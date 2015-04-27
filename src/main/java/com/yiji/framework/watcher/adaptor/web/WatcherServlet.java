@@ -11,9 +11,8 @@
 package com.yiji.framework.watcher.adaptor.web;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.StringWriter;
+import java.net.URL;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -24,10 +23,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 
+import com.google.common.base.Charsets;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Maps;
-import com.google.common.io.CharStreams;
-import com.google.common.io.Closeables;
+import com.google.common.io.Resources;
 import com.yiji.framework.watcher.DefaultMonitorService;
 import com.yiji.framework.watcher.MonitorRequest;
 import com.yiji.framework.watcher.ResponseType;
@@ -99,7 +98,7 @@ public class WatcherServlet extends HttpServlet {
 			params.put("appName", appName);
 			params.put("metricses", DefaultMonitorService.INSTANCE.monitorMetricses());
 			if (vmContent == null) {
-				vmContent=readFile(velocityPath);
+				vmContent = readFile(velocityPath);
 			}
 			index = parseVelocity(vmContent, params);
 		} catch (Exception e) {
@@ -113,31 +112,12 @@ public class WatcherServlet extends HttpServlet {
 	}
 	
 	private static String readFile(String resourceLocation) {
-		InputStream inputStream = getDefaultClassLoader().getResourceAsStream(resourceLocation);
-		if (inputStream == null) {
-			return resourceLocation + "不存在";
-		} else {
-			try {
-				return CharStreams.toString(new InputStreamReader(inputStream));
-			} catch (IOException e) {
-				return Throwables.getStackTraceAsString(e);
-			} finally {
-				Closeables.closeQuietly(inputStream);
-			}
-		}
-	}
-	
-	private static ClassLoader getDefaultClassLoader() {
-		ClassLoader cl = null;
 		try {
-			cl = Thread.currentThread().getContextClassLoader();
-		} catch (Throwable ex) {
-			//ignore
+			URL url = Resources.getResource(resourceLocation);
+			return Resources.toString(url, Charsets.UTF_8);
+		} catch (Exception e) {
+			return Throwables.getStackTraceAsString(e);
 		}
-		if (cl == null) {
-			cl = WatcherServlet.class.getClassLoader();
-		}
-		return cl;
 	}
 	
 	private static String parseVelocity(String templateContent, Map<String, Object> param) {
