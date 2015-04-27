@@ -50,6 +50,8 @@ public class WatcherServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		final String uri = req.getPathInfo();
+		req.setCharacterEncoding(Charsets.UTF_8.name());
+		resp.setCharacterEncoding(Charsets.UTF_8.name());
 		resp.setStatus(HttpServletResponse.SC_OK);
 		resp.setHeader("Cache-Control", "must-revalidate,no-cache,no-store");
 		if (uri == null || uri.equals("/") || uri.equals("/index.html") || uri.equals("/index.htm")) {
@@ -82,7 +84,11 @@ public class WatcherServlet extends HttpServlet {
 	private void setResType(Map<String, Object> paramMap, MonitorRequest request) {
 		try {
 			Object resType = paramMap.get("resType");
-			if (resType == null || ResponseType.valueOf(resType.toString()) == null) {
+			if (resType == null) {
+				request.setResponseType(ResponseType.JSON);
+			}
+			String str=resType.toString().toUpperCase();
+			if ( ResponseType.valueOf(str) == null) {
 				request.setResponseType(ResponseType.JSON);
 			} else {
 				request.setResponseType(ResponseType.valueOf(resType.toString()));
