@@ -10,10 +10,10 @@
  */
 package com.yiji.framework.watcher.adaptor.web;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.StringWriter;
-import java.net.URL;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -24,10 +24,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 
-import com.google.common.base.Charsets;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Maps;
-import com.google.common.io.Files;
+import com.google.common.io.CharStreams;
+import com.google.common.io.Closeables;
 import com.yiji.framework.watcher.DefaultMonitorService;
 import com.yiji.framework.watcher.MonitorRequest;
 import com.yiji.framework.watcher.ResponseType;
@@ -36,8 +36,8 @@ import com.yiji.framework.watcher.ResponseType;
  * @author qzhanbo@yiji.com
  */
 public class WatcherServlet extends HttpServlet {
-	private static String velocityPath = "/com/yiji/framework/watcher/adaptor/web/index.vm";
-	
+	private static String velocityPath = "com/yiji/framework/watcher/adaptor/web/index.vm";
+	private static String vmContent = null;
 	private String index = null;
 	private String appName = null;
 	
@@ -95,18 +95,14 @@ public class WatcherServlet extends HttpServlet {
 	
 	private void handleIndex(HttpServletRequest req, HttpServletResponse resp) {
 		try {
-			String file = resolveClasspath("com/yiji/framework/watcher/adaptor/web/index.vm");
-			if (file != null) {
-				StringBuilder content = new StringBuilder();
-				Files.readLines(new File(file), Charsets.UTF_8).stream().forEach(s -> content.append(s));
-				Map<String, Object> params = Maps.newHashMap();
-				params.put("appName", appName);
-				params.put("metricses", DefaultMonitorService.INSTANCE.monitorMetricses());
-				index = parseVelocity(content.toString(), params);
-			} else {
-				index = "监控主页文件不存在";
+			Map<String, Object> params = Maps.newHashMap();
+			params.put("appName", appName);
+			params.put("metricses", DefaultMonitorService.INSTANCE.monitorMetricses());
+			if (vmContent == null) {
+				vmContent=readFile(velocityPath);
 			}
-		} catch (IOException e) {
+			index = parseVelocity(vmContent, params);
+		} catch (Exception e) {
 			index = Throwables.getStackTraceAsString(e);
 		}
 		try {
@@ -116,13 +112,19 @@ public class WatcherServlet extends HttpServlet {
 		}
 	}
 	
-	private static String resolveClasspath(String resourceLocation) {
-		URL url = getDefaultClassLoader().getResource(resourceLocation);
-		if (url == null) {
-			return null;
+	private static String readFile(String resourceLocation) {
+		InputStream inputStream = getDefaultClassLoader().getResourceAsStream(resourceLocation);
+		if (inputStream == null) {
+			return resourceLocation + "不存在";
+		} else {
+			try {
+				return CharStreams.toString(new InputStreamReader(inputStream));
+			} catch (IOException e) {
+				return Throwables.getStackTraceAsString(e);
+			} finally {
+				Closeables.closeQuietly(inputStream);
+			}
 		}
-		return url.getFile();
-		
 	}
 	
 	private static ClassLoader getDefaultClassLoader() {
