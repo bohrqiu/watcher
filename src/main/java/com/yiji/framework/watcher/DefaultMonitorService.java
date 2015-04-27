@@ -64,7 +64,7 @@ public class DefaultMonitorService extends AbstractMonitorService {
 			}
 			request.addParam(ResponseType.RESPONSE_TYPE_KEY, request.getResponseType());
 			Object result = monitorMetrics.monitor(request.getParams());
-			if (request.getResponseType() == ResponseType.PLAINTEXT) {
+			if (request.getResponseType() == ResponseType.TEXT) {
 				if (result == null) {
 					return "null";
 				} else {
@@ -74,7 +74,7 @@ public class DefaultMonitorService extends AbstractMonitorService {
 				return toJson(result, request.isPrettyFormat());
 			}
 		} catch (Exception e) {
-			if (request.getResponseType() == ResponseType.PLAINTEXT) {
+			if (request.getResponseType() == ResponseType.TEXT) {
 				return Throwables.getStackTraceAsString(e);
 			} else {
 				ExceptionResult exceptionResult = new ExceptionResult();

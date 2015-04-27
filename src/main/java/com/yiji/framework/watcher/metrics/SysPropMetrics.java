@@ -27,7 +27,7 @@ public class SysPropMetrics implements MonitorMetrics {
         if (key == null) {
             return toMap(System.getProperties());
         } else {
-            return System.getProperties().get("key");
+            return System.getProperties().get(key);
         }
     }
 

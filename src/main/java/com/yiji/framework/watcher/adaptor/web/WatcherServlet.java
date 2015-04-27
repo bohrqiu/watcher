@@ -25,11 +25,12 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 
 import com.google.common.base.Charsets;
-import com.google.common.base.Strings;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Maps;
 import com.google.common.io.Files;
 import com.yiji.framework.watcher.DefaultMonitorService;
+import com.yiji.framework.watcher.MonitorRequest;
+import com.yiji.framework.watcher.ResponseType;
 
 /**
  * @author qzhanbo@yiji.com
@@ -50,30 +51,63 @@ public class WatcherServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		final String uri = req.getPathInfo();
-		if (uri == null || uri.equals("/")) {
+		resp.setStatus(HttpServletResponse.SC_OK);
+		resp.setHeader("Cache-Control", "must-revalidate,no-cache,no-store");
+		if (uri == null || uri.equals("/") || uri.equals("/index.html") || uri.equals("/index.htm")) {
 			handleIndex(req, resp);
 			return;
+		} else if (uri.indexOf("q.do") != -1) {
+			Map<String, Object> paramMap = getRequestParamMap(req);
+			MonitorRequest request = new MonitorRequest();
+			request.setParams(paramMap);
+			String action = (String) paramMap.get("action");
+			if (action == null) {
+				resp.getWriter().write("请指定action参数值");
+			}
+			request.setAction(paramMap.get("action").toString());
+			setPrettyFormat(paramMap, request);
+			setResType(paramMap, request);
+			resp.getWriter().write(DefaultMonitorService.INSTANCE.monitor(request));
 		} else {
+			resp.getWriter().write("不支持的请求");
+		}
+	}
+	
+	private void setPrettyFormat(Map<String, Object> paramMap, MonitorRequest request) {
+		Object prettyFormat = paramMap.get("prettyFormat");
+		if (prettyFormat != null) {
+			request.setPrettyFormat(Boolean.parseBoolean(prettyFormat.toString()));
+		}
+	}
+	
+	private void setResType(Map<String, Object> paramMap, MonitorRequest request) {
+		try {
+			Object resType = paramMap.get("resType");
+			if (resType == null || ResponseType.valueOf(resType.toString()) == null) {
+				request.setResponseType(ResponseType.JSON);
+			} else {
+				request.setResponseType(ResponseType.valueOf(resType.toString()));
+			}
+		} catch (IllegalArgumentException e) {
+			request.setResponseType(ResponseType.JSON);
 		}
 	}
 	
 	private void handleIndex(HttpServletRequest req, HttpServletResponse resp) {
-		if (Strings.isNullOrEmpty(index)) {
-			try {
-				String file = resolveClasspath("/com/yiji/framework/watcher/adaptor/web/index.vm");
-				if (file != null) {
-					StringBuilder content = new StringBuilder();
-					Files.readLines(new File(file), Charsets.UTF_8).stream().forEach(s -> content.append(s));
-					Map<String, Object> params = Maps.newHashMap();
-					params.put("appName", appName);
-					params.put("metricsNames", DefaultMonitorService.INSTANCE.names());
-					index = parseVelocity(content.toString(), params);
-				} else {
-					index = "监控主页文件不存在";
-				}
-			} catch (IOException e) {
-				index = Throwables.getStackTraceAsString(e);
+		try {
+			String file = resolveClasspath("com/yiji/framework/watcher/adaptor/web/index.vm");
+			if (file != null) {
+				StringBuilder content = new StringBuilder();
+				Files.readLines(new File(file), Charsets.UTF_8).stream().forEach(s -> content.append(s));
+				Map<String, Object> params = Maps.newHashMap();
+				params.put("appName", appName);
+				params.put("metricses", DefaultMonitorService.INSTANCE.monitorMetricses());
+				index = parseVelocity(content.toString(), params);
+			} else {
+				index = "监控主页文件不存在";
 			}
+		} catch (IOException e) {
+			index = Throwables.getStackTraceAsString(e);
 		}
 		try {
 			resp.getWriter().write(index);
@@ -114,4 +148,14 @@ public class WatcherServlet extends HttpServlet {
 		velocity.evaluate(context, w, velocityPath, templateContent);
 		return w.toString();
 	}
+	
+	private Map<String, Object> getRequestParamMap(HttpServletRequest req) {
+		Map<String, Object> paramMap = Maps.newHashMap();
+		Map<String, String[]> stringMap = req.getParameterMap();
+		stringMap.entrySet().stream().filter(stringEntry -> stringEntry.getValue() != null).forEach(stringEntry -> {
+			paramMap.put(stringEntry.getKey(), stringEntry.getValue()[0]);
+		});
+		return paramMap;
+	}
+	
 }

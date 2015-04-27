@@ -53,7 +53,7 @@
 <div class="content">
     <div class="header">
         <h1>
-            <center>[$!appName]监控服务</center>
+            <center>$!appName 监控服务</center>
         </h1>
         <hr/>
     </div>
@@ -66,94 +66,14 @@
                     <th width="100px">访问地址</th>
                 </tr>
 
-                #foreach( $name in $metricsNames)
+                #foreach( $metircs in $metricses)
                     <tr>
-                        <td>jstack</td>
-                        <td>查看线程栈</td>
-                        <td><a href="/metrics/jstack.json" target="_blank">json</a> | <a href="/metrics/jstack.html"
-                                                                                         target="_blank">text</a></td>
+                        <td>$metircs.name()</td>
+                        <td>$metircs.desc()</td>
+                        <td><a href="/metrics/q.do?action=${metircs.name()}&resType=JSON" target="_blank">json</a> | <a href="/metrics/q.do?action=${metircs.name()}&resType=TEXT">text</a>
                     </tr>
                 #end
 
-
-                <tr>
-                    <td>jstack</td>
-                    <td>查看线程栈</td>
-                    <td><a href="/metrics/jstack.json" target="_blank">json</a> | <a href="/metrics/jstack.html"
-                                                                                     target="_blank">text</a></td>
-                </tr>
-                <tr>
-                    <td>metrics</td>
-                    <td>查看Metrics监控指标，可在url上加name=xxx或type=(timer/gauge/meter/histogram/counter/all)参数过滤;
-                        name参数支持前缀匹配。
-                    </td>
-                    <td><a href="/metrics/metrics.json" target="_blank">json</a></td>
-                </tr>
-                <tr>
-                    <td>healthCheck</td>
-                    <td>健康检查</td>
-                    <td><a href="/metrics/healthCheck.json" target="_blank">json</a></td>
-                </tr>
-                <tr>
-                    <td>sysEnv</td>
-                    <td>查看系统环境变量.不带任何参数，返回所有环境变量，传入参数key=xx，返回指定的参数.例如,查看<a target="_blank"
-                                                                            href="/metrics/sysEnv.json?key=JAVA_VERSION">java
-                        version</a></td>
-                    <td><a href="/metrics/sysEnv.json" target="_blank">json</a></td>
-                </tr>
-                <tr>
-                    <td>sysProp</td>
-                    <td>查看系统配置.不带任何参数，返回所有配置，传入参数key=xx，返回指定的参数.例如,查看<a target="_blank"
-                                                                        href="/metrics/sysProp.json?key=yiji.appName">应用名称</a>
-                        <a target="_blank" href="/metrics/sysProp.json?key=spring.profiles.active">应用环境</a>
-                    </td>
-                    <td><a href="/metrics/sysProp.json" target="_blank">json</a></td>
-                </tr>
-                <tr>
-                    <td>fileDescriptor</td>
-                    <td>查看文件描述符使用情况</td>
-                    <td><a href="/metrics/fileDescriptor.json" target="_blank">json</a></td>
-                </tr>
-                <tr>
-                    <td>mem</td>
-                    <td>查看内存使用情况</td>
-                    <td><a href="/metrics/mem.json" target="_blank">json</a></td>
-                </tr>
-                <tr>
-                    <td>thread</td>
-                    <td>查看线程情况</td>
-                    <td><a href="/metrics/thread.json" target="_blank">json</a></td>
-                </tr>
-                <tr>
-                    <td>gc</td>
-                    <td>查看gc情况</td>
-                    <td><a href="/metrics/gc.json" target="_blank">json</a></td>
-                </tr>
-                <tr>
-                    <td>classLoading</td>
-                    <td>查看jvm加载类情况</td>
-                    <td><a href="/metrics/classLoading.json" target="_blank">json</a></td>
-                </tr>
-                <tr>
-                    <td>uptime</td>
-                    <td>查看jvm运行时间</td>
-                    <td><a href="/metrics/uptime.json" target="_blank">json</a></td>
-                </tr>
-                <tr>
-                    <td>startTime</td>
-                    <td>查看jvm启动时间</td>
-                    <td><a href="/metrics/startTime.json" target="_blank">json</a></td>
-                </tr>
-                <tr>
-                    <td>cpu</td>
-                    <td>查看cpu情况</td>
-                    <td><a href="/metrics/cpu.json" target="_blank">json</a></td>
-                </tr>
-                <tr>
-                    <td>webContainer</td>
-                    <td>查看web容器情况</td>
-                    <td><a href="/metrics/webContainer.json" target="_blank">json</a></td>
-                </tr>
             </table>
         </div>
     </div>

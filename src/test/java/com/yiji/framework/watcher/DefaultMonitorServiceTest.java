@@ -7,8 +7,6 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 import java.util.Set;
 
-import static org.assertj.core.api.Assertions.*;
-
 /**
  * @author qzhanbo@yiji.com
  */
@@ -61,7 +59,7 @@ public class DefaultMonitorServiceTest {
     @Test
     public void testJstack() throws Exception {
         MonitorRequest monitorRequest = new MonitorRequest();
-        monitorRequest.setResponseType(ResponseType.PLAINTEXT);
+        monitorRequest.setResponseType(ResponseType.TEXT);
         monitorRequest.setAction("jstack");
         System.out.println(monitorService.monitor(monitorRequest));
     }

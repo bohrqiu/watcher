@@ -29,7 +29,7 @@ public class JstackMetrics implements MonitorMetrics {
 
 	public Object monitor(Map<String, Object> params) {
 		ResponseType responseType = (ResponseType) params.get(ResponseType.RESPONSE_TYPE_KEY);
-		if(responseType==ResponseType.PLAINTEXT){
+		if(responseType==ResponseType.TEXT){
 			return dump();
 		}
 		return getThreadInfos();

@@ -10,6 +10,7 @@
  */
 package com.yiji.framework.watcher;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -33,5 +34,10 @@ public abstract class AbstractMonitorService implements MonitorService {
 	
 	public Set<String> names() {
 		return monitorMetricsMap.keySet();
+	}
+
+	@Override
+	public Set<MonitorMetrics> monitorMetricses() {
+		return new HashSet<>(monitorMetricsMap.values());
 	}
 }

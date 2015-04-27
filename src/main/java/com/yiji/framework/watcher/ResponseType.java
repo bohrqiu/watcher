@@ -14,7 +14,7 @@ package com.yiji.framework.watcher;
  * @author qzhanbo@yiji.com
  */
 public enum ResponseType {
-	PLAINTEXT,
+	TEXT,
 	JSON;
 	public static final String RESPONSE_TYPE_KEY = "resType";
 }

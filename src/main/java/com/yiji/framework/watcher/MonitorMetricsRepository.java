@@ -17,9 +17,11 @@ import java.util.Set;
  */
 public interface MonitorMetricsRepository {
 	void addMonitorMetrics(MonitorMetrics monitorMetrics);
-
+	
 	/**
 	 * 获取所有注册的监控指标
 	 */
 	Set<String> names();
+	
+	Set<MonitorMetrics> monitorMetricses();
 }
