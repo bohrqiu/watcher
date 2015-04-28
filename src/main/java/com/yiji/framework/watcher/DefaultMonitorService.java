@@ -10,6 +10,7 @@
  */
 package com.yiji.framework.watcher;
 
+import java.lang.reflect.Modifier;
 import java.util.Objects;
 import java.util.Set;
 
@@ -44,7 +45,7 @@ public class DefaultMonitorService extends AbstractMonitorService {
 						logger.debug("{}加载失败,原因:{}", clazzName, e.getMessage());
 						return;
 					}
-					if (MonitorMetrics.class.isAssignableFrom(clazz) && !clazz.isInterface()) {
+					if (MonitorMetrics.class.isAssignableFrom(clazz) && !clazz.isInterface() && !Modifier.isAbstract(clazz.getModifiers())) {
 						MonitorMetrics monitorMetrics = (MonitorMetrics) clazz.newInstance();
 						logger.debug("监控注册:{}->{}", monitorMetrics.name(), clazzName);
 						DefaultMonitorService.this.addMonitorMetrics(monitorMetrics);
