@@ -37,7 +37,13 @@ public class DefaultMonitorService extends AbstractMonitorService {
 			classInfos.stream().forEach(classInfo -> {
 				String clazzName = classInfo.getName();
 				try {
-					Class clazz = classLoader.loadClass(clazzName);
+					Class clazz = null;
+					try {
+						clazz = classLoader.loadClass(clazzName);
+					} catch (ClassNotFoundException e) {
+						logger.debug("{}加载失败,原因:{}", clazzName, e.getMessage());
+						return;
+					}
 					if (MonitorMetrics.class.isAssignableFrom(clazz) && !clazz.isInterface()) {
 						MonitorMetrics monitorMetrics = (MonitorMetrics) clazz.newInstance();
 						logger.debug("监控注册:{}->{}", monitorMetrics.name(), clazzName);

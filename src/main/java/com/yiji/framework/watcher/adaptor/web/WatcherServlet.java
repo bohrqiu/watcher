@@ -35,7 +35,16 @@ import com.yiji.framework.watcher.ResponseType;
  * @author qzhanbo@yiji.com
  */
 public class WatcherServlet extends HttpServlet {
+	
 	private static String velocityPath = "com/yiji/framework/watcher/adaptor/web/index.vm";
+	private static VelocityEngine velocity;
+	static {
+		velocity = new VelocityEngine();
+		//模板内引用解析失败时不抛出异常
+		velocity.setProperty("runtime.references.strict", "false");
+		velocity.init();
+	}
+	
 	private static String vmContent = null;
 	private String index = null;
 	private String appName = null;
@@ -129,10 +138,6 @@ public class WatcherServlet extends HttpServlet {
 	private static String parseVelocity(String templateContent, Map<String, Object> param) {
 		VelocityContext context = new VelocityContext(param);
 		StringWriter w = new StringWriter();
-		VelocityEngine velocity = new VelocityEngine();
-		//模板内引用解析失败时不抛出异常
-		//velocity.setProperty("runtime.references.strict", "false");
-		velocity.init();
 		velocity.evaluate(context, w, velocityPath, templateContent);
 		return w.toString();
 	}
