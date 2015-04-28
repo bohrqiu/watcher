@@ -6,8 +6,6 @@
     <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
         <resetJUL>true</resetJUL>
     </contextListener>
-    <!-- 配置文件，包括此文件内的所有变量的配置 -->
-    <property resource="spring/log/log.properties"/>
     <!-- contextName主要是为了区分在一个web容器下部署多个应用启用jmx时，不会出现混乱 -->
     <contextName>${CONTEXT_NAME}</contextName>
 
@@ -20,14 +18,10 @@
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{0}:%L-%X{ID}- %msg%n</pattern>
         </encoder>
     </appender>
-    <root>
+    <root level="debug">
         <appender-ref ref="STDOUT"/>
     </root>
 
 
-    <!-- 根日志logger -->
-    <root level="INFO">
-        <appender-ref ref="STDOUT"/>
-    </root>
 
 </configuration>
