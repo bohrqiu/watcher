@@ -19,7 +19,7 @@ public class RequestParser {
 
     /**
      * 解析命令行。命令行的格式如下：
-     * command key1=value1,key2=value2,...
+     * metricName key1=value1,key2=value2,...
      * @param commandLine
      * @return
      * @throws IllegalArgumentException
@@ -27,7 +27,7 @@ public class RequestParser {
     public static MonitorRequest parse(String commandLine) throws IllegalArgumentException{
         String processed = StringUtils.trim(commandLine);
         if (StringUtils.isEmpty(processed))
-            return null;
+            throw new IllegalArgumentException("命令为空");
         String[] parts = BLANK_CHAR_PATTERN.split(processed);
         String cmd = null;
         String params = null;
@@ -63,6 +63,7 @@ public class RequestParser {
                     }
                 }
             }
+            return request;
         }
         return null;
     }
