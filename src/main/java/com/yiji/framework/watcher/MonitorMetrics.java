@@ -16,6 +16,9 @@ import java.util.Map;
  * @author qzhanbo@yiji.com
  */
 public interface MonitorMetrics extends MetricsName {
+	/**
+	 * 参数名字
+	 */
 	String KEY = "key";
 	
 	Object monitor(Map<String, Object> params);

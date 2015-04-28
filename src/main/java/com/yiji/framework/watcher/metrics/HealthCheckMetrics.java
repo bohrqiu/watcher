@@ -1,0 +1,53 @@
+/*
+ * www.yiji.com Inc.
+ * Copyright (c) 2014 All Rights Reserved
+ */
+
+/*
+ * 修订记录:
+ * qzhanbo@yiji.com 2015-04-28 14:39 创建
+ *
+ */
+package com.yiji.framework.watcher.metrics;
+
+import java.util.Collections;
+import java.util.Map;
+
+import com.codahale.metrics.health.HealthCheckRegistry;
+import com.yiji.framework.watcher.MonitorMetrics;
+import com.yiji.framework.watcher.metrics.health.ThreadDeadlockHealthCheck;
+import com.yjf.common.metrics.MetricsHolder;
+
+/**
+ * @author qzhanbo@yiji.com
+ */
+public class HealthCheckMetrics implements MonitorMetrics {
+	private HealthCheckRegistry healthCheckRegistry = MetricsHolder.healthCheckRegistry();
+	
+	public HealthCheckMetrics() {
+		healthCheckRegistry.register("threadDeadlockHealthCheck", new ThreadDeadlockHealthCheck());
+	}
+	
+	@Override
+	public Object monitor(Map<String, Object> params) {
+		Object key = params.get(KEY);
+		if (key == null) {
+			return healthCheckRegistry.runHealthChecks();
+		} else {
+			if (!healthCheckRegistry.getNames().contains(key.toString())) {
+				return Collections.emptyMap();
+			}
+			return healthCheckRegistry.runHealthCheck(key.toString());
+		}
+	}
+	
+	@Override
+	public String name() {
+		return "healthCheck";
+	}
+	
+	@Override
+	public String desc() {
+		return "健康状态检查,如果参数key=xxx，可以查看指定组件的健康检查";
+	}
+}

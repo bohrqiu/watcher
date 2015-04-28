@@ -21,7 +21,7 @@ import java.util.Map;
 public class SysEnvMetrics implements MonitorMetrics {
 
 	public Object monitor(Map<String, Object> params) {
-		String key = (String) params.get("key");
+		String key = (String) params.get(KEY);
 		if (key == null) {
 			return System.getenv();
 		} else {

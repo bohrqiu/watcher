@@ -23,7 +23,7 @@ import java.util.Properties;
 public class SysPropMetrics implements MonitorMetrics {
 
     public Object monitor(Map<String, Object> params) {
-        String key = (String) params.get("key");
+        String key = (String) params.get(KEY);
         if (key == null) {
             return toMap(System.getProperties());
         } else {
