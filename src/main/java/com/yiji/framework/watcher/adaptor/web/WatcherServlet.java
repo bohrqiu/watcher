@@ -95,12 +95,13 @@ public class WatcherServlet extends HttpServlet {
 			Object resType = paramMap.get("resType");
 			if (resType == null) {
 				request.setResponseType(ResponseType.JSON);
-			}
-			String str = resType.toString().toUpperCase();
-			if (ResponseType.valueOf(str) == null) {
-				request.setResponseType(ResponseType.JSON);
 			} else {
-				request.setResponseType(ResponseType.valueOf(resType.toString()));
+				String str = resType.toString().toUpperCase();
+				if (ResponseType.valueOf(str) == null) {
+					request.setResponseType(ResponseType.JSON);
+				} else {
+					request.setResponseType(ResponseType.valueOf(resType.toString()));
+				}
 			}
 		} catch (IllegalArgumentException e) {
 			request.setResponseType(ResponseType.JSON);
