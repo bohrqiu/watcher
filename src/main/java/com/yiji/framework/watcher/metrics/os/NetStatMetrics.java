@@ -10,32 +10,24 @@
  */
 package com.yiji.framework.watcher.metrics.os;
 
-import com.yiji.framework.watcher.MonitorMetrics;
-import com.yiji.framework.watcher.UnsupportMonitorMetricsOperationException;
-
 import java.util.Map;
 
+import org.hyperic.sigar.SigarException;
 
 /**
  * @author qzhanbo@yiji.com
  */
-public class NetStatMetrics implements MonitorMetrics {
-
-    public Object monitor(Map<String, Object> params) {
-        try {
-            return SigarFactory.getSigar().getNetStat();
-        } catch (Exception e){
-            throw new UnsupportMonitorMetricsOperationException(e);
-        }
-
-    }
-
-
-    public String name() {
-        return "netstat";
-    }
-
-    public String desc() {
-        return "网络使用情况统计";
-    }
+public class NetStatMetrics extends AbstractOSMonitorMetrics {
+	
+	public Object doMonitor(Map<String, Object> params) throws SigarException {
+		return SigarFactory.getSigar().getNetStat();
+	}
+	
+	public String name() {
+		return "netstat";
+	}
+	
+	public String desc() {
+		return "网络使用情况统计";
+	}
 }

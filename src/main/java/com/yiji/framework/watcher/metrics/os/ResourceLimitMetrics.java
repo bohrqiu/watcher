@@ -10,35 +10,27 @@
  */
 package com.yiji.framework.watcher.metrics.os;
 
-import com.yiji.framework.watcher.MonitorMetrics;
-import com.yiji.framework.watcher.UnsupportMonitorMetricsOperationException;
-
 import java.util.Map;
 
+import org.hyperic.sigar.SigarException;
 
 /**
  * @author qzhanbo@yiji.com
  */
-public class ResourceLimitMetrics implements MonitorMetrics {
+public class ResourceLimitMetrics extends AbstractOSMonitorMetrics {
 	private Map resourceLimit = null;
 	
-
-	public Object monitor(Map<String, Object> params) {
-		try {
-			if (resourceLimit == null) {
-				resourceLimit = SigarFactory.getSigar().getResourceLimit().toMap();
-			}
-			return resourceLimit;
-		} catch (Exception e) {
-			throw new UnsupportMonitorMetricsOperationException(e);
+	public Object doMonitor(Map<String, Object> params) throws SigarException {
+		if (resourceLimit == null) {
+			resourceLimit = SigarFactory.getSigar().getResourceLimit().toMap();
 		}
+		return resourceLimit;
 	}
 	
-
 	public String name() {
 		return "resourceLimit";
 	}
-
+	
 	public String desc() {
 		return "操作系统资源限制";
 	}

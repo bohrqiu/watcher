@@ -10,32 +10,24 @@
  */
 package com.yiji.framework.watcher.metrics.os;
 
-import com.yiji.framework.watcher.MonitorMetrics;
-import com.yiji.framework.watcher.UnsupportMonitorMetricsOperationException;
-
 import java.util.Map;
 
+import org.hyperic.sigar.SigarException;
 
 /**
  * @author qzhanbo@yiji.com
  */
-public class SwapMetrics implements MonitorMetrics {
-
-    public Object monitor(Map<String, Object> params) {
-        try {
-            return SigarFactory.getSigar().getSwap().toMap();
-        } catch (Exception e){
-            throw new UnsupportMonitorMetricsOperationException(e);
-        }
-
-    }
-
-
-    public String name() {
-        return "swap";
-    }
-
-    public String desc() {
-        return "os swap使用情况";
-    }
+public class SwapMetrics extends AbstractOSMonitorMetrics {
+	
+	public Object doMonitor(Map<String, Object> params) throws SigarException {
+		return SigarFactory.getSigar().getSwap().toMap();
+	}
+	
+	public String name() {
+		return "swap";
+	}
+	
+	public String desc() {
+		return "os swap使用情况";
+	}
 }
