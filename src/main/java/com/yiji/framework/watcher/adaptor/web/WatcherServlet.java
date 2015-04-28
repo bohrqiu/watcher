@@ -87,8 +87,8 @@ public class WatcherServlet extends HttpServlet {
 			if (resType == null) {
 				request.setResponseType(ResponseType.JSON);
 			}
-			String str=resType.toString().toUpperCase();
-			if ( ResponseType.valueOf(str) == null) {
+			String str = resType.toString().toUpperCase();
+			if (ResponseType.valueOf(str) == null) {
 				request.setResponseType(ResponseType.JSON);
 			} else {
 				request.setResponseType(ResponseType.valueOf(resType.toString()));
@@ -122,7 +122,7 @@ public class WatcherServlet extends HttpServlet {
 			URL url = Resources.getResource(resourceLocation);
 			return Resources.toString(url, Charsets.UTF_8);
 		} catch (Exception e) {
-			return Throwables.getStackTraceAsString(e);
+			throw Throwables.propagate(e);
 		}
 	}
 	
@@ -131,7 +131,7 @@ public class WatcherServlet extends HttpServlet {
 		StringWriter w = new StringWriter();
 		VelocityEngine velocity = new VelocityEngine();
 		//模板内引用解析失败时不抛出异常
-		velocity.setProperty("runtime.references.strict", "false");
+		//velocity.setProperty("runtime.references.strict", "false");
 		velocity.init();
 		velocity.evaluate(context, w, velocityPath, templateContent);
 		return w.toString();

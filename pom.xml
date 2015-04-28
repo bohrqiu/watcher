@@ -77,6 +77,22 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <!--src/main/java目录下的xml/vm文件也打包-->
+                    <include>**/*.xml</include>
+                    <include>**/*.vm</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
+    </build>
 
 </project>

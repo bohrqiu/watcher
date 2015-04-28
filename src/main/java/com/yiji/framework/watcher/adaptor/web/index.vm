@@ -3,7 +3,7 @@
 
 <head lang="en">
     <meta charset="UTF-8">
-    <title>应用[$!appName]监控</title>
+    <title>应用$!appName监控</title>
     <style>
         .content {
             margin-left: auto;
@@ -68,8 +68,8 @@
 
                 #foreach( $metircs in $metricses)
                     <tr>
-                        <td>$metircs.name()</td>
-                        <td>$metircs.desc()</td>
+                        <td>${metircs.name()}</td>
+                        <td>${metircs.desc()}</td>
                         <td><a href="/metrics/q.do?action=${metircs.name()}&resType=JSON" target="_blank">json</a> | <a href="/metrics/q.do?action=${metircs.name()}&resType=TEXT">text</a>
                     </tr>
                 #end
