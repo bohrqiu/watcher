@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd        http://code.alibabatech.com/schema/dubbo        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- 提供方应用信息，用于计算依赖关系 -->
+    <dubbo:application name="watcher-test"  />
+
+    <dubbo:registry protocol="zookeeper" address="snet.yiji:2181"
+                    file="dubbo.cache" register="true" />
+
+    <!-- expose this service through dubbo protocol, through port 20880 ProtocolConfig -->
+    <dubbo:protocol name="dubbo" port="20880"
+                    threads="200" queues="100"/>
+
+    <dubbo:consumer check="false" />
+
+    <dubbo:monitor protocol="registry" />
+
+    <!-- 提供者默认配置 选用快速失败策略 -->
+    <dubbo:provider timeout="60000" cluster="failfast" telnet="watch"/>
+
+    <bean id="dubboRemoteProxyFacotry" class="com.yjf.common.dubbo.DubboRemoteProxyFacotry" />
+
+    <dubbo:service interface="com.yiji.framework.watcher.dubbo.DemoService" ref="demoService"/>
+    <!-- 和本地bean一样实现服务 -->
+    <bean id="demoService" class="com.yiji.framework.watcher.dubbo.DemoServiceImpl" />
+
+</beans>

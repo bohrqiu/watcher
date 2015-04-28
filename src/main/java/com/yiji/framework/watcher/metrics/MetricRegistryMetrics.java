@@ -51,7 +51,7 @@ public class MetricRegistryMetrics implements MonitorMetrics{
         if (param == null) {
             return true;
         }
-        String name = (String) param.get("name");
+        String name = (String) param.get(MonitorMetrics.KEY);
         String type = (String) param.get("type");
         if (metricName != null && !metricName.startsWith(name)) {
             return false;
@@ -63,11 +63,7 @@ public class MetricRegistryMetrics implements MonitorMetrics{
             } catch (Exception e) {
                 chosen = MetricType.ALL;
             }
-            if (chosen.equals(MetricType.ALL) || type2MetricClass(chosen).isInstance(metric)) {
-                return true;
-            } else {
-                return false;
-            }
+            return chosen.equals(MetricType.ALL) || type2MetricClass(chosen).isInstance(metric);
         } else {
             return true;
         }
@@ -97,6 +93,6 @@ public class MetricRegistryMetrics implements MonitorMetrics{
 
     @Override
     public String desc() {
-        return "Metrics指标";
+        return "Metrics指标。可加上key=xx&type=yy来指定Metric的名字和类型；名字支持前缀匹配；不加参数返回所有指标";
     }
 }
