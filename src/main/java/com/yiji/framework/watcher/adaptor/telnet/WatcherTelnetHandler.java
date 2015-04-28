@@ -58,11 +58,7 @@ public class WatcherTelnetHandler implements TelnetHandler {
 				request.setResponseType(ResponseType.JSON);
 			} else {
 				String str = resType.toString().toUpperCase();
-				if (ResponseType.valueOf(str) == null) {
-					request.setResponseType(ResponseType.JSON);
-				} else {
-					request.setResponseType(ResponseType.valueOf(resType.toString()));
-				}
+				request.setResponseType(ResponseType.valueOf(str));
 			}
 		} catch (IllegalArgumentException e) {
 			request.setResponseType(ResponseType.JSON);

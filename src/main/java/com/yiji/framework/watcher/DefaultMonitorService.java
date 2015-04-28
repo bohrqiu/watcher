@@ -29,7 +29,7 @@ import com.google.common.reflect.Reflection;
  */
 public class DefaultMonitorService extends AbstractMonitorService {
 	private static final Logger logger = LoggerFactory.getLogger(DefaultMonitorService.class);
-	public static DefaultMonitorService INSTANCE = new DefaultMonitorService();
+	public static final DefaultMonitorService INSTANCE = new DefaultMonitorService();
 	
 	private DefaultMonitorService() {
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
