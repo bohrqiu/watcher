@@ -2,7 +2,7 @@ package com.yiji.framework.watcher;
 
 /**
  * 
- * @author Bohr.Qiu <qzhanbo@yiji.com>
+ * @author Bohr.Qiu <qiubo@yiji.com>
  * 
  */
 public class WatherTomcatBootStrap {

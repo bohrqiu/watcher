@@ -122,7 +122,7 @@ watcher内部集成了[metrics](https://github.com/dropwizard/metrics),需要添
 
 ### 5.2 `watcher style`
 
-继承`com.yiji.framework.watcher.metrics.AbstractMonitorMetrics`接口，然后通过`DefaultMonitorService#addMonitorMetrics`注册。
+继承`com.yiji.framework.watcher.metrics.AbstractMonitorMetrics`类，然后通过`DefaultMonitorService#addMonitorMetrics`注册。
 
 `DefaultMonitorService`默认会扫描`com.yiji.framework.watcher.metrics`下的所有`MonitorMetrics`.
 

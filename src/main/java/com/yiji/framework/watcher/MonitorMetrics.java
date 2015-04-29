@@ -5,7 +5,7 @@
 
 /*
  * 修订记录:
- * qzhanbo@yiji.com 2015-04-24 23:52 创建
+ * qiubo@yiji.com 2015-04-24 23:52 创建
  *
  */
 package com.yiji.framework.watcher;
