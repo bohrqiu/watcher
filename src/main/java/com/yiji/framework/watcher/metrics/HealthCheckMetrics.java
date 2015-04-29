@@ -47,6 +47,6 @@ public class HealthCheckMetrics extends AbstractMonitorMetrics {
 	
 	@Override
 	public String desc() {
-		return "health check. If key=xx is set, the given indicator is returned. Otherwise, show all indicators.";
+		return "health check. Optional parameter: key=xx";
 	}
 }

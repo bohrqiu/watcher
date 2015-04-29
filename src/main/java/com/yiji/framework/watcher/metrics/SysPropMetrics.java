@@ -46,6 +46,6 @@ public class SysPropMetrics extends AbstractMonitorMetrics {
 	}
 	
 	public String desc() {
-		return "system properties. If key=xx is set, the given property is returned. Otherwise, show all properties.";
+		return "system properties. Optional parameter: key=xx";
 	}
 }

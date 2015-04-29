@@ -83,7 +83,7 @@ public class MetricRegistryMetrics extends AbstractMonitorMetrics {
 	
 	@Override
 	public String desc() {
-		return "Metrics indicators. You can set key=xx&type=yy to specify Metric name and type of your interest";
+		return "Metric indicators. Optional parameters: key=xx[&type=yy]";
 	}
 	
 	public enum MetricType {

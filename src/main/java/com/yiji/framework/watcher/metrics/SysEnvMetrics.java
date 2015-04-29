@@ -31,6 +31,6 @@ public class SysEnvMetrics extends AbstractMonitorMetrics {
 	}
 	
 	public String desc() {
-		return "system environment vars. If key=xx is set, the given variable is returned. Otherwise, show all variables.";
+		return "system environment vars. Optional parameter: key=xx";
 	}
 }
