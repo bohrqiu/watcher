@@ -17,8 +17,8 @@ import java.util.regex.Pattern;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 
-import com.yjf.common.log.Logger;
-import com.yjf.common.log.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author daidai@yiji.com

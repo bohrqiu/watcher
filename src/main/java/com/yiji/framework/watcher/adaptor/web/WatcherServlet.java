@@ -46,7 +46,7 @@ public class WatcherServlet extends HttpServlet {
 		velocity.setProperty("runtime.references.strict", "false");
 		velocity.init();
 	}
-
+	
 	private String index = null;
 	private String appName = null;
 	
@@ -111,9 +111,11 @@ public class WatcherServlet extends HttpServlet {
 	private Map<String, Object> getRequestParamMap(HttpServletRequest req) {
 		Map<String, Object> paramMap = Maps.newHashMap();
 		Map<String, String[]> stringMap = req.getParameterMap();
-		stringMap.entrySet().stream().filter(stringEntry -> stringEntry.getValue() != null).forEach(stringEntry -> {
-			paramMap.put(stringEntry.getKey(), stringEntry.getValue()[0]);
-		});
+		for (Map.Entry<String, String[]> stringEntry : stringMap.entrySet()) {
+			if (stringEntry.getValue() != null) {
+				paramMap.put(stringEntry.getKey(), stringEntry.getValue()[0]);
+			}
+		}
 		return paramMap;
 	}
 	

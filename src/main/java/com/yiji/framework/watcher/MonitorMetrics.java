@@ -15,16 +15,17 @@ import java.util.Map;
 /**
  * @author qzhanbo@yiji.com
  */
-public interface MonitorMetrics extends MetricsName, Comparable<MonitorMetrics> {
+public interface MonitorMetrics extends MetricsName//, Comparable<MonitorMetrics>
+{
 	/**
 	 * 参数名字
 	 */
 	String KEY = "key";
 	
 	Object monitor(Map<String, Object> params);
-	
-	@Override
-	default int compareTo(MonitorMetrics o) {
-		return this.name().compareTo(o.name());
-	}
+	//
+	//@Override
+	//default int compareTo(MonitorMetrics o) {
+	//	return this.name().compareTo(o.name());
+	//}
 }

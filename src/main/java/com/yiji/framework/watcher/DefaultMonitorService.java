@@ -34,7 +34,7 @@ public class DefaultMonitorService extends AbstractMonitorService {
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		try {
 			Set<ClassPath.ClassInfo> classInfos = ClassPath.from(classLoader).getTopLevelClassesRecursive("com.yiji.framework.watcher.metrics");
-			classInfos.stream().forEach(classInfo -> {
+			for (ClassPath.ClassInfo classInfo : classInfos) {
 				String clazzName = classInfo.getName();
 				try {
 					Class clazz = null;
@@ -57,7 +57,7 @@ public class DefaultMonitorService extends AbstractMonitorService {
 				} catch (Exception e) {
 					logger.error("初始化错误", e);
 				}
-			});
+			}
 		} catch (Exception e) {
 			logger.error("初始化错误", e);
 		}
@@ -128,27 +128,27 @@ public class DefaultMonitorService extends AbstractMonitorService {
 		private boolean success;
 		private String msg;
 		private String stackTrace;
-
+		
 		public String getMsg() {
 			return msg;
 		}
-
+		
 		public void setMsg(String msg) {
 			this.msg = msg;
 		}
-
+		
 		public String getStackTrace() {
 			return stackTrace;
 		}
-
+		
 		public void setStackTrace(String stackTrace) {
 			this.stackTrace = stackTrace;
 		}
-
+		
 		public boolean isSuccess() {
 			return success;
 		}
-
+		
 		public void setSuccess(boolean success) {
 			this.success = success;
 		}

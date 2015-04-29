@@ -5,9 +5,9 @@ import java.util.Map;
 import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.codahale.metrics.*;
 import com.google.common.collect.Maps;
+import com.yiji.framework.watcher.MetricsHolder;
 import com.yiji.framework.watcher.MonitorMetrics;
 import com.yiji.framework.watcher.metrics.serilization.*;
-import com.yjf.common.metrics.MetricsHolder;
 
 /**
  * @author daidai@yiji.com
