@@ -12,7 +12,8 @@ import com.google.common.collect.Lists;
 import com.yiji.framework.watcher.*;
 
 /**
- * Created by SegeonTang on 2015/4/28.
+ *
+ * @author daidai@yiji.com
  */
 @Help(parameter = "[-h] metricName [key1=val1,...]", summary = "查看watcher提供的指标",
 		detail = "查看watcher提供的指标，命令格式如下watch [-h] metricName key1=value1,key2=value2,...")

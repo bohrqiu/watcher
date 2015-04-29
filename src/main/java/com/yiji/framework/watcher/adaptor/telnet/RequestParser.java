@@ -1,14 +1,13 @@
 package com.yiji.framework.watcher.adaptor.telnet;
 
+import java.util.regex.Pattern;
+
 import com.yiji.framework.watcher.MonitorRequest;
 import com.yjf.common.util.StringUtils;
 
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
- * Created by SegeonTang on 2015/4/27.
+ *
+ * @author daidai@yiji.com
  */
 public class RequestParser {
     public static final String KEY_VALUE_DELIM = "=";
