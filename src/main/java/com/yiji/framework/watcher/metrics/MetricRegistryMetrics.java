@@ -53,7 +53,7 @@ public class MetricRegistryMetrics implements MonitorMetrics{
         }
         String name = (String) param.get(MonitorMetrics.KEY);
         String type = (String) param.get("type");
-        if (metricName != null && !metricName.startsWith(name)) {
+        if (metricName != null && name != null && !metricName.startsWith(name)) {
             return false;
         }
         if (type != null) {
