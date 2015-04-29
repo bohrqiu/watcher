@@ -15,12 +15,11 @@ import java.lang.management.ManagementFactory;
 import java.util.Map;
 
 import com.google.common.collect.Maps;
-import com.yiji.framework.watcher.MonitorMetrics;
 
 /**
  * @author qzhanbo@yiji.com
  */
-public class ClassloadMetrics implements MonitorMetrics {
+public class ClassloadMetrics extends AbstractMonitorMetrics {
 	
 	public Object monitor(Map<String, Object> params) {
 		Map<String, Object> map = Maps.newHashMap();

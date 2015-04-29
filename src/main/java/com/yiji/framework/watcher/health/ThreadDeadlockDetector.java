@@ -8,7 +8,7 @@
  * qzhanbo@yiji.com 2015-04-28 15:13 创建
  *
  */
-package com.yiji.framework.watcher.metrics.health;
+package com.yiji.framework.watcher.health;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadInfo;

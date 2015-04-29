@@ -17,12 +17,11 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import com.google.common.collect.Maps;
-import com.yiji.framework.watcher.MonitorMetrics;
 
 /**
  * @author qzhanbo@yiji.com
  */
-public class GCMetrics implements MonitorMetrics {
+public class GCMetrics extends AbstractMonitorMetrics {
 	private final Pattern WHITESPACE = Pattern.compile("[\\s]+");
 	
 	public Object monitor(Map<String, Object> params) {

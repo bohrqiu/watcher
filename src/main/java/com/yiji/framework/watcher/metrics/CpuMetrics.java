@@ -15,12 +15,11 @@ import java.lang.management.OperatingSystemMXBean;
 import java.util.Map;
 
 import com.google.common.collect.Maps;
-import com.yiji.framework.watcher.MonitorMetrics;
 
 /**
  * @author qzhanbo@yiji.com
  */
-public class CpuMetrics implements MonitorMetrics {
+public class CpuMetrics extends AbstractMonitorMetrics {
 	
 	public Object monitor(Map<String, Object> params) {
 		Map<String, Object> map = Maps.newHashMap();

@@ -12,12 +12,10 @@ package com.yiji.framework.watcher.metrics;
 
 import java.util.Map;
 
-import com.yiji.framework.watcher.MonitorMetrics;
-
 /**
  * @author qzhanbo@yiji.com
  */
-public class SysEnvMetrics implements MonitorMetrics {
+public class SysEnvMetrics extends AbstractMonitorMetrics {
 	
 	public Object monitor(Map<String, Object> params) {
 		String key = (String) params.get(KEY);

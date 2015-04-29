@@ -21,12 +21,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Maps;
-import com.yiji.framework.watcher.MonitorMetrics;
 
 /**
  * @author qzhanbo@yiji.com
  */
-public class WebContainerMetrics implements MonitorMetrics {
+public class WebContainerMetrics extends AbstractMonitorMetrics {
 	private static final Logger logger = LoggerFactory.getLogger(WebContainerMetrics.class);
 	private static final String tomcatEmbedDomain = "Tomcat";
 	private static final String tomcatDomain = "Catalina";

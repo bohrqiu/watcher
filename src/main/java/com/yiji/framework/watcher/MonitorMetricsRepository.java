@@ -16,6 +16,7 @@ import java.util.Set;
  * @author qzhanbo@yiji.com
  */
 public interface MonitorMetricsRepository {
+	
 	void addMonitorMetrics(MonitorMetrics monitorMetrics);
 	
 	/**

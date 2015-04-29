@@ -19,12 +19,11 @@ import java.util.Map;
 import java.util.Set;
 
 import com.google.common.collect.Maps;
-import com.yiji.framework.watcher.MonitorMetrics;
 
 /**
  * @author qzhanbo@yiji.com
  */
-public class ThreadMetrics implements MonitorMetrics {
+public class ThreadMetrics extends AbstractMonitorMetrics {
 	private static final int MAX_STACK_TRACE_DEPTH = 100;
 	
 	public Object monitor(Map<String, Object> params) {

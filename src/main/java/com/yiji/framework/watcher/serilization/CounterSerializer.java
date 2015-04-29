@@ -8,7 +8,7 @@
  * daidai@yiji.com 2015-04-21 14:30 创建
  *
  */
-package com.yiji.framework.watcher.metrics.serilization;
+package com.yiji.framework.watcher.serilization;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
