@@ -3,7 +3,7 @@
 
 <head lang="en">
     <meta charset="UTF-8">
-    <title>应用$!appName监控</title>
+    <title>watcher $!appName</title>
     <style>
         .content {
             margin-left: auto;
@@ -53,7 +53,7 @@
 <div class="content">
     <div class="header">
         <h1>
-            <center>$!appName 监控服务</center>
+            <center>$!appName wacther services</center>
         </h1>
         <hr/>
     </div>
@@ -61,9 +61,9 @@
         <div>
             <table>
                 <tr>
-                    <th width="100px">名称</th>
-                    <th>描述</th>
-                    <th width="100px">访问地址</th>
+                    <th width="100px">name</th>
+                    <th>desc</th>
+                    <th width="100px">url</th>
                 </tr>
 
                 #foreach( $metircs in $metricses)
