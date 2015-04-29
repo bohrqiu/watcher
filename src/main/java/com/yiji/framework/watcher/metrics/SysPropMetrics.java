@@ -14,12 +14,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import com.yiji.framework.watcher.MonitorMetrics;
-
 /**
  * @author qzhanbo@yiji.com
  */
-public class SysPropMetrics implements MonitorMetrics {
+public class SysPropMetrics extends AbstractMonitorMetrics {
 	
 	public Object monitor(Map<String, Object> params) {
 		String key = (String) params.get(KEY);

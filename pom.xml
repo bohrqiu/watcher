@@ -3,21 +3,38 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>com.yiji</groupId>
-        <artifactId>yiji-parent</artifactId>
-        <version>2.0-SNAPSHOT</version>
-    </parent>
     <groupId>com.yiji.framework</groupId>
     <artifactId>yiji-watcher</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <description>应用监视器</description>
+    <description>应用监控，提供监控应用/系统的能力</description>
+    <properties>
+        <tomcat.verion>8.0.21</tomcat.verion>
+        <spring.version>4.1.6.RELEASE</spring.version>
+        <metrics.version>3.1.0</metrics.version>
+        <guava.version>18.0</guava.version>
+        <sigar.version>1.6.4</sigar.version>
+    </properties>
+    <developers>
+        <developer>
+            <name>秋波</name>
+            <email>qiubo@yiji.com</email>
+        </developer>
+        <developer>
+            <name>呆呆</name>
+            <email>daidai@yiji.com</email>
+        </developer>
+    </developers>
     <dependencies>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
         <!-- 提供监控操作系统的能力-->
         <dependency>
             <groupId>org.fusesource</groupId>
             <artifactId>sigar</artifactId>
-            <version>1.6.4</version>
+            <version>${sigar.version}</version>
             <classifier>native</classifier>
             <exclusions>
                 <exclusion>
@@ -29,7 +46,7 @@
         <dependency>
             <groupId>org.fusesource</groupId>
             <artifactId>sigar</artifactId>
-            <version>1.6.4</version>
+            <version>${sigar.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>log4j</artifactId>
@@ -37,72 +54,132 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- metrics-->
+
+        <dependency>
+            <groupId>io.dropwizard.metrics</groupId>
+            <artifactId>metrics-core</artifactId>
+            <version>${metrics.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.dropwizard.metrics</groupId>
+            <artifactId>metrics-healthchecks</artifactId>
+            <version>${metrics.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.dropwizard.metrics</groupId>
+            <artifactId>metrics-annotation</artifactId>
+            <version>${metrics.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.4</version>
+        </dependency>
+
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
+            <version>1.7.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <version>4.12</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
+            <version>3.0.1</version>
             <scope>provided</scope>
         </dependency>
         <!-- 适配web时，渲染首页-->
         <dependency>
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity</artifactId>
+            <version>1.7</version>
             <scope>provided</scope>
         </dependency>
         <!-- dubbo telnet支持-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>dubbo</artifactId>
+            <version>2.5.3</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-logging-juli</artifactId>
+            <version>${tomcat.verion}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
+            <version>${tomcat.verion}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
+            <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.zookeeper</groupId>
             <artifactId>zookeeper</artifactId>
-            <scope>test</scope>
+            <version>3.4.6</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>log4j</artifactId>
+                    <groupId>log4j</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>slf4j-log4j12</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>slf4j-api</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.github.sgroschupf</groupId>
             <artifactId>zkclient</artifactId>
             <scope>test</scope>
+            <version>0.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.zookeeper</groupId>
+                    <artifactId>zookeeper</artifactId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>log4j</artifactId>
+                    <groupId>log4j</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
     <build>
@@ -111,7 +188,6 @@
                 <directory>src/main/java</directory>
                 <filtering>false</filtering>
                 <includes>
-                    <!--src/main/java目录下的xml/vm文件也打包-->
                     <include>**/*.xml</include>
                     <include>**/*.vm</include>
                 </includes>
@@ -121,6 +197,18 @@
                 <filtering>false</filtering>
             </resource>
         </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.2</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                    <optimize>true</optimize>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 
 </project>

@@ -14,14 +14,13 @@ import java.util.Collections;
 import java.util.Map;
 
 import com.codahale.metrics.health.HealthCheckRegistry;
-import com.yiji.framework.watcher.MonitorMetrics;
-import com.yiji.framework.watcher.metrics.health.ThreadDeadlockHealthCheck;
-import com.yjf.common.metrics.MetricsHolder;
+import com.yiji.framework.watcher.MetricsHolder;
+import com.yiji.framework.watcher.health.ThreadDeadlockHealthCheck;
 
 /**
  * @author qzhanbo@yiji.com
  */
-public class HealthCheckMetrics implements MonitorMetrics {
+public class HealthCheckMetrics extends AbstractMonitorMetrics {
 	private HealthCheckRegistry healthCheckRegistry = MetricsHolder.healthCheckRegistry();
 	
 	public HealthCheckMetrics() {

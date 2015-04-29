@@ -13,12 +13,10 @@ package com.yiji.framework.watcher.metrics;
 import java.lang.management.ManagementFactory;
 import java.util.Map;
 
-import com.yiji.framework.watcher.MonitorMetrics;
-
 /**
  * @author qzhanbo@yiji.com
  */
-public class PidMetrics implements MonitorMetrics {
+public class PidMetrics extends AbstractMonitorMetrics {
 	private Long pid;
 	
 	public Object monitor(Map<String, Object> params) {

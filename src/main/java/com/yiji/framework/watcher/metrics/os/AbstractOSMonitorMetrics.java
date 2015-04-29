@@ -14,13 +14,13 @@ import java.util.Map;
 
 import org.hyperic.sigar.SigarException;
 
-import com.yiji.framework.watcher.MonitorMetrics;
 import com.yiji.framework.watcher.UnsupportMonitorMetricsOperationException;
+import com.yiji.framework.watcher.metrics.AbstractMonitorMetrics;
 
 /**
  * @author qzhanbo@yiji.com
  */
-public abstract class AbstractOSMonitorMetrics implements MonitorMetrics {
+public abstract class AbstractOSMonitorMetrics extends AbstractMonitorMetrics {
 	public Object monitor(Map<String, Object> params) {
 		try {
 			return doMonitor(params);

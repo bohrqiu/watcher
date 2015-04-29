@@ -3,7 +3,7 @@ package com.yiji.framework.watcher.adaptor.telnet;
 import java.util.regex.Pattern;
 
 import com.yiji.framework.watcher.MonitorRequest;
-import com.yjf.common.util.StringUtils;
+import com.yiji.framework.watcher.Utils;
 
 /**
  *
@@ -11,7 +11,7 @@ import com.yjf.common.util.StringUtils;
  */
 public class RequestParser {
 	public static final String KEY_VALUE_DELIM = "=";
-	public static final String PARAM_SEPARATOR = ",";
+	public static final char PARAM_SEPARATOR = ',';
 	public static final String PRETTY_FORMAT_KEY = "prettyFormat";
 	private static final String BLANK_CHAR_SEQ = "\\s+";
 	private static final Pattern BLANK_CHAR_PATTERN = Pattern.compile(BLANK_CHAR_SEQ);
@@ -23,8 +23,8 @@ public class RequestParser {
 	 * @throws IllegalArgumentException
 	 */
 	public static MonitorRequest parse(String commandLine) throws IllegalArgumentException {
-		String processed = StringUtils.trim(commandLine);
-		if (StringUtils.isEmpty(processed))
+		String processed = Utils.trim(commandLine);
+		if (Utils.isEmpty(processed))
 			throw new IllegalArgumentException("命令为空");
 		String[] parts = BLANK_CHAR_PATTERN.split(processed);
 		String cmd = null;
@@ -43,14 +43,14 @@ public class RequestParser {
 			// should never reach here
 			throw new IllegalArgumentException("应该至少有一组匹配");
 		}
-		if (!StringUtils.isEmpty(cmd)) {
+		if (!Utils.isEmpty(cmd)) {
 			MonitorRequest request = new MonitorRequest();
 			request.setAction(cmd);
-			if (!StringUtils.isEmpty(params)) {
-				String[] paramSecs = StringUtils.split(params, PARAM_SEPARATOR);
+			if (!Utils.isEmpty(params)) {
+				String[] paramSecs = Utils.split(params, PARAM_SEPARATOR);
 				for (String param : paramSecs) {
 					param = param.trim();
-					if (!StringUtils.isEmpty(param)) {
+					if (!Utils.isEmpty(param)) {
 						String[] pair = param.split(KEY_VALUE_DELIM);
 						if (pair != null && pair.length >= 2) {
 							String key = pair[0].trim();

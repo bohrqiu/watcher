@@ -23,8 +23,4 @@ public interface MonitorMetrics extends MetricsName, Comparable<MonitorMetrics> 
 	
 	Object monitor(Map<String, Object> params);
 	
-	@Override
-	default int compareTo(MonitorMetrics o) {
-		return this.name().compareTo(o.name());
-	}
 }

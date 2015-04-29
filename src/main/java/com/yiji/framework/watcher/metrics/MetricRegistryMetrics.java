@@ -5,14 +5,14 @@ import java.util.Map;
 import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.codahale.metrics.*;
 import com.google.common.collect.Maps;
+import com.yiji.framework.watcher.MetricsHolder;
 import com.yiji.framework.watcher.MonitorMetrics;
-import com.yiji.framework.watcher.metrics.serilization.*;
-import com.yjf.common.metrics.MetricsHolder;
+import com.yiji.framework.watcher.serilization.*;
 
 /**
  * @author daidai@yiji.com
  */
-public class MetricRegistryMetrics implements MonitorMetrics {
+public class MetricRegistryMetrics extends AbstractMonitorMetrics {
 	private MetricRegistry metricRegistry;
 	
 	public MetricRegistryMetrics() {
@@ -32,7 +32,7 @@ public class MetricRegistryMetrics implements MonitorMetrics {
 			if (matches(params, metricEntry.getKey(), metricEntry.getValue())) {
 				ret.put(metricEntry.getKey(), metricEntry.getValue());
 			}
-
+			
 		}
 		return ret;
 	}

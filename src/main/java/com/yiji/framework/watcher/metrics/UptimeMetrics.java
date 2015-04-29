@@ -16,12 +16,11 @@ import java.util.Date;
 import java.util.Map;
 
 import com.google.common.collect.Maps;
-import com.yiji.framework.watcher.MonitorMetrics;
 
 /**
  * @author qzhanbo@yiji.com
  */
-public class UptimeMetrics implements MonitorMetrics {
+public class UptimeMetrics extends AbstractMonitorMetrics {
 	public static final String simple = "yyyy-MM-dd HH:mm:ss";
 	private static String startTime = null;
 	
