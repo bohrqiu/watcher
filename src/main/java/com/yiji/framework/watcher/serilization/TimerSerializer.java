@@ -22,6 +22,7 @@ import com.codahale.metrics.Snapshot;
 import com.codahale.metrics.Timer;
 
 /**
+ * Timer的fastjson序列化器。@see Timer
  * @author daidai@yiji.com
  */
 public class TimerSerializer implements ObjectSerializer {

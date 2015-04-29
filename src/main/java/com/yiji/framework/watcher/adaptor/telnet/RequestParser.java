@@ -17,9 +17,9 @@ public class RequestParser {
 	private static final Pattern BLANK_CHAR_PATTERN = Pattern.compile(BLANK_CHAR_SEQ);
 	
 	/**
-	 * 解析命令行。命令行的格式如下： metricName key1=value1,key2=value2,...
+	 * 解析telnet命令行。命令行的格式如下： metricName key1=value1,key2=value2,...
 	 * @param commandLine
-	 * @return
+	 * @return 解析出来的MonitorRequest对象
 	 * @throws IllegalArgumentException
 	 */
 	public static MonitorRequest parse(String commandLine) throws IllegalArgumentException {

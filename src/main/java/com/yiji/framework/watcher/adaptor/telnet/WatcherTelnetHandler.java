@@ -12,7 +12,7 @@ import com.google.common.collect.Lists;
 import com.yiji.framework.watcher.*;
 
 /**
- *
+ * Dubbo的Telnet扩展。参见：http://dubbo.io/Developer+Guide-zh.htm#DeveloperGuide-zh-Telnet%E5%91%BD%E4%BB%A4%E6%89%A9%E5%B1%95
  * @author daidai@yiji.com
  */
 @Help(parameter = "[-h] metricName [key1=val1,...]", summary = "show indicators provided by watcher",

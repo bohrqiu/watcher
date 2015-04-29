@@ -17,7 +17,7 @@ import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.alibaba.fastjson.serializer.ObjectSerializer;
 import com.codahale.metrics.Counter;
 
-/**
+/** Counter的fastjson序列化器。@see Counter
  * @author daidai@yiji.com
  */
 public class CounterSerializer implements ObjectSerializer {

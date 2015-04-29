@@ -19,6 +19,7 @@ import com.alibaba.fastjson.serializer.SerializeWriter;
 import com.codahale.metrics.Gauge;
 
 /**
+ * Gauge的fastjson序列化器。@see Gauge
  * @author daidai@yiji.com
  */
 public class GaugeSerializer implements ObjectSerializer {
