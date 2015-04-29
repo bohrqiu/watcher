@@ -70,7 +70,8 @@
                     <tr>
                         <td>${metircs.name()}</td>
                         <td>${metircs.desc()}</td>
-                        <td><a href="/metrics/q.do?action=${metircs.name()}&resType=JSON" target="_blank">json</a> | <a href="/metrics/q.do?action=${metircs.name()}&resType=TEXT">text</a>
+                        <td><a href="q.do?action=${metircs.name()}&resType=json" target="_blank">json</a> | <a
+                                href="q.do?action=${metircs.name()}&resType=text" target="_blank">text</a>
                     </tr>
                 #end
 

@@ -22,37 +22,40 @@ import com.alibaba.fastjson.serializer.SerializeWriter;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.google.common.base.Throwables;
 import com.google.common.reflect.ClassPath;
-import com.google.common.reflect.Reflection;
 
 /**
  * @author qzhanbo@yiji.com
  */
 public class DefaultMonitorService extends AbstractMonitorService {
 	private static final Logger logger = LoggerFactory.getLogger(DefaultMonitorService.class);
-	public static DefaultMonitorService INSTANCE = new DefaultMonitorService();
+	public static final DefaultMonitorService INSTANCE = new DefaultMonitorService();
 	
 	private DefaultMonitorService() {
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		try {
-			Set<ClassPath.ClassInfo> classInfos = ClassPath.from(classLoader).getTopLevelClassesRecursive(Reflection.getPackageName(this.getClass()));
+			Set<ClassPath.ClassInfo> classInfos = ClassPath.from(classLoader).getTopLevelClassesRecursive("com.yiji.framework.watcher.metrics");
 			classInfos.stream().forEach(classInfo -> {
 				String clazzName = classInfo.getName();
 				try {
 					Class clazz = null;
 					try {
 						clazz = classLoader.loadClass(clazzName);
-					} catch (ClassNotFoundException e) {
+					} catch (Exception e) {
 						logger.debug("{}加载失败,原因:{}", clazzName, e.getMessage());
 						return;
 					}
 					if (MonitorMetrics.class.isAssignableFrom(clazz) && !clazz.isInterface() && !Modifier.isAbstract(clazz.getModifiers())) {
-						MonitorMetrics monitorMetrics = (MonitorMetrics) clazz.newInstance();
-						logger.debug("监控注册:{}->{}", monitorMetrics.name(), clazzName);
-						DefaultMonitorService.this.addMonitorMetrics(monitorMetrics);
+						MonitorMetrics monitorMetrics = null;
+						try {
+							monitorMetrics = (MonitorMetrics) clazz.newInstance();
+							logger.debug("监控注册:{}->{}", monitorMetrics.name(), clazzName);
+							DefaultMonitorService.this.addMonitorMetrics(monitorMetrics);
+						} catch (Exception e) {
+							logger.debug("{}初始化失败,原因:{}", clazzName, e.getMessage());
+						}
 					}
 				} catch (Exception e) {
 					logger.error("初始化错误", e);
-					
 				}
 			});
 		} catch (Exception e) {
