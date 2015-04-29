@@ -21,6 +21,7 @@ import com.alibaba.fastjson.serializer.SerializeWriter;
 import com.codahale.metrics.Meter;
 
 /**
+ * Meter的fastjson序列化器。@see Meter
  * @author daidai@yiji.com
  */
 public class MeterSerializer implements ObjectSerializer {

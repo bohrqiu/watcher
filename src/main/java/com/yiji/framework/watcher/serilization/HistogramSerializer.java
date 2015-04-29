@@ -20,6 +20,7 @@ import com.codahale.metrics.Histogram;
 import com.codahale.metrics.Snapshot;
 
 /**
+ * Histogram的fastjson序列化器。@see Histogram
  * @author daidai@yiji.com
  */
 public class HistogramSerializer implements ObjectSerializer {
