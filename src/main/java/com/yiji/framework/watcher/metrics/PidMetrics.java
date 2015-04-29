@@ -10,11 +10,10 @@
  */
 package com.yiji.framework.watcher.metrics;
 
-import com.yiji.framework.watcher.MonitorMetrics;
-
 import java.lang.management.ManagementFactory;
 import java.util.Map;
 
+import com.yiji.framework.watcher.MonitorMetrics;
 
 /**
  * @author qzhanbo@yiji.com
@@ -22,7 +21,6 @@ import java.util.Map;
 public class PidMetrics implements MonitorMetrics {
 	private Long pid;
 	
-
 	public Object monitor(Map<String, Object> params) {
 		return getProcessId();
 	}
@@ -46,12 +44,10 @@ public class PidMetrics implements MonitorMetrics {
 		return -1l;
 	}
 	
-
 	public String name() {
 		return "pid";
 	}
-
-
+	
 	public String desc() {
 		return "进程id";
 	}

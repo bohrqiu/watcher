@@ -17,11 +17,11 @@ import javax.management.MBeanServer;
 import javax.management.MBeanServerFactory;
 import javax.management.ObjectName;
 
-import com.yiji.framework.watcher.MonitorMetrics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Maps;
+import com.yiji.framework.watcher.MonitorMetrics;
 
 /**
  * @author qzhanbo@yiji.com
@@ -37,7 +37,7 @@ public class WebContainerMetrics implements MonitorMetrics {
 		List<MBeanServer> mBeanServers = MBeanServerFactory.findMBeanServer(null);
 		if (!mBeanServers.isEmpty()) {
 			MBeanServer mBeanServer = mBeanServers.get(0);
-			String domain=getTomcatDomian(mBeanServer);
+			String domain = getTomcatDomian(mBeanServer);
 			try {
 				
 				ObjectName[] objNames = (ObjectName[]) mBeanServer.getAttribute(new ObjectName(domain, "type", "Service"), "connectorNames");
@@ -111,13 +111,11 @@ public class WebContainerMetrics implements MonitorMetrics {
 		}
 	}
 	
-
-	public String desc() {
-		return "web容器相关情况";
-	}
-	
-
 	public String name() {
 		return "webContainer";
+	}
+	
+	public String desc() {
+		return "web容器相关情况";
 	}
 }

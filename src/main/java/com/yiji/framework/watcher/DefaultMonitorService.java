@@ -27,8 +27,8 @@ import com.google.common.reflect.ClassPath;
  * @author qzhanbo@yiji.com
  */
 public class DefaultMonitorService extends AbstractMonitorService {
-	private static final Logger logger = LoggerFactory.getLogger(DefaultMonitorService.class);
 	public static final DefaultMonitorService INSTANCE = new DefaultMonitorService();
+	private static final Logger logger = LoggerFactory.getLogger(DefaultMonitorService.class);
 	
 	private DefaultMonitorService() {
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -115,36 +115,6 @@ public class DefaultMonitorService extends AbstractMonitorService {
 		}
 	}
 	
-	private static class ExceptionResult {
-		private boolean success;
-		private String msg;
-		private String stackTrace;
-		
-		public String getMsg() {
-			return msg;
-		}
-		
-		public void setMsg(String msg) {
-			this.msg = msg;
-		}
-		
-		public String getStackTrace() {
-			return stackTrace;
-		}
-		
-		public void setStackTrace(String stackTrace) {
-			this.stackTrace = stackTrace;
-		}
-		
-		public boolean isSuccess() {
-			return success;
-		}
-		
-		public void setSuccess(boolean success) {
-			this.success = success;
-		}
-	}
-	
 	private JSONSerializer getJsonSerializer(SerializeWriter out) {
 		JSONSerializer serializer = new JSONSerializer(out);
 		serializer.config(SerializerFeature.WriteDateUseDateFormat, true);
@@ -152,6 +122,36 @@ public class DefaultMonitorService extends AbstractMonitorService {
 		serializer.config(SerializerFeature.QuoteFieldNames, true);
 		serializer.config(SerializerFeature.DisableCircularReferenceDetect, false);
 		return serializer;
+	}
+	
+	private static class ExceptionResult {
+		private boolean success;
+		private String msg;
+		private String stackTrace;
+
+		public String getMsg() {
+			return msg;
+		}
+
+		public void setMsg(String msg) {
+			this.msg = msg;
+		}
+
+		public String getStackTrace() {
+			return stackTrace;
+		}
+
+		public void setStackTrace(String stackTrace) {
+			this.stackTrace = stackTrace;
+		}
+
+		public boolean isSuccess() {
+			return success;
+		}
+
+		public void setSuccess(boolean success) {
+			this.success = success;
+		}
 	}
 	
 }

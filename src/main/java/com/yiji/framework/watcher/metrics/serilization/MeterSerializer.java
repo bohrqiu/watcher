@@ -24,13 +24,18 @@ import com.codahale.metrics.Meter;
  * @author daidai@yiji.com
  */
 public class MeterSerializer implements ObjectSerializer {
+	public static final MeterSerializer INSTANCE = new MeterSerializer(TimeUnit.SECONDS);
 	private final String rateUnit;
 	private final double rateFactor;
-	public static final MeterSerializer INSTANCE = new MeterSerializer(TimeUnit.SECONDS);
 	
 	public MeterSerializer(TimeUnit rateUnit) {
 		this.rateFactor = rateUnit.toSeconds(1);
 		this.rateUnit = calculateRateUnit(rateUnit, "events");
+	}
+	
+	private static String calculateRateUnit(TimeUnit unit, String name) {
+		final String s = unit.toString().toLowerCase(Locale.US);
+		return name + '/' + s.substring(0, s.length() - 1);
 	}
 	
 	@Override
@@ -44,10 +49,5 @@ public class MeterSerializer implements ObjectSerializer {
 		writer.writeFieldValue(',', "mean_rate", meter.getMeanRate() * rateFactor);
 		writer.writeFieldValue(',', "units", rateUnit);
 		writer.write('}');
-	}
-	
-	private static String calculateRateUnit(TimeUnit unit, String name) {
-		final String s = unit.toString().toLowerCase(Locale.US);
-		return name + '/' + s.substring(0, s.length() - 1);
 	}
 }

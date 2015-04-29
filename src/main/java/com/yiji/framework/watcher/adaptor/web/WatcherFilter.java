@@ -25,11 +25,11 @@ import com.yjf.common.log.LoggerFactory;
  */
 
 public class WatcherFilter implements Filter {
-	private Logger logger = LoggerFactory.getLogger(getClass());
 	private static final String ALLOWABLE_IP_REGEX = "(127[.]0[.]0[.]1)|" + "(localhost)|" + "(10[.]\\d{1,3}[.]\\d{1,3}[.]\\d{1,3})|"
 														+ "(172[.]((1[6-9])|(2\\d)|(3[01]))[.]\\d{1,3}[.]\\d{1,3})|"
 														+ "(192[.]168[.]\\d{1,3}[.]\\d{1,3})";
 	private static final Pattern pattern = Pattern.compile(ALLOWABLE_IP_REGEX);
+	private Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {

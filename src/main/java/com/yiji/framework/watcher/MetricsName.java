@@ -15,5 +15,6 @@ package com.yiji.framework.watcher;
  */
 public interface MetricsName {
 	String name();
+	
 	String desc();
 }

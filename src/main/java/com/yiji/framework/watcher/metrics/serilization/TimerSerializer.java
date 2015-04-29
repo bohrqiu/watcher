@@ -25,12 +25,11 @@ import com.codahale.metrics.Timer;
  * @author daidai@yiji.com
  */
 public class TimerSerializer implements ObjectSerializer {
+	public static final TimerSerializer INSTANCE = new TimerSerializer(TimeUnit.SECONDS, TimeUnit.MILLISECONDS);
 	private final String rateUnit;
 	private final double rateFactor;
 	private final String durationUnit;
 	private final double durationFactor;
-	
-	public static final TimerSerializer INSTANCE = new TimerSerializer(TimeUnit.SECONDS, TimeUnit.MILLISECONDS);
 	
 	public TimerSerializer(TimeUnit rateUnit, TimeUnit durationUnit) {
 		this.rateUnit = calculateRateUnit(rateUnit, "calls");

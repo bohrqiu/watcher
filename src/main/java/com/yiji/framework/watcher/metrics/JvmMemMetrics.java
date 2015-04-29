@@ -21,7 +21,7 @@ import com.yiji.framework.watcher.MonitorMetrics;
  * @author qzhanbo@yiji.com
  */
 public class JvmMemMetrics implements MonitorMetrics {
-
+	
 	public Object monitor(Map<String, Object> params) {
 		Map<String, Object> map = Maps.newHashMap();
 		MemoryMXBean memoryMXBean = ManagementFactory.getMemoryMXBean();
@@ -33,12 +33,10 @@ public class JvmMemMetrics implements MonitorMetrics {
 		return map;
 	}
 	
-
 	public String name() {
 		return "jvmMem";
 	}
-
-
+	
 	public String desc() {
 		return "jvm内存使用情况";
 	}

@@ -66,8 +66,13 @@ public class SigarFactory {
 		}
 	}
 	
-	public static Sigar getSigar() {
-		return new Sigar();
+	private static boolean checkLocalLib() {
+		for (String lib : libs) {
+			if (!new File(lib).exists()) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	public static void unzip(String sourceFile, String toDir) throws Exception {
@@ -96,17 +101,12 @@ public class SigarFactory {
 		Closeables.close(zipFile, true);
 	}
 	
-	private static boolean checkLocalLib() {
-		for (String lib : libs) {
-			if (!new File(lib).exists()) {
-				return false;
-			}
-		}
-		return true;
-	}
-	
 	public static void main(String[] args) throws Exception {
 		System.out.println(SigarFactory.getSigar().getNetInfo().toMap());
+	}
+	
+	public static Sigar getSigar() {
+		return new Sigar();
 	}
 	
 }

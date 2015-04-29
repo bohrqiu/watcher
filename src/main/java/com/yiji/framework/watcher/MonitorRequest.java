@@ -21,7 +21,7 @@ public class MonitorRequest {
 	private String action;
 	private ResponseType responseType = ResponseType.JSON;
 	private Map<String, Object> params = Maps.newHashMap();
-	private boolean prettyFormat=true;
+	private boolean prettyFormat = true;
 	
 	public String getAction() {
 		return action;
@@ -56,6 +56,7 @@ public class MonitorRequest {
 		this.responseType = ResponseType.TEXT;
 		return this;
 	}
+	
 	public MonitorRequest responseJson() {
 		this.responseType = ResponseType.JSON;
 		return this;

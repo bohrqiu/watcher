@@ -21,7 +21,7 @@ import com.yiji.framework.watcher.MonitorMetrics;
  * @author qzhanbo@yiji.com
  */
 public class ClassloadMetrics implements MonitorMetrics {
-
+	
 	public Object monitor(Map<String, Object> params) {
 		Map<String, Object> map = Maps.newHashMap();
 		ClassLoadingMXBean mxBean = ManagementFactory.getClassLoadingMXBean();
@@ -32,11 +32,10 @@ public class ClassloadMetrics implements MonitorMetrics {
 		
 	}
 	
-
 	public String name() {
 		return "classload";
 	}
-
+	
 	public String desc() {
 		return "jvm类加载情况";
 	}

@@ -23,34 +23,32 @@ import com.yiji.framework.watcher.MonitorMetrics;
  * @author qzhanbo@yiji.com
  */
 public class FileDescriptorMetrics implements MonitorMetrics {
-
-    public Object monitor(Map<String, Object> params) {
-        OperatingSystemMXBean os = ManagementFactory.getOperatingSystemMXBean();
-        long maxFileDescriptorCount = invoke(os, "getMaxFileDescriptorCount");
-        long openFileDescriptorCount = invoke(os, "getOpenFileDescriptorCount");
-        HashMap<String, Long> map = Maps.newHashMap();
-        map.put("maxFileDescriptorCount", maxFileDescriptorCount);
-        map.put("openFileDescriptorCount", openFileDescriptorCount);
-        return map;
-    }
-
-    private long invoke(OperatingSystemMXBean os, String name) {
-        try {
-            final Method method = os.getClass().getDeclaredMethod(name);
-            method.setAccessible(true);
-            return (Long) method.invoke(os);
-        } catch (Exception e) {
-            return -1;
-        }
-    }
-
-
-    public String name() {
-        return "fileDescriptor";
-    }
-
-
-    public String desc() {
-        return "进程文件描述符使用情况";
-    }
+	
+	public Object monitor(Map<String, Object> params) {
+		OperatingSystemMXBean os = ManagementFactory.getOperatingSystemMXBean();
+		long maxFileDescriptorCount = invoke(os, "getMaxFileDescriptorCount");
+		long openFileDescriptorCount = invoke(os, "getOpenFileDescriptorCount");
+		HashMap<String, Long> map = Maps.newHashMap();
+		map.put("maxFileDescriptorCount", maxFileDescriptorCount);
+		map.put("openFileDescriptorCount", openFileDescriptorCount);
+		return map;
+	}
+	
+	private long invoke(OperatingSystemMXBean os, String name) {
+		try {
+			final Method method = os.getClass().getDeclaredMethod(name);
+			method.setAccessible(true);
+			return (Long) method.invoke(os);
+		} catch (Exception e) {
+			return -1;
+		}
+	}
+	
+	public String name() {
+		return "fileDescriptor";
+	}
+	
+	public String desc() {
+		return "进程文件描述符使用情况";
+	}
 }

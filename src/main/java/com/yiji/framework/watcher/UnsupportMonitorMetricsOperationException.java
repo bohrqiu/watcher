@@ -26,7 +26,6 @@ public class UnsupportMonitorMetricsOperationException extends RuntimeException 
 		super(message);
 	}
 	
-
 	public synchronized Throwable fillInStackTrace() {
 		return this;
 	}

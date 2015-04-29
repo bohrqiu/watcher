@@ -25,7 +25,6 @@ public class UptimeMetrics implements MonitorMetrics {
 	public static final String simple = "yyyy-MM-dd HH:mm:ss";
 	private static String startTime = null;
 	
-
 	public Object monitor(Map<String, Object> params) {
 		long uptime = ManagementFactory.getRuntimeMXBean().getUptime() / 1000;
 		long s = uptime % 60;//秒
@@ -49,18 +48,16 @@ public class UptimeMetrics implements MonitorMetrics {
 		map.put("uptimeStr", sb.toString());
 		map.put("uptime", uptime);
 		if (startTime == null) {
-			startTime=new SimpleDateFormat(simple).format(new Date(ManagementFactory.getRuntimeMXBean().getStartTime()));
+			startTime = new SimpleDateFormat(simple).format(new Date(ManagementFactory.getRuntimeMXBean().getStartTime()));
 		}
 		map.put("startTime", startTime);
 		return map;
 	}
 	
-
 	public String name() {
 		return "uptime";
 	}
 	
-
 	public String desc() {
 		return "进程启动时间";
 	}

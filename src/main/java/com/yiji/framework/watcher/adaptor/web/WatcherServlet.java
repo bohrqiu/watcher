@@ -38,14 +38,15 @@ public class WatcherServlet extends HttpServlet {
 	
 	private static String velocityPath = "com/yiji/framework/watcher/adaptor/web/index.vm";
 	private static VelocityEngine velocity;
+	private static String vmContent = null;
+	
 	static {
 		velocity = new VelocityEngine();
 		//模板内引用解析失败时不抛出异常
 		velocity.setProperty("runtime.references.strict", "false");
 		velocity.init();
 	}
-	
-	private static String vmContent = null;
+
 	private String index = null;
 	private String appName = null;
 	
@@ -63,11 +64,11 @@ public class WatcherServlet extends HttpServlet {
 		resp.setCharacterEncoding(Charsets.UTF_8.name());
 		resp.setStatus(HttpServletResponse.SC_OK);
 		resp.setHeader("Cache-Control", "must-revalidate,no-cache,no-store");
-		if(uri==null){
-			resp.sendRedirect(req.getRequestURI()+"/");
+		if (uri == null) {
+			resp.sendRedirect(req.getRequestURI() + "/");
 			return;
 		}
-		if ( uri.equals("/") || uri.equals("/index.html") || uri.equals("/index.htm")) {
+		if (uri.equals("/") || uri.equals("/index.html") || uri.equals("/index.htm")) {
 			handleIndex(req, resp);
 			return;
 		} else if (uri.indexOf("q.do") != -1) {
@@ -86,6 +87,34 @@ public class WatcherServlet extends HttpServlet {
 		} else {
 			resp.getWriter().write("不支持的请求");
 		}
+	}
+	
+	private void handleIndex(HttpServletRequest req, HttpServletResponse resp) {
+		try {
+			Map<String, Object> params = Maps.newHashMap();
+			params.put("appName", appName);
+			params.put("metricses", DefaultMonitorService.INSTANCE.monitorMetricses());
+			if (vmContent == null) {
+				vmContent = readFile(velocityPath);
+			}
+			index = parseVelocity(vmContent, params);
+		} catch (Exception e) {
+			index = Throwables.getStackTraceAsString(e);
+		}
+		try {
+			resp.getWriter().write(index);
+		} catch (IOException e) {
+			//do nothing
+		}
+	}
+	
+	private Map<String, Object> getRequestParamMap(HttpServletRequest req) {
+		Map<String, Object> paramMap = Maps.newHashMap();
+		Map<String, String[]> stringMap = req.getParameterMap();
+		stringMap.entrySet().stream().filter(stringEntry -> stringEntry.getValue() != null).forEach(stringEntry -> {
+			paramMap.put(stringEntry.getKey(), stringEntry.getValue()[0]);
+		});
+		return paramMap;
 	}
 	
 	private void setPrettyFormat(Map<String, Object> paramMap, MonitorRequest request) {
@@ -109,25 +138,6 @@ public class WatcherServlet extends HttpServlet {
 		}
 	}
 	
-	private void handleIndex(HttpServletRequest req, HttpServletResponse resp) {
-		try {
-			Map<String, Object> params = Maps.newHashMap();
-			params.put("appName", appName);
-			params.put("metricses", DefaultMonitorService.INSTANCE.monitorMetricses());
-			if (vmContent == null) {
-				vmContent = readFile(velocityPath);
-			}
-			index = parseVelocity(vmContent, params);
-		} catch (Exception e) {
-			index = Throwables.getStackTraceAsString(e);
-		}
-		try {
-			resp.getWriter().write(index);
-		} catch (IOException e) {
-			//do nothing
-		}
-	}
-	
 	private static String readFile(String resourceLocation) {
 		try {
 			URL url = Resources.getResource(resourceLocation);
@@ -142,15 +152,6 @@ public class WatcherServlet extends HttpServlet {
 		StringWriter w = new StringWriter();
 		velocity.evaluate(context, w, velocityPath, templateContent);
 		return w.toString();
-	}
-	
-	private Map<String, Object> getRequestParamMap(HttpServletRequest req) {
-		Map<String, Object> paramMap = Maps.newHashMap();
-		Map<String, String[]> stringMap = req.getParameterMap();
-		stringMap.entrySet().stream().filter(stringEntry -> stringEntry.getValue() != null).forEach(stringEntry -> {
-			paramMap.put(stringEntry.getKey(), stringEntry.getValue()[0]);
-		});
-		return paramMap;
 	}
 	
 }
