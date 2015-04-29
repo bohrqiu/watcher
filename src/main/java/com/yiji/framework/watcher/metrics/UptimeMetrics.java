@@ -32,16 +32,16 @@ public class UptimeMetrics extends AbstractMonitorMetrics {
 		long d = uptime / 60 / 60 / 24;//天
 		StringBuilder sb = new StringBuilder();
 		if (d != 0) {
-			sb.append(d).append("天");
+			sb.append(d).append("day");
 		}
 		if (h != 0) {
-			sb.append(h).append("小时");
+			sb.append(h).append("hour");
 		}
 		if (m != 0) {
-			sb.append(m).append("分");
+			sb.append(m).append("min");
 		}
 		if (s != 0) {
-			sb.append(s).append("秒");
+			sb.append(s).append("sec");
 		}
 		Map<String, Object> map = Maps.newHashMap();
 		map.put("uptimeStr", sb.toString());
