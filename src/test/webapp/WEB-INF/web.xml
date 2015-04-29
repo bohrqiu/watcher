@@ -20,12 +20,7 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
-    <listener>
-        <listener-class>com.yjf.common.log.LogbackConfigListener</listener-class>
-    </listener>
 
-
-    <!-- java 专用 WEB SERVICE -->
     <servlet>
         <servlet-name>WatcherServlet</servlet-name>
         <servlet-class>com.yiji.framework.watcher.adaptor.web.WatcherServlet</servlet-class>

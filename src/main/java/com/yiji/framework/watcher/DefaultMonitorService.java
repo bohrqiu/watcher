@@ -27,9 +27,9 @@ import com.google.common.reflect.ClassPath;
  * @author qzhanbo@yiji.com
  */
 public class DefaultMonitorService extends AbstractMonitorService {
-	public static final DefaultMonitorService INSTANCE = new DefaultMonitorService();
 	private static final Logger logger = LoggerFactory.getLogger(DefaultMonitorService.class);
-	
+	public static final DefaultMonitorService INSTANCE = new DefaultMonitorService();
+
 	private DefaultMonitorService() {
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		try {
