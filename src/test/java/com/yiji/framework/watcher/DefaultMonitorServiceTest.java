@@ -3,6 +3,7 @@ package com.yiji.framework.watcher;
 import java.util.Map;
 import java.util.Set;
 
+import com.yiji.framework.watcher.metrics.AbstractMonitorMetrics;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -128,7 +129,7 @@ public class DefaultMonitorServiceTest {
 	
 	@Test
 	public void testAdd() throws Exception {
-		MonitorMetrics monitorMetrics = new MonitorMetrics() {
+		MonitorMetrics monitorMetrics = new AbstractMonitorMetrics() {
 			@Override
 			public Object monitor(Map<String, Object> params) {
 				return null;
@@ -150,12 +151,12 @@ public class DefaultMonitorServiceTest {
 	@Test
 	public void testNames() throws Exception {
 		Set<String> names = monitorService.names();
-		names.stream().forEach(s -> {
+		for (String name : names) {
 			MonitorRequest monitorRequest = new MonitorRequest();
-			monitorRequest.setAction(s);
+			monitorRequest.setAction(name);
 			monitorRequest.responseJson();
-			logger.info("{}->\n{}", s, monitorService.monitor(monitorRequest));
-		});
+			logger.info("{}->\n{}", name, monitorService.monitor(monitorRequest));
+		}
 	}
 	
 	@Test
