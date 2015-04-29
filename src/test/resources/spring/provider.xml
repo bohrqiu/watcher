@@ -8,16 +8,12 @@
     <!-- 提供方应用信息，用于计算依赖关系 -->
     <dubbo:application name="watcher-test"/>
 
-    <dubbo:registry protocol="zookeeper" address="snet.yiji:2181"
-                    file="dubbo.cache" register="true"/>
+    <dubbo:registry protocol="local"
+                    file="dubbo.cache" register="false"/>
 
     <!-- expose this service through dubbo protocol, through port 20880 ProtocolConfig -->
     <dubbo:protocol name="dubbo" port="20880"
                     threads="200" queues="100"/>
-
-    <dubbo:consumer check="false"/>
-
-    <dubbo:monitor protocol="registry"/>
 
     <!-- 提供者默认配置 选用快速失败策略 -->
     <dubbo:provider timeout="60000" cluster="failfast" telnet="watch"/>
