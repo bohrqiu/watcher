@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 import com.google.common.collect.Maps;
 
 /**
- * @author qzhanbo@yiji.com
+ * @author qiubo@yiji.com
  */
 public class GCMetrics extends AbstractMonitorMetrics {
 	private final Pattern WHITESPACE = Pattern.compile("[\\s]+");

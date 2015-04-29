@@ -12,7 +12,7 @@ import com.alibaba.dubbo.common.json.JSONObject;
 import com.yiji.framework.watcher.metrics.AbstractMonitorMetrics;
 
 /**
- * @author qzhanbo@yiji.com
+ * @author qiubo@yiji.com
  */
 public class DefaultMonitorServiceTest {
 	

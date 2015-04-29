@@ -18,7 +18,7 @@ import com.yiji.framework.watcher.MetricsHolder;
 import com.yiji.framework.watcher.health.ThreadDeadlockHealthCheck;
 
 /**
- * @author qzhanbo@yiji.com
+ * @author qiubo@yiji.com
  */
 public class HealthCheckMetrics extends AbstractMonitorMetrics {
 	private HealthCheckRegistry healthCheckRegistry = MetricsHolder.healthCheckRegistry();

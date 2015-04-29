@@ -61,8 +61,8 @@
         <div>
             <table>
                 <tr>
-                    <th width="100px">name</th>
-                    <th>desc</th>
+                    <th width="100px">metricName</th>
+                    <th>description</th>
                     <th width="100px">url</th>
                 </tr>
 

@@ -32,7 +32,7 @@ import com.yiji.framework.watcher.MonitorRequest;
 import com.yiji.framework.watcher.ResponseType;
 
 /**
- * @author qzhanbo@yiji.com
+ * @author qiubo@yiji.com
  */
 public class WatcherServlet extends HttpServlet {
 	
@@ -53,6 +53,9 @@ public class WatcherServlet extends HttpServlet {
 	public WatcherServlet() {
 	}
 	
+	/**
+	 * @param appName 应用名称
+	 */
 	public WatcherServlet(String appName) {
 		this.appName = appName;
 	}

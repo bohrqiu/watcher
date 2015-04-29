@@ -18,7 +18,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @author qzhanbo@yiji.com
+ * @author qiubo@yiji.com
  */
 public class ThreadDeadlockDetector {
 	private static final int MAX_STACK_TRACE_DEPTH = 100;

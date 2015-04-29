@@ -21,7 +21,7 @@ import java.util.Set;
 import com.google.common.collect.Maps;
 
 /**
- * @author qzhanbo@yiji.com
+ * @author qiubo@yiji.com
  */
 public class ThreadMetrics extends AbstractMonitorMetrics {
 	private static final int MAX_STACK_TRACE_DEPTH = 100;

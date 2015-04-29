@@ -20,6 +20,14 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
+    <filter>
+        <filter-name>watcherFilter</filter-name>
+        <filter-class>com.yiji.framework.watcher.adaptor.web.WatcherFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>watcherFilter</filter-name>
+        <url-pattern>/watcher/*</url-pattern>
+    </filter-mapping>
 
     <servlet>
         <servlet-name>WatcherServlet</servlet-name>

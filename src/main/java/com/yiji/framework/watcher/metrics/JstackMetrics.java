@@ -18,7 +18,7 @@ import java.util.Map;
 import com.yiji.framework.watcher.ResponseType;
 
 /**
- * @author qzhanbo@yiji.com
+ * @author qiubo@yiji.com
  */
 public class JstackMetrics extends AbstractMonitorMetrics {
 	private ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();

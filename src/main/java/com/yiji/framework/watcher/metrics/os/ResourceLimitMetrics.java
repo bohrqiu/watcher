@@ -15,7 +15,7 @@ import java.util.Map;
 import org.hyperic.sigar.SigarException;
 
 /**
- * @author qzhanbo@yiji.com
+ * @author qiubo@yiji.com
  */
 public class ResourceLimitMetrics extends AbstractOSMonitorMetrics {
 	private Map resourceLimit = null;

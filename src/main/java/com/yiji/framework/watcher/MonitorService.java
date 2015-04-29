@@ -12,7 +12,7 @@ package com.yiji.framework.watcher;
 
 /**
  * 监控服务接口
- * @author qzhanbo@yiji.com
+ * @author qiubo@yiji.com
  */
 public interface MonitorService extends MonitorMetricsRepository {
 	/**

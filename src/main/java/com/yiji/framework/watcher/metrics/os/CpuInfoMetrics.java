@@ -19,7 +19,7 @@ import org.hyperic.sigar.SigarException;
 import com.google.common.collect.Lists;
 
 /**
- * @author qzhanbo@yiji.com
+ * @author qiubo@yiji.com
  */
 public class CpuInfoMetrics extends AbstractOSMonitorMetrics {
 	private List<Map> result;

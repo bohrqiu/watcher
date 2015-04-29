@@ -18,7 +18,7 @@ import org.apache.catalina.startup.Tomcat;
 import org.apache.tomcat.util.scan.StandardJarScanner;
 
 /**
- * @author qzhanbo@yiji.com
+ * @author qiubo@yiji.com
  */
 public class BootstrapHelper {
 	private static final char ENTER_CHAR = '\n';
@@ -128,8 +128,10 @@ public class BootstrapHelper {
 	
 	private void log(long time) {
 		System.out.println("********************************************************");
-		System.out.println("启动成功: http://127.0.0.1:" + port + "   in:" + time + "ms");
-		System.out.println("您可以直接在console里敲回车，重启tomcat,just have a try");
+		System.out.println("应用启动成功,耗时:"+time+"ms");
+		System.out.println("web: http://127.0.0.1:" + port + "/watcher/");
+		System.out.println("dubbo: telnet 127.0.0.1 20880");
+		System.out.println("您可以直接在console里输入回车重启应用");
 		System.out.println("********************************************************");
 	}
 	

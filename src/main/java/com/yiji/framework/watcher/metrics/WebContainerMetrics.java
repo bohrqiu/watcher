@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.Maps;
 
 /**
- * @author qzhanbo@yiji.com
+ * @author qiubo@yiji.com
  */
 public class WebContainerMetrics extends AbstractMonitorMetrics {
 	private static final Logger logger = LoggerFactory.getLogger(WebContainerMetrics.class);

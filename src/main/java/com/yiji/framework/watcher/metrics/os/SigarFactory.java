@@ -28,7 +28,7 @@ import com.google.common.io.ByteStreams;
 import com.google.common.io.Closeables;
 
 /**
- * @author qzhanbo@yiji.com
+ * @author qiubo@yiji.com
  */
 public class SigarFactory {
 	private static final Logger logger = LoggerFactory.getLogger(SigarFactory.class);

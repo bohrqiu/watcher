@@ -18,7 +18,7 @@ import com.yiji.framework.watcher.UnsupportMonitorMetricsOperationException;
 import com.yiji.framework.watcher.metrics.AbstractMonitorMetrics;
 
 /**
- * @author qzhanbo@yiji.com
+ * @author qiubo@yiji.com
  */
 public abstract class AbstractOSMonitorMetrics extends AbstractMonitorMetrics {
 	public Object monitor(Map<String, Object> params) {

@@ -18,7 +18,7 @@ import java.util.TreeSet;
 import com.google.common.collect.Maps;
 
 /**
- * @author qzhanbo@yiji.com
+ * @author qiubo@yiji.com
  */
 public abstract class AbstractMonitorService implements MonitorService {
 	protected Map<String, MonitorMetrics> monitorMetricsMap = Maps.newConcurrentMap();

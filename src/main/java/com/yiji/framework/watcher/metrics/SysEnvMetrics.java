@@ -13,7 +13,7 @@ package com.yiji.framework.watcher.metrics;
 import java.util.Map;
 
 /**
- * @author qzhanbo@yiji.com
+ * @author qiubo@yiji.com
  */
 public class SysEnvMetrics extends AbstractMonitorMetrics {
 	

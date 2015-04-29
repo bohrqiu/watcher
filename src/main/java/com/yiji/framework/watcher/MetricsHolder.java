@@ -16,7 +16,7 @@ import com.codahale.metrics.health.HealthCheckRegistry;
 import com.codahale.metrics.health.SharedHealthCheckRegistries;
 
 /**
- * @author qzhanbo@yiji.com
+ * @author qiubo@yiji.com
  */
 public class MetricsHolder {
 	private static MetricRegistry metricRegistry = SharedMetricRegistries.getOrCreate("metricRegistry");

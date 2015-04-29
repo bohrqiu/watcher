@@ -26,7 +26,7 @@ import com.google.common.reflect.ClassPath;
 /**
  * DefaultMonitorService会扫描包com.yiji.framework.watcher.metrics下的所有
  * {@link MonitorMetrics}类，并注册
- * @author qzhanbo@yiji.com
+ * @author qiubo@yiji.com
  */
 public class DefaultMonitorService extends AbstractMonitorService {
 	private static final Logger logger = LoggerFactory.getLogger(DefaultMonitorService.class);

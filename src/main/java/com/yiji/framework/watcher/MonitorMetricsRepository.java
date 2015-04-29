@@ -14,7 +14,7 @@ import java.util.Set;
 
 /**
  * 监控指标注册
- * @author qzhanbo@yiji.com
+ * @author qiubo@yiji.com
  */
 public interface MonitorMetricsRepository {
 	

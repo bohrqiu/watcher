@@ -18,7 +18,7 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 
 /**
- * @author qzhanbo@yiji.com
+ * @author qiubo@yiji.com
  */
 public class UptimeMetrics extends AbstractMonitorMetrics {
 	public static final String simple = "yyyy-MM-dd HH:mm:ss";

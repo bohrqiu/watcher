@@ -18,7 +18,7 @@ import org.hyperic.sigar.ProcExe;
 import org.hyperic.sigar.SigarException;
 
 /**
- * @author qzhanbo@yiji.com
+ * @author qiubo@yiji.com
  */
 public class ProcExeMetrics extends AbstractOSMonitorMetrics {
 	private Map result;

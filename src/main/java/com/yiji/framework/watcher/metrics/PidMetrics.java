@@ -14,7 +14,7 @@ import java.lang.management.ManagementFactory;
 import java.util.Map;
 
 /**
- * @author qzhanbo@yiji.com
+ * @author qiubo@yiji.com
  */
 public class PidMetrics extends AbstractMonitorMetrics {
 	private Long pid;

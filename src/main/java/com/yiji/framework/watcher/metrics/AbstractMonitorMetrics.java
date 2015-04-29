@@ -13,7 +13,7 @@ package com.yiji.framework.watcher.metrics;
 import com.yiji.framework.watcher.MonitorMetrics;
 
 /**
- * @author qzhanbo@yiji.com
+ * @author qiubo@yiji.com
  */
 public abstract class AbstractMonitorMetrics implements MonitorMetrics {
 	

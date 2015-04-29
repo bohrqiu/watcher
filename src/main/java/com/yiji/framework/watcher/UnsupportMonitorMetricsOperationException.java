@@ -11,7 +11,7 @@
 package com.yiji.framework.watcher;
 
 /**
- * @author qzhanbo@yiji.com
+ * @author qiubo@yiji.com
  */
 public class UnsupportMonitorMetricsOperationException extends RuntimeException {
 	public UnsupportMonitorMetricsOperationException() {

@@ -14,7 +14,7 @@ import java.util.Map;
 
 /**
  * 监控指标
- * @author qzhanbo@yiji.com
+ * @author qiubo@yiji.com
  */
 public interface MonitorMetrics extends MetricsName, Comparable<MonitorMetrics> {
 	/**
