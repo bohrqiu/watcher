@@ -44,6 +44,6 @@ public class CpuInfoMetrics extends AbstractOSMonitorMetrics {
 	}
 	
 	public String desc() {
-		return "cpu详细信息";
+		return "cpu details";
 	}
 }

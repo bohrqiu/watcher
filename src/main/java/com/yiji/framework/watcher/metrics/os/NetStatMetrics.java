@@ -28,6 +28,6 @@ public class NetStatMetrics extends AbstractOSMonitorMetrics {
 	}
 	
 	public String desc() {
-		return "网络使用情况统计";
+		return "network use stats";
 	}
 }

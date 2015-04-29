@@ -35,6 +35,6 @@ public class CpuMetrics implements MonitorMetrics {
 	}
 	
 	public String desc() {
-		return "cpu概况";
+		return "show processor info and system load";
 	}
 }

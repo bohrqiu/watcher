@@ -49,6 +49,6 @@ public class PidMetrics implements MonitorMetrics {
 	}
 	
 	public String desc() {
-		return "进程id";
+		return "process id";
 	}
 }

@@ -48,6 +48,6 @@ public class HealthCheckMetrics implements MonitorMetrics {
 	
 	@Override
 	public String desc() {
-		return "健康状态检查，不带任何参数，返回所有配置，传入参数key=xx，返回指定的参数.";
+		return "health check. If key=xx is set, the given indicator is returned. Otherwise, show all indicators.";
 	}
 }

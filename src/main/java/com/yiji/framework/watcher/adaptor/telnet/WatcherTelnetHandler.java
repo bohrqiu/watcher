@@ -15,8 +15,8 @@ import com.yiji.framework.watcher.*;
  *
  * @author daidai@yiji.com
  */
-@Help(parameter = "[-h] metricName [key1=val1,...]", summary = "查看watcher提供的指标",
-		detail = "查看watcher提供的指标，命令格式如下watch [-h] metricName key1=value1,key2=value2,...")
+@Help(parameter = "[-h] metricName [key1=val1,...]", summary = "show indicators provided by watcher",
+		detail = "show watcher indicators. Usage: watch [-h] metricName key1=value1,key2=value2,...")
 public class WatcherTelnetHandler implements TelnetHandler {
 	private MonitorService monitorService = DefaultMonitorService.INSTANCE;
 	private String helpInfo;

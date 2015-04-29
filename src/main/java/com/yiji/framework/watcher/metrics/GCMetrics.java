@@ -52,6 +52,6 @@ public class GCMetrics implements MonitorMetrics {
 	}
 	
 	public String desc() {
-		return "gc情况";
+		return "show gc stats";
 	}
 }

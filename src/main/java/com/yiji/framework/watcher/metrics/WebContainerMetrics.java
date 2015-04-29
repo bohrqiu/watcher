@@ -116,6 +116,6 @@ public class WebContainerMetrics implements MonitorMetrics {
 	}
 	
 	public String desc() {
-		return "web容器相关情况";
+		return "web container info";
 	}
 }

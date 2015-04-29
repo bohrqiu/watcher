@@ -71,6 +71,6 @@ public class ThreadMetrics implements MonitorMetrics {
 	}
 	
 	public String desc() {
-		return "线程状况";
+		return "show thread stats";
 	}
 }

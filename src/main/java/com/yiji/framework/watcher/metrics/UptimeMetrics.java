@@ -59,6 +59,6 @@ public class UptimeMetrics implements MonitorMetrics {
 	}
 	
 	public String desc() {
-		return "进程启动时间";
+		return "show process up time";
 	}
 }

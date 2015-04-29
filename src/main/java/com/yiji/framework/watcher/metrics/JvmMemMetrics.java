@@ -38,6 +38,6 @@ public class JvmMemMetrics implements MonitorMetrics {
 	}
 	
 	public String desc() {
-		return "jvm内存使用情况";
+		return "jvm memory use stats";
 	}
 }

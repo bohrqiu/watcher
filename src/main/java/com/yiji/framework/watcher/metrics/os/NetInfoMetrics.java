@@ -28,6 +28,6 @@ public class NetInfoMetrics extends AbstractOSMonitorMetrics {
 	}
 	
 	public String desc() {
-		return "网络配置情况";
+		return "network configuration info";
 	}
 }

@@ -49,6 +49,6 @@ public class FileDescriptorMetrics implements MonitorMetrics {
 	}
 	
 	public String desc() {
-		return "进程文件描述符使用情况";
+		return "show file descriptors in use";
 	}
 }

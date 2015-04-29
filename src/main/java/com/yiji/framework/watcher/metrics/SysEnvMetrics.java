@@ -33,6 +33,6 @@ public class SysEnvMetrics implements MonitorMetrics {
 	}
 	
 	public String desc() {
-		return "环境变量,不带任何参数，返回所有配置，传入参数key=xx，返回指定的参数.";
+		return "system environment vars. If key=xx is set, the given variable is returned. Otherwise, show all variables.";
 	}
 }

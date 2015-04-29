@@ -41,6 +41,6 @@ public class ProcExeMetrics extends AbstractOSMonitorMetrics {
 	}
 	
 	public String desc() {
-		return "程序启动命令相关信息";
+		return "show process starting command and arguments";
 	}
 }

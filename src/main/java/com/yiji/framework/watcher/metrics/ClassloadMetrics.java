@@ -37,6 +37,6 @@ public class ClassloadMetrics implements MonitorMetrics {
 	}
 	
 	public String desc() {
-		return "jvm类加载情况";
+		return "show jvm classload stats";
 	}
 }

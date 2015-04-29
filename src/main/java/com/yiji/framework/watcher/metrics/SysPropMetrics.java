@@ -48,6 +48,6 @@ public class SysPropMetrics implements MonitorMetrics {
 	}
 	
 	public String desc() {
-		return "系统参数,不带任何参数，返回所有配置，传入参数key=xx，返回指定的参数.";
+		return "system properties. If key=xx is set, the given property is returned. Otherwise, show all properties.";
 	}
 }

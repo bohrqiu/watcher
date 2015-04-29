@@ -32,6 +32,6 @@ public class ResourceLimitMetrics extends AbstractOSMonitorMetrics {
 	}
 	
 	public String desc() {
-		return "操作系统资源限制";
+		return "resource limits by the underlying OS";
 	}
 }

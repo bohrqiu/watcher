@@ -100,7 +100,7 @@ public class JstackMetrics implements MonitorMetrics {
 	}
 	
 	public String desc() {
-		return "java线程栈";
+		return "print java stack trace.";
 	}
 	
 }
