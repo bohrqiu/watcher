@@ -32,10 +32,6 @@ public abstract class AbstractMonitorService implements MonitorService {
 		monitorMetricsMap.put(monitorMetrics.name(), monitorMetrics);
 	}
 	
-	public Set<String> names() {
-		return monitorMetricsMap.keySet();
-	}
-	
 	@Override
 	public Set<MonitorMetrics> monitorMetricses() {
 		return new TreeSet<>(monitorMetricsMap.values());

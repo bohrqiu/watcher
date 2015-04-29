@@ -13,16 +13,20 @@ package com.yiji.framework.watcher;
 import java.util.Set;
 
 /**
+ * 监控指标注册
  * @author qzhanbo@yiji.com
  */
 public interface MonitorMetricsRepository {
 	
+	/**
+	 * 注册监控指标
+	 * @param monitorMetrics
+	 */
 	void addMonitorMetrics(MonitorMetrics monitorMetrics);
 	
 	/**
-	 * 获取所有注册的监控指标
+	 * 获取所有监控指标
+	 * @return
 	 */
-	Set<String> names();
-	
 	Set<MonitorMetrics> monitorMetricses();
 }

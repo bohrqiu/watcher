@@ -1,179 +1,107 @@
 package com.yiji.framework.watcher;
 
-import java.util.Map;
-import java.util.Set;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
-import com.yiji.framework.watcher.metrics.AbstractMonitorMetrics;
+import java.util.Map;
+
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import com.alibaba.dubbo.common.json.JSON;
+import com.alibaba.dubbo.common.json.JSONObject;
+import com.yiji.framework.watcher.metrics.AbstractMonitorMetrics;
 
 /**
  * @author qzhanbo@yiji.com
  */
 public class DefaultMonitorServiceTest {
-	private static final Logger logger = LoggerFactory.getLogger(DefaultMonitorServiceTest.class);
 	
 	MonitorService monitorService = DefaultMonitorService.INSTANCE;
 	
 	@Test
-	public void testMonitor() throws Exception {
-		MonitorRequest monitorRequest = new MonitorRequest();
-		monitorRequest.setAction("classload");
-		System.out.println(monitorService.monitor(monitorRequest));
-		
-		monitorRequest.setAction("cpu");
-		System.out.println(monitorService.monitor(monitorRequest));
-		
-		monitorRequest.setAction("fileDescriptor");
-		System.out.println(monitorService.monitor(monitorRequest));
-		
-		monitorRequest.setAction("gc");
-		System.out.println(monitorService.monitor(monitorRequest));
-		
-		monitorRequest.setAction("mem");
-		System.out.println(monitorService.monitor(monitorRequest));
-		
-		monitorRequest.setAction("pid");
-		System.out.println(monitorService.monitor(monitorRequest));
-		
-		monitorRequest.setAction("startTime");
-		System.out.println(monitorService.monitor(monitorRequest));
-		
-		monitorRequest.setAction("sysEnv");
-		System.out.println(monitorService.monitor(monitorRequest));
-		
-		monitorRequest.setAction("sysProp");
-		System.out.println(monitorService.monitor(monitorRequest));
-		
-		monitorRequest.setAction("thread");
-		System.out.println(monitorService.monitor(monitorRequest));
-		
-		monitorRequest.setAction("uptime");
-		System.out.println(monitorService.monitor(monitorRequest));
-		
-		monitorRequest.setAction("jstack");
-		System.out.println(monitorService.monitor(monitorRequest));
-		
-	}
-	
-	@Test
-	public void testJstack() throws Exception {
-		MonitorRequest monitorRequest = new MonitorRequest();
-		monitorRequest.setResponseType(ResponseType.TEXT);
-		monitorRequest.setAction("jstack");
-		System.out.println(monitorService.monitor(monitorRequest));
-	}
-	
-	@Test
-	public void testSysEnv() throws Exception {
-		MonitorRequest monitorRequest = new MonitorRequest();
-		monitorRequest.setAction("sysEnv");
-		monitorRequest.addParam("key", "PATH");
-		System.out.println(monitorService.monitor(monitorRequest));
-	}
-	
-	@Test
 	public void testNetinfo() throws Exception {
-		MonitorRequest monitorRequest = new MonitorRequest();
-		monitorRequest.setAction("netinfo");
-		System.out.println(monitorService.monitor(monitorRequest));
+		if (isNotWindows()) {
+			MonitorRequest monitorRequest = new MonitorRequest();
+			monitorRequest.setAction("netinfo");
+			String result = monitorService.monitor(monitorRequest);
+			JSONObject object = (JSONObject) JSON.parse(result);
+			assertThat(object.get("PrimaryDns")).isNotNull();
+		}
+
 	}
 	
 	@Test
 	public void testNetStat() throws Exception {
-		MonitorRequest monitorRequest = new MonitorRequest();
-		monitorRequest.setAction("netStat");
-		System.out.println(monitorService.monitor(monitorRequest));
-		
-	}
-	
-	@Test
-	public void testSwap() throws Exception {
-		MonitorRequest monitorRequest = new MonitorRequest();
-		monitorRequest.setAction("swap");
-		System.out.println(monitorService.monitor(monitorRequest));
-		
-	}
-	
-	@Test
-	public void testOSCPU() throws Exception {
-		MonitorRequest monitorRequest = new MonitorRequest();
-		monitorRequest.setAction("cpuinfo");
-		System.out.println(monitorService.monitor(monitorRequest));
-	}
-	
-	@Test
-	public void testCmd() throws Exception {
-		
-		MonitorRequest monitorRequest = new MonitorRequest();
-		monitorRequest.setAction("cmd");
-		System.out.println(monitorService.monitor(monitorRequest));
-	}
-	
-	@Test
-	public void testResourceLimit() throws Exception {
-		
-		MonitorRequest monitorRequest = new MonitorRequest();
-		monitorRequest.setAction("resourceLimit");
-		System.out.println(monitorService.monitor(monitorRequest));
-	}
-	
-	@Test
-	public void testNotExists() throws Exception {
-		MonitorRequest monitorRequest = new MonitorRequest();
-		monitorRequest.setAction("cpuinfo");
-		monitorRequest.responseJson().prettyFormat();
-		System.out.println(monitorService.monitor(monitorRequest));
-	}
-	
-	@Test
-	public void testAdd() throws Exception {
-		MonitorMetrics monitorMetrics = new AbstractMonitorMetrics() {
-			@Override
-			public Object monitor(Map<String, Object> params) {
-				return null;
-			}
-			
-			@Override
-			public String name() {
-				return "gc";
-			}
-			
-			@Override
-			public String desc() {
-				return "test";
-			}
-		};
-		monitorService.addMonitorMetrics(monitorMetrics);
-	}
-	
-	@Test
-	public void testNames() throws Exception {
-		Set<String> names = monitorService.names();
-		for (String name : names) {
+		if (isNotWindows()) {
 			MonitorRequest monitorRequest = new MonitorRequest();
-			monitorRequest.setAction(name);
-			monitorRequest.responseJson();
-			logger.info("{}->\n{}", name, monitorService.monitor(monitorRequest));
+			monitorRequest.setAction("netstat");
+			String result = monitorService.monitor(monitorRequest);
+			JSONObject object = (JSONObject) JSON.parse(result);
+			assertThat(object.get("tcpInboundTotal")).isNotNull();
 		}
 	}
 	
 	@Test
-	public void testName() throws Exception {
+	public void testOSCPU() throws Exception {
+		if (isNotWindows()) {
+			MonitorRequest monitorRequest = new MonitorRequest();
+			monitorRequest.setAction("swap");
+			String result = monitorService.monitor(monitorRequest);
+			JSONObject object = (JSONObject) JSON.parse(result);
+			assertThat(object.get("Used")).isNotNull();
+		}
+	}
+	
+	@Test
+	public void testNotExists() throws Exception {
+		String action = "xxx";
 		MonitorRequest monitorRequest = new MonitorRequest();
-		monitorRequest.setAction("procExe");
+		monitorRequest.setAction(action);
 		monitorRequest.responseJson().prettyFormat();
-		System.out.println(monitorService.monitor(monitorRequest));
+		String result = monitorService.monitor(monitorRequest);
+		JSONObject object = (JSONObject) JSON.parse(result);
+		assertThat(object.get("msg")).isEqualTo("unsupport monitor metrics:" + action);
+	}
+	
+	@Test
+	public void testAddMonitorMetrics() throws Exception {
+		
+		try {
+			MonitorMetrics monitorMetrics = new AbstractMonitorMetrics() {
+				@Override
+				public Object monitor(Map<String, Object> params) {
+					return null;
+				}
+				
+				@Override
+				public String name() {
+					return "gc";
+				}
+				
+				@Override
+				public String desc() {
+					return "test";
+				}
+			};
+			monitorService.addMonitorMetrics(monitorMetrics);
+			fail("应该抛出监控指标已存在的异常");
+		} catch (Exception e) {
+			assertThat(e).hasMessageContaining("gc监控指标已经存在");
+		}
 		
 	}
 	
 	@Test
-	public void testName1() throws Exception {
+	public void testWebContainer() throws Exception {
+		String action = "webContainer";
 		MonitorRequest monitorRequest = new MonitorRequest();
-		monitorRequest.setAction("webContainer");
+		monitorRequest.setAction(action);
 		monitorRequest.responseJson().prettyFormat();
-		System.out.println(monitorService.monitor(monitorRequest));
-		
+		String result = monitorService.monitor(monitorRequest);
+		assertThat(result).isEqualTo("{}");
+	}
+	
+	public static boolean isNotWindows() {
+		return !System.getProperty("os.name").startsWith("Windows");
 	}
 }

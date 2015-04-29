@@ -14,7 +14,15 @@ package com.yiji.framework.watcher;
  * @author qzhanbo@yiji.com
  */
 public interface MetricsName {
+	/**
+	 * 监控指标名称
+	 * @return
+	 */
 	String name();
 	
+	/**
+	 * 监控指标描述
+	 * @return
+	 */
 	String desc();
 }

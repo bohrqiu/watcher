@@ -24,12 +24,14 @@ import com.google.common.base.Throwables;
 import com.google.common.reflect.ClassPath;
 
 /**
+ * DefaultMonitorService会扫描包com.yiji.framework.watcher.metrics下的所有
+ * {@link MonitorMetrics}类，并注册
  * @author qzhanbo@yiji.com
  */
 public class DefaultMonitorService extends AbstractMonitorService {
 	private static final Logger logger = LoggerFactory.getLogger(DefaultMonitorService.class);
 	public static final DefaultMonitorService INSTANCE = new DefaultMonitorService();
-
+	
 	private DefaultMonitorService() {
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		try {
@@ -63,14 +65,14 @@ public class DefaultMonitorService extends AbstractMonitorService {
 		}
 		
 	}
-	
+
 	public String monitor(MonitorRequest request) {
 		
 		try {
 			Objects.requireNonNull(request, "request不能为空");
 			MonitorMetrics monitorMetrics = monitorMetricsMap.get(request.getAction());
 			if (monitorMetrics == null) {
-				throw new UnsupportMonitorMetricsOperationException("不支持的监控" + request.getAction());
+				throw new UnsupportMonitorMetricsOperationException("unsupport monitor metrics:" + request.getAction());
 			}
 			request.addParam(ResponseType.RESPONSE_TYPE_KEY, request.getResponseType());
 			Object result = monitorMetrics.monitor(request.getParams());

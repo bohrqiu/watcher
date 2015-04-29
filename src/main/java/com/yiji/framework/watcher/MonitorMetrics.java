@@ -13,6 +13,7 @@ package com.yiji.framework.watcher;
 import java.util.Map;
 
 /**
+ * 监控指标
  * @author qzhanbo@yiji.com
  */
 public interface MonitorMetrics extends MetricsName, Comparable<MonitorMetrics> {
@@ -21,6 +22,9 @@ public interface MonitorMetrics extends MetricsName, Comparable<MonitorMetrics> 
 	 */
 	String KEY = "key";
 	
+	/**
+	 * 通过请求参数返回监控结果对象
+	 */
 	Object monitor(Map<String, Object> params);
 	
 }
