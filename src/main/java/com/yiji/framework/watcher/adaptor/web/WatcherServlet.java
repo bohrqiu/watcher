@@ -63,7 +63,11 @@ public class WatcherServlet extends HttpServlet {
 		resp.setCharacterEncoding(Charsets.UTF_8.name());
 		resp.setStatus(HttpServletResponse.SC_OK);
 		resp.setHeader("Cache-Control", "must-revalidate,no-cache,no-store");
-		if (uri == null || uri.equals("/") || uri.equals("/index.html") || uri.equals("/index.htm")) {
+		if(uri==null){
+			resp.sendRedirect(req.getRequestURI()+"/");
+			return;
+		}
+		if ( uri.equals("/") || uri.equals("/index.html") || uri.equals("/index.htm")) {
 			handleIndex(req, resp);
 			return;
 		} else if (uri.indexOf("q.do") != -1) {
@@ -73,6 +77,7 @@ public class WatcherServlet extends HttpServlet {
 			String action = (String) paramMap.get("action");
 			if (action == null) {
 				resp.getWriter().write("请指定action参数值");
+				return;
 			}
 			request.setAction(paramMap.get("action").toString());
 			setPrettyFormat(paramMap, request);

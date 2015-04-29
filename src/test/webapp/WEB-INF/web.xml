@@ -32,6 +32,6 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>WatcherServlet</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/watcher/*</url-pattern>
     </servlet-mapping>
 </web-app>
