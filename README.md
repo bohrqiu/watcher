@@ -27,9 +27,9 @@
 
 ![dubbo](res/dubbo_index.png "dubbo")
 
-查看线程情况:
+查看thread,输入:
 
-	dubbo>watch thread
+	watch thread
 
 返回：
 
@@ -127,4 +127,8 @@ watcher内部集成了[metrics](https://github.com/dropwizard/metrics),需要添
 `DefaultMonitorService`默认会扫描`com.yiji.framework.watcher.metrics`下的所有`MonitorMetrics`.
 
 
+## 6.其他
 
+### 6.1 访问控制
+
+`watcher`提供了简单的访问控制filter `com.yiji.framework.watcher.adaptor.web.WatcherFilter`,仅内网可以访问。

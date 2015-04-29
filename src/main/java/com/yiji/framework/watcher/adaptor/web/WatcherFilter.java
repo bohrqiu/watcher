@@ -40,7 +40,7 @@ public class WatcherFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		if (request instanceof HttpServletRequest) {
 			HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-			String host = httpServletRequest.getRemoteHost();
+			String host = getIpAddr(httpServletRequest);
 			Matcher matcher = pattern.matcher(host);
 			if (matcher.find()) {
 				chain.doFilter(request, response);
@@ -56,5 +56,26 @@ public class WatcherFilter implements Filter {
 	@Override
 	public void destroy() {
 		
+	}
+	
+	public String getIpAddr(HttpServletRequest request) {
+		if (request == null) {
+			return "unknown";
+		} else {
+			String ip = request.getHeader("x-forwarded-for");
+			if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+				ip = request.getHeader("Proxy-Client-IP");
+			}
+			
+			if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+				ip = request.getHeader("WL-Proxy-Client-IP");
+			}
+			
+			if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+				ip = request.getRemoteAddr();
+			}
+			
+			return ip;
+		}
 	}
 }
