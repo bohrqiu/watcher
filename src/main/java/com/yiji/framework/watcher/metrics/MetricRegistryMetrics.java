@@ -83,7 +83,7 @@ public class MetricRegistryMetrics extends AbstractMonitorMetrics {
 	
 	@Override
 	public String desc() {
-		return "Metrics指标。可加上key=xx&type=yy来指定Metric的名字和类型；名字支持前缀匹配；不加参数返回所有指标";
+		return "Metric indicators. Optional parameters: key=xx[&type=yy]";
 	}
 	
 	public enum MetricType {

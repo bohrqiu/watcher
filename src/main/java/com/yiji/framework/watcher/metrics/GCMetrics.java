@@ -51,6 +51,6 @@ public class GCMetrics extends AbstractMonitorMetrics {
 	}
 	
 	public String desc() {
-		return "gc情况";
+		return "show gc stats";
 	}
 }

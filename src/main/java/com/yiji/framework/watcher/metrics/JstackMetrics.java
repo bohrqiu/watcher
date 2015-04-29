@@ -99,7 +99,7 @@ public class JstackMetrics extends AbstractMonitorMetrics {
 	}
 	
 	public String desc() {
-		return "java线程栈";
+		return "print java stack trace.";
 	}
 	
 }

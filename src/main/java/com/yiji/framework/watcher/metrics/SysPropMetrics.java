@@ -46,6 +46,6 @@ public class SysPropMetrics extends AbstractMonitorMetrics {
 	}
 	
 	public String desc() {
-		return "系统参数,不带任何参数，返回所有配置，传入参数key=xx，返回指定的参数.";
+		return "system properties. Optional parameter: key=xx";
 	}
 }

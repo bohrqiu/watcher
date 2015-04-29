@@ -37,6 +37,6 @@ public class JvmMemMetrics extends AbstractMonitorMetrics {
 	}
 	
 	public String desc() {
-		return "jvm内存使用情况";
+		return "jvm memory use stats";
 	}
 }

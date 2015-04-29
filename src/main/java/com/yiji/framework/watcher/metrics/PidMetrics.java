@@ -47,6 +47,6 @@ public class PidMetrics extends AbstractMonitorMetrics {
 	}
 	
 	public String desc() {
-		return "进程id";
+		return "process id";
 	}
 }

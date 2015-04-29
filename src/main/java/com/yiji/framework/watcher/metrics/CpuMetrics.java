@@ -34,6 +34,6 @@ public class CpuMetrics extends AbstractMonitorMetrics {
 	}
 	
 	public String desc() {
-		return "cpu概况";
+		return "show processor info and system load";
 	}
 }

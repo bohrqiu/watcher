@@ -28,6 +28,6 @@ public class SwapMetrics extends AbstractOSMonitorMetrics {
 	}
 	
 	public String desc() {
-		return "os swap使用情况";
+		return "os swap use stats";
 	}
 }
