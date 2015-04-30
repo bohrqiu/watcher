@@ -131,4 +131,4 @@ watcher内部集成了[metrics](https://github.com/dropwizard/metrics),需要添
 
 ### 6.1 访问控制
 
-`watcher`提供了简单的访问控制filter `com.yiji.framework.watcher.adaptor.web.WatcherFilter`,仅内网可以访问。
+`watcher`中的`WatcherServlet`提供了访问控制能力,详情见代码注释。

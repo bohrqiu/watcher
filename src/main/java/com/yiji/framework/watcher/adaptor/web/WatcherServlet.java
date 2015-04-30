@@ -16,7 +16,6 @@ import java.net.URL;
 import java.util.Map;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,7 +33,7 @@ import com.yiji.framework.watcher.ResponseType;
 /**
  * @author qiubo@yiji.com
  */
-public class WatcherServlet extends HttpServlet {
+public class WatcherServlet extends AccessControlServlet {
 	
 	private static String velocityPath = "com/yiji/framework/watcher/adaptor/web/index.vm";
 	private static VelocityEngine velocity;
@@ -63,10 +62,6 @@ public class WatcherServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		final String uri = req.getPathInfo();
-		req.setCharacterEncoding(Charsets.UTF_8.name());
-		resp.setCharacterEncoding(Charsets.UTF_8.name());
-		resp.setStatus(HttpServletResponse.SC_OK);
-		resp.setHeader("Cache-Control", "must-revalidate,no-cache,no-store");
 		if (uri == null) {
 			resp.sendRedirect(req.getRequestURI() + "/");
 			return;
@@ -86,6 +81,9 @@ public class WatcherServlet extends HttpServlet {
 			request.setAction(paramMap.get("action").toString());
 			setPrettyFormat(paramMap, request);
 			setResType(paramMap, request);
+			if (request.getResponseType() == ResponseType.JSON) {
+				resp.setContentType("application/json;charset=utf-8");
+			}
 			resp.getWriter().write(DefaultMonitorService.INSTANCE.monitor(request));
 		} else {
 			resp.getWriter().write("不支持的请求");

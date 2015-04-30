@@ -20,18 +20,18 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
-    <filter>
-        <filter-name>watcherFilter</filter-name>
-        <filter-class>com.yiji.framework.watcher.adaptor.web.WatcherFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>watcherFilter</filter-name>
-        <url-pattern>/watcher/*</url-pattern>
-    </filter-mapping>
 
     <servlet>
         <servlet-name>WatcherServlet</servlet-name>
         <servlet-class>com.yiji.framework.watcher.adaptor.web.WatcherServlet</servlet-class>
+        <init-param>
+            <param-name>deny</param-name>
+            <param-value>127.0.0.1</param-value>
+        </init-param>
+        <init-param>
+            <param-name>allow</param-name>
+            <param-value>1</param-value>
+        </init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>WatcherServlet</servlet-name>
