@@ -28,10 +28,6 @@
             <param-name>deny</param-name>
             <param-value>127.0.0.1</param-value>
         </init-param>
-        <init-param>
-            <param-name>allow</param-name>
-            <param-value>1</param-value>
-        </init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>WatcherServlet</servlet-name>
