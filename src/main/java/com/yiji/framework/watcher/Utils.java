@@ -10,6 +10,7 @@
  */
 package com.yiji.framework.watcher;
 
+import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,10 @@ import java.util.List;
  * @author qiubo@yiji.com
  */
 public class Utils {
+	
 	public static final String[] EMPTY_STRINGS = {};
+	
+	private static Long pid = null;
 	
 	public static String trim(String str) {
 		if (str == null) {
@@ -62,5 +66,25 @@ public class Utils {
 			list.add(str.substring(start, i));
 		}
 		return (String[]) list.toArray(new String[list.size()]);
+	}
+	
+	public static Long getPid() {
+		if (pid == null) {
+			final String jvmName = ManagementFactory.getRuntimeMXBean().getName();
+			final int index = jvmName.indexOf('@');
+			
+			if (index < 1) {
+				return -1l;
+			}
+			try {
+				pid = Long.parseLong(jvmName.substring(0, index));
+				return pid;
+			} catch (NumberFormatException e) {
+				// ignore
+				return -1l;
+			}
+		} else {
+			return pid;
+		}
 	}
 }

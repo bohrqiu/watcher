@@ -10,36 +10,21 @@
  */
 package com.yiji.framework.watcher.metrics;
 
-import java.lang.management.ManagementFactory;
 import java.util.Map;
+
+import com.yiji.framework.watcher.Utils;
 
 /**
  * @author qiubo@yiji.com
  */
 public class PidMetrics extends AbstractMonitorMetrics {
-	private Long pid;
-	
 	public Object monitor(Map<String, Object> params) {
 		return getProcessId();
 	}
 	
 	private Long getProcessId() {
-		if (pid != null) {
-			return pid;
-		}
-		final String jvmName = ManagementFactory.getRuntimeMXBean().getName();
-		final int index = jvmName.indexOf('@');
 		
-		if (index < 1) {
-			return -1l;
-		}
-		try {
-			pid = Long.parseLong(jvmName.substring(0, index));
-			return pid;
-		} catch (NumberFormatException e) {
-			// ignore
-		}
-		return -1l;
+		return Utils.getPid();
 	}
 	
 	public String name() {

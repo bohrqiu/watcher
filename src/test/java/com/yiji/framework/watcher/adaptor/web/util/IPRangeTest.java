@@ -4,6 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
+import sun.jvm.hotspot.gc_interface.CollectedHeap;
+import sun.jvm.hotspot.runtime.VM;
+import sun.jvm.hotspot.tools.HeapSummary;
+import sun.jvm.hotspot.tools.JMap;
+
 /**
  * @author qiubo@yiji.com
  */
@@ -50,4 +55,27 @@ public class IPRangeTest {
 		assertThat(allow).isTrue();
 	}
 	
+	@Test
+	public void testName() throws Exception {
+
+		try {
+			HeapSummary hs = new HeapSummary();
+			hs.main(new String[] { "39029" });
+		} catch (Error e) {
+			e.printStackTrace();
+		}
+		CollectedHeap heap = VM.getVM().getUniverse().heap();
+		System.out.println(heap);
+	}
+	
+	@Test
+	public void testName1() throws Exception {
+		HeapSummary hs = new HeapSummary();
+		hs.run();
+	}
+
+	public static void main(String[] args) {
+		HeapSummary hs = new HeapSummary();
+		hs.run();
+	}
 }
