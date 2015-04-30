@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.yiji.framework</groupId>
     <artifactId>yiji-watcher</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <description>应用监控，提供监控应用/系统的能力</description>
     <properties>
         <tomcat.verion>8.0.21</tomcat.verion>
