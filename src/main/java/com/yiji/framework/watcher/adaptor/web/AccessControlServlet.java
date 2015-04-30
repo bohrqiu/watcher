@@ -152,7 +152,13 @@ public class AccessControlServlet extends HttpServlet {
 			return true;
 		}
 		
-		IPAddress ipAddress = new IPAddress(remoteAddress);
+		IPAddress ipAddress;
+		try {
+			ipAddress = new IPAddress(remoteAddress);
+		} catch (Exception e) {
+			logger.debug("ip解析错误", e);
+			return false;
+		}
 		
 		if (allowIntranetAccess) {
 			for (IPRange range : intranetIpRange) {
