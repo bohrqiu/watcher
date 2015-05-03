@@ -33,4 +33,15 @@ class MonitorServiceSpec extends Specification {
         "netstat" | "tcpInboundTotal"
 
     }
+
+    def "access not exist monitor metrics"() {
+        given:
+        def monitorRequest = new MonitorRequest();
+        when:
+        monitorRequest.action = "xxx"
+        def obj = monitorService.monitor(monitorRequest)
+        then:
+        obj.contains("\"success\":false");
+    }
+
 }
