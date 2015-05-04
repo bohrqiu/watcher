@@ -56,12 +56,6 @@
             <artifactId>sigar</artifactId>
             <version>${sigar.version}</version>
             <classifier>native</classifier>
-            <exclusions>
-                <exclusion>
-                    <artifactId>log4j</artifactId>
-                    <groupId>log4j</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.fusesource</groupId>
