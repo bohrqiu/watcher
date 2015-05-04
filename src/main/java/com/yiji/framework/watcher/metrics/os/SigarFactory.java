@@ -101,10 +101,7 @@ public class SigarFactory {
 		Closeables.close(zipFile, true);
 	}
 	
-	public static void main(String[] args) throws Exception {
-		System.out.println(SigarFactory.getSigar().getNetInfo().toMap());
-	}
-	
+
 	public static Sigar getSigar() {
 		return new Sigar();
 	}

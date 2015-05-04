@@ -10,7 +10,10 @@
  */
 package com.yiji.framework.watcher.metrics;
 
+import java.util.Map;
+
 import com.yiji.framework.watcher.MonitorMetrics;
+import com.yiji.framework.watcher.ResponseType;
 
 /**
  * @author qiubo@yiji.com
@@ -21,4 +24,15 @@ public abstract class AbstractMonitorMetrics implements MonitorMetrics {
 	public int compareTo(MonitorMetrics o) {
 		return this.name().compareTo(o.name());
 	}
+	
+	protected boolean isResponseText(Map<String, Object> params) {
+		ResponseType responseType = (ResponseType) params.get(ResponseType.RESPONSE_TYPE_KEY);
+		return responseType == ResponseType.TEXT;
+	}
+	
+	protected boolean isResponseJson(Map<String, Object> params) {
+		ResponseType responseType = (ResponseType) params.get(ResponseType.RESPONSE_TYPE_KEY);
+		return responseType == ResponseType.JSON;
+	}
+	
 }

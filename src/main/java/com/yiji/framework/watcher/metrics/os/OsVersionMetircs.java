@@ -5,7 +5,7 @@
 
 /*
  * 修订记录:
- * qiubo@yiji.com 2015-04-26 15:28 创建
+ * qzhanbo@yiji.com 2015-05-04 18:33 创建
  *
  */
 package com.yiji.framework.watcher.metrics.os;
@@ -13,25 +13,27 @@ package com.yiji.framework.watcher.metrics.os;
 import java.util.Map;
 
 import org.hyperic.sigar.SigarException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author qiubo@yiji.com
  */
-public class ResourceLimitMetrics extends AbstractOSMonitorMetrics {
-	private Map resourceLimit = null;
+public class OsVersionMetircs extends AbstractOSMonitorMetrics {
+	private static final Logger logger = LoggerFactory.getLogger(OsVersionMetircs.class);
 	
+	@Override
 	public Object doMonitor(Map<String, Object> params) throws SigarException {
-		if (resourceLimit == null) {
-			resourceLimit = SigarFactory.getSigar().getResourceLimit().toMap();
-		}
-		return resourceLimit;
+		return OSVersion.getResult();
 	}
 	
+	@Override
 	public String name() {
-		return "resourceLimit";
+		return "osVersion";
 	}
 	
+	@Override
 	public String desc() {
-		return "resource limits by the underlying OS";
+		return "os version info";
 	}
 }
