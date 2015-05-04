@@ -68,6 +68,14 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+        <dependency>
+            <groupId>sun.jdk</groupId>
+            <artifactId>sa-jdi</artifactId>
+            <version>1.7</version>
+            <scope>system</scope>
+            <systemPath>${java.home}/../lib/sa-jdi.jar</systemPath>
+        </dependency>
         <!-- metrics-->
 
         <dependency>
