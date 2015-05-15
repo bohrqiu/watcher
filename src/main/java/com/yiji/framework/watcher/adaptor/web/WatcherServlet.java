@@ -58,7 +58,7 @@ public class WatcherServlet extends AccessControlServlet {
 	public WatcherServlet(String appName) {
 		this.appName = appName;
 	}
-	
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		final String uri = req.getPathInfo();

@@ -7,7 +7,7 @@ package com.yiji.framework.watcher;
  */
 public class WatherTomcatBootStrap {
 	public static void main(final String[] args) {
-		new BootstrapHelper(11111, false, "local").start();
+		new BootstrapHelper(11112, false, "local").start();
 	}
 	
 }
