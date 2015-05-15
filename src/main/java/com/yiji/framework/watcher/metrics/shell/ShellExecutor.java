@@ -99,7 +99,7 @@ public class ShellExecutor {
 		executor.setStreamHandler(pumpStreamHandler);
 		
 		DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler();
-		//如果认为60s还没有执行完，停止认为执行
+		//如果认为30s还没有执行完，停止认为执行
 		ExecuteWatchdog watchdog = new ExecuteWatchdog(30000);
 		executor.setWatchdog(watchdog);
 		try {
