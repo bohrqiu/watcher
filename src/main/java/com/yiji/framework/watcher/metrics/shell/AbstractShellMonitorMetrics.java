@@ -16,5 +16,5 @@ import com.yiji.framework.watcher.metrics.AbstractMonitorMetrics;
  * @author qiubo@yiji.com
  */
 public abstract class AbstractShellMonitorMetrics extends AbstractMonitorMetrics {
-	protected static ShellExecutor shellExecutor = new ShellExecutor();
+	protected ShellExecutor shellExecutor = new ShellExecutor();
 }

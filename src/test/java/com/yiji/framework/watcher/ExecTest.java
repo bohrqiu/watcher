@@ -10,6 +10,8 @@
  */
 package com.yiji.framework.watcher;
 
+import java.net.URL;
+
 import org.junit.Test;
 
 import com.yiji.framework.watcher.metrics.shell.ShellExecutor;
@@ -32,6 +34,14 @@ public class ExecTest {
 		MonitorRequest request = new MonitorRequest();
 		request.setAction("busyJavaThread");
 		System.out.println(DefaultMonitorService.INSTANCE.monitor(request));
-
+		
+	}
+	
+	@Test
+	public void testName3() throws Exception {
+		URL url = new URL("jar:file:/Users/bohr/.m2/repository/com/yiji/framework/yiji-watcher/1.4/yiji-watcher-1.4.jar!/watcher/script");
+		URL newUrl = new URL(url, "/");
+		System.out.println("ori:" + url);
+		System.out.println("new:" + newUrl);
 	}
 }

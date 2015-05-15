@@ -35,7 +35,12 @@ public class ShellExecutor {
 	
 	private static boolean init = false;
 	
+	private static String initMsg = null;
+	
 	public ShellExecutor() {
+		if (!Utils.isLinux()) {
+			initMsg = "仅支持linux操作系统";
+		}
 		if (!init) {
 			logger.info("watcher script安装路径:{}", scriptPath);
 			try {
@@ -43,6 +48,7 @@ public class ShellExecutor {
 				init = true;
 			} catch (Exception e) {
 				logger.info(e.getMessage(), e);
+				initMsg = Throwables.getStackTraceAsString(e);
 			}
 		}
 	}
@@ -83,7 +89,7 @@ public class ShellExecutor {
 	
 	public String exeShellConetent(String content) {
 		if (!init) {
-			return "执行脚本初始化失败";
+			return initMsg;
 		}
 		logger.info("执行脚本:{}", content);
 		CommandLine cmdLine = CommandLine.parse(content);

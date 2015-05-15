@@ -13,7 +13,6 @@ package com.yiji.framework.watcher;
 import java.io.*;
 import java.lang.management.ManagementFactory;
 import java.net.JarURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.*;
@@ -21,9 +20,6 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Closeables;
@@ -198,9 +194,10 @@ public class Utils {
 		}
 	}
 	
-	private static Set<URL> findPathMatchingJarResources(URL rootUrl) throws IOException {
+	private static Set<URL> findPathMatchingJarResources(URL relativeUrl) throws IOException {
+		URL rootUrl = new URL(relativeUrl, "/");
 		//在jar包中的相对路径
-		URLConnection con = rootUrl.openConnection();
+		URLConnection con = relativeUrl.openConnection();
 		JarURLConnection jarCon = (JarURLConnection) con;
 		JarFile jarFile = jarCon.getJarFile();
 		JarEntry jarEntry = jarCon.getJarEntry();
@@ -218,173 +215,20 @@ public class Utils {
 				if (entryPath.startsWith("/")) {
 					entryPath = entryPath.substring(1);
 				}
-				URL url = new URL(rootUrl, entryPath);
-				result.add(getCleanedUrl(url, url.toString()));
+				result.add(new URL(rootUrl, entryPath));
 			}
 		}
 		return result;
-	}
-	
-	private static URL getCleanedUrl(URL originalUrl, String originalPath) {
-		try {
-			return new URL(StringUtils.cleanPath(originalPath));
-		} catch (MalformedURLException ex) {
-			// Cleaned URL path cannot be converted to URL
-			// -> take original URL.
-			return originalUrl;
-		}
-	}
-	
-	public static String cleanPath(String path) {
-		if (path == null) {
-			return null;
-		} else {
-			String pathToUse = replace(path, "\\", "/");
-			int prefixIndex = pathToUse.indexOf(":");
-			String prefix = "";
-			if (prefixIndex != -1) {
-				prefix = pathToUse.substring(0, prefixIndex + 1);
-				pathToUse = pathToUse.substring(prefixIndex + 1);
-			}
-			
-			if (pathToUse.startsWith("/")) {
-				prefix = prefix + "/";
-				pathToUse = pathToUse.substring(1);
-			}
-			
-			String[] pathArray = delimitedListToStringArray(pathToUse, "/");
-			LinkedList pathElements = new LinkedList();
-			int tops = 0;
-			
-			int i;
-			for (i = pathArray.length - 1; i >= 0; --i) {
-				String element = pathArray[i];
-				if (!".".equals(element)) {
-					if ("..".equals(element)) {
-						++tops;
-					} else if (tops > 0) {
-						--tops;
-					} else {
-						pathElements.add(0, element);
-					}
-				}
-			}
-			
-			for (i = 0; i < tops; ++i) {
-				pathElements.add(0, "..");
-			}
-			
-			return prefix + collectionToDelimitedString(pathElements, "/");
-		}
-	}
-	
-	public static String replace(String inString, String oldPattern, String newPattern) {
-		if (hasLength(inString) && hasLength(oldPattern) && newPattern != null) {
-			StringBuffer sbuf = new StringBuffer();
-			int pos = 0;
-			int index = inString.indexOf(oldPattern);
-			
-			for (int patLen = oldPattern.length(); index >= 0; index = inString.indexOf(oldPattern, pos)) {
-				sbuf.append(inString.substring(pos, index));
-				sbuf.append(newPattern);
-				pos = index + patLen;
-			}
-			
-			sbuf.append(inString.substring(pos));
-			return sbuf.toString();
-		} else {
-			return inString;
-		}
-	}
-	
-	public static boolean hasLength(CharSequence str) {
-		return str != null && str.length() > 0;
-	}
-	
-	public static String collectionToDelimitedString(Collection coll, String delim) {
-		return collectionToDelimitedString(coll, delim, "", "");
-	}
-	
-	public static String collectionToDelimitedString(Collection coll, String delim, String prefix, String suffix) {
-		if (CollectionUtils.isEmpty(coll)) {
-			return "";
-		} else {
-			StringBuffer sb = new StringBuffer();
-			Iterator it = coll.iterator();
-			
-			while (it.hasNext()) {
-				sb.append(prefix).append(it.next()).append(suffix);
-				if (it.hasNext()) {
-					sb.append(delim);
-				}
-			}
-			
-			return sb.toString();
-		}
-	}
-	
-	public static String[] delimitedListToStringArray(String str, String delimiter) {
-		return delimitedListToStringArray(str, delimiter, (String) null);
-	}
-	
-	public static String[] delimitedListToStringArray(String str, String delimiter, String charsToDelete) {
-		if (str == null) {
-			return new String[0];
-		} else if (delimiter == null) {
-			return new String[] { str };
-		} else {
-			ArrayList result = new ArrayList();
-			int pos;
-			if ("".equals(delimiter)) {
-				for (pos = 0; pos < str.length(); ++pos) {
-					result.add(deleteAny(str.substring(pos, pos + 1), charsToDelete));
-				}
-			} else {
-				pos = 0;
-				
-				int var6;
-				for (boolean delPos = false; (var6 = str.indexOf(delimiter, pos)) != -1; pos = var6 + delimiter.length()) {
-					result.add(deleteAny(str.substring(pos, var6), charsToDelete));
-				}
-				
-				if (str.length() > 0 && pos <= str.length()) {
-					result.add(deleteAny(str.substring(pos), charsToDelete));
-				}
-			}
-			
-			return toStringArray((Collection) result);
-		}
-	}
-	
-	public static String[] toStringArray(Collection collection) {
-		return collection == null ? null : (String[]) ((String[]) collection.toArray(new String[collection.size()]));
-	}
-	
-	public static String deleteAny(String inString, String charsToDelete) {
-		if (hasLength(inString) && hasLength(charsToDelete)) {
-			StringBuffer out = new StringBuffer();
-			
-			for (int i = 0; i < inString.length(); ++i) {
-				char c = inString.charAt(i);
-				if (charsToDelete.indexOf(c) == -1) {
-					out.append(c);
-				}
-			}
-			
-			return out.toString();
-		} else {
-			return inString;
-		}
-	}
-	
-	public static String collectionToCommaDelimitedString(Collection coll) {
-		return collectionToDelimitedString(coll, ",");
 	}
 	
 	public static boolean isJarResource(URL url) throws IOException {
 		String protocol = url.getProtocol();
 		return "jar".equals(protocol) || "zip".equals(protocol) || "vfszip".equals(protocol) || "wsjar".equals(protocol)
 				|| "code-source".equals(protocol) && url.getPath().contains("!/");
+	}
+	
+	public static boolean isLinux() {
+		return System.getProperty("os.name").toLowerCase().contains("linux");
 	}
 	
 }
