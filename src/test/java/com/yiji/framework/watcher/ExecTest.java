@@ -22,8 +22,8 @@ public class ExecTest {
 	public void testName() throws Exception {
 		String line = "echo '你好'";
 		ShellExecutor shellExecutor = new ShellExecutor();
-		System.out.println(shellExecutor.exeShellConetent(line));
-		System.out.println(shellExecutor.exeShell("test/test.sh"));
+		//System.out.println(shellExecutor.exeShellConetent(line));
+		//System.out.println(shellExecutor.exeShell("test/test.sh"));
 		
 	}
 	
@@ -32,7 +32,6 @@ public class ExecTest {
 		MonitorRequest request = new MonitorRequest();
 		request.setAction("busyJavaThread");
 		System.out.println(DefaultMonitorService.INSTANCE.monitor(request));
-		;
-		
+
 	}
 }
