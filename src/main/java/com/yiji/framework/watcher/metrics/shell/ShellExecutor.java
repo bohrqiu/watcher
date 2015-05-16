@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Preconditions;
 import com.google.common.base.Throwables;
 import com.google.common.io.ByteStreams;
 import com.yiji.framework.watcher.Utils;
@@ -88,24 +89,26 @@ public class ShellExecutor {
 	}
 	
 	public String exeShellConetent(String content) {
+		Preconditions.checkNotNull(content);
 		if (!init) {
 			return initMsg;
 		}
-		logger.info("执行脚本:{}", content);
+		logger.info("开始执行脚本:[{}]", content);
 		CommandLine cmdLine = CommandLine.parse(content);
 		DefaultExecutor executor = new DefaultExecutor();
 		final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 		PumpStreamHandler pumpStreamHandler = new PumpStreamHandler(byteArrayOutputStream);
 		executor.setStreamHandler(pumpStreamHandler);
 		
-		DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler();
+		DefaultExecuteResultHandler resultHandler = new LogExecuteResultHandler(content);
 		//如果认为30s还没有执行完，停止认为执行
 		ExecuteWatchdog watchdog = new ExecuteWatchdog(30000);
 		executor.setWatchdog(watchdog);
 		try {
 			executor.execute(cmdLine, System.getenv(), resultHandler);
-			resultHandler.waitFor();
+			resultHandler.waitFor(30000);
 		} catch (Exception e) {
+			logger.error("脚本[{}]执行失败", content, e);
 			return Throwables.getStackTraceAsString(e);
 		}
 		return new String(byteArrayOutputStream.toByteArray());
@@ -113,5 +116,29 @@ public class ShellExecutor {
 	
 	public String exeShell(String scriptName, String... params) {
 		return exeShellConetent("sh " + scriptPath + File.separator + scriptName + " " + Joiner.on(' ').join(params));
+	}
+	
+	private static class LogExecuteResultHandler extends DefaultExecuteResultHandler {
+		private static final Logger logger = LoggerFactory.getLogger(LogExecuteResultHandler.class);
+		private String cmd;
+		private long startTime;
+		
+		public LogExecuteResultHandler(String cmd) {
+			super();
+			this.cmd = cmd;
+			this.startTime = System.currentTimeMillis();
+		}
+		
+		@Override
+		public void onProcessComplete(int exitValue) {
+			super.onProcessComplete(exitValue);
+			logger.info("脚本[{}]执行成功，result:{},费时:{}ms", cmd, exitValue, System.currentTimeMillis() - startTime);
+		}
+		
+		@Override
+		public void onProcessFailed(ExecuteException e) {
+			super.onProcessFailed(e);
+			logger.error("脚本[{}]执行失败,费时:{}ms", cmd, System.currentTimeMillis() - startTime, e);
+		}
 	}
 }

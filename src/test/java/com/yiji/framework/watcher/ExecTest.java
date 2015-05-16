@@ -22,9 +22,9 @@ import com.yiji.framework.watcher.metrics.shell.ShellExecutor;
 public class ExecTest {
 	@Test
 	public void testName() throws Exception {
-		String line = "echo '你好'";
+		String line = "git status";
 		ShellExecutor shellExecutor = new ShellExecutor();
-		//System.out.println(shellExecutor.exeShellConetent(line));
+		System.out.println(shellExecutor.exeShellConetent(line));
 		//System.out.println(shellExecutor.exeShell("test/test.sh"));
 		
 	}
