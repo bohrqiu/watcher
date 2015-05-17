@@ -22,11 +22,14 @@ import com.google.common.util.concurrent.RateLimiter;
  */
 public class BusyJavaThreadMetrics extends AbstractShellMonitorMetrics {
 	//速度限制为每5s一次
-	final RateLimiter rateLimiter = RateLimiter.create(1d / 5d);
+	private RateLimiter rateLimiter;
 	private String lastResult;
 	
 	@Override
 	public Object monitor(Map<String, Object> params) {
+		if (rateLimiter == null) {
+			rateLimiter = RateLimiter.create(1d / 5d);
+		}
 		if (rateLimiter.tryAcquire()) {
 			Object count = getParam(params, "count", "5");
 			lastResult = shellExecutor.exeShell("show-busy-java-threads.sh", "-p " + getPid(), "-c " + count);
