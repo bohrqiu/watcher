@@ -27,7 +27,7 @@ public abstract class AbstractMonitorService implements MonitorService {
 		Objects.requireNonNull(monitorMetrics, "监控指标不能为空");
 		Objects.requireNonNull(monitorMetrics.name(), "监控指标名字不能为空");
 		if (monitorMetricsMap.containsKey(monitorMetrics.name())) {
-			throw new UnsupportMonitorMetricsOperationException(monitorMetrics.name() + "监控指标已经存在!");
+			throw new MonitorMetricsOperationException(monitorMetrics.name() + "监控指标已经存在!");
 		}
 		monitorMetricsMap.put(monitorMetrics.name(), monitorMetrics);
 	}

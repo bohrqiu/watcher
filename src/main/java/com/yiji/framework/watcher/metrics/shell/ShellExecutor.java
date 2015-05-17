@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.base.Throwables;
 import com.google.common.io.ByteStreams;
 import com.yiji.framework.watcher.Utils;
@@ -42,6 +43,10 @@ public class ShellExecutor {
 		if (!Utils.isLinux()) {
 			initMsg = "仅支持linux操作系统";
 		}
+		
+	}
+	
+	public void init() {
 		if (!init) {
 			logger.info("watcher script安装路径:{}", scriptPath);
 			try {
@@ -91,6 +96,9 @@ public class ShellExecutor {
 	public String exeShellConetent(String content) {
 		Preconditions.checkNotNull(content);
 		if (!init) {
+			init();
+		}
+		if (Strings.isNullOrEmpty(initMsg)) {
 			return initMsg;
 		}
 		logger.info("开始执行脚本:[{}]", content);

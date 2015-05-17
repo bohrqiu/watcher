@@ -12,17 +12,15 @@ package com.yiji.framework.watcher.metrics.os;
 
 import java.util.Map;
 
-import org.hyperic.sigar.SigarException;
-
 /**
  * @author qiubo@yiji.com
  */
 public class NetInfoMetrics extends AbstractOSMonitorMetrics {
 	
-	public Object doMonitor(Map<String, Object> params) throws SigarException {
-		return SigarFactory.getSigar().getNetInfo().toMap();
+	public Object doMonitor(Map<String, Object> params) throws Exception {
+        return SigarFactory.getSigar().getNetInfo().toMap();
 	}
-	
+
 	public String name() {
 		return "netinfo";
 	}

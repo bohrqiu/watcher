@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.hyperic.sigar.CpuInfo;
-import org.hyperic.sigar.SigarException;
 
 import com.google.common.collect.Lists;
 
@@ -22,21 +21,21 @@ import com.google.common.collect.Lists;
  * @author qiubo@yiji.com
  */
 public class CpuInfoMetrics extends AbstractOSMonitorMetrics {
-	private List<Map> result;
 	
-	public Object doMonitor(Map<String, Object> params) throws SigarException {
-		if (result != null) {
-			return result;
-		}
+	public Object doMonitor(Map<String, Object> params) throws Exception {
 		CpuInfo[] cpuInfos = SigarFactory.getSigar().getCpuInfoList();
-		List<Map> temp = Lists.newArrayList();
+		List<Map> result = Lists.newArrayList();
 		if (cpuInfos != null) {
 			for (CpuInfo cpuInfo : cpuInfos) {
-				temp.add(cpuInfo.toMap());
+				result.add(cpuInfo.toMap());
 			}
 		}
-		this.result = temp;
-		return this.result;
+		return result;
+	}
+	
+	@Override
+	public CacheTime getCacheTime() {
+		return CacheTime.Forver;
 	}
 	
 	public String name() {

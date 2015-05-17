@@ -12,17 +12,19 @@ package com.yiji.framework.watcher.metrics.os;
 
 import java.util.Map;
 
-import org.hyperic.sigar.SigarException;
-
 /**
  * @author qiubo@yiji.com
  */
 public class SwapMetrics extends AbstractOSMonitorMetrics {
 	
-	public Object doMonitor(Map<String, Object> params) throws SigarException {
-		return SigarFactory.getSigar().getSwap().toMap();
+	public Object doMonitor(Map<String, Object> params) throws Exception {
+        return SigarFactory.getSigar().getSwap().toMap();
 	}
-	
+
+    @Override
+    public CacheTime getCacheTime() {
+        return new CacheTime.Time(5 * 1000);
+    }
 	public String name() {
 		return "swap";
 	}

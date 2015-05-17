@@ -1,4 +1,6 @@
-package com.yiji.framework.watcher;
+package com.yiji.framework.boot;
+
+import com.yiji.framework.boot.BootstrapHelper;
 
 /**
  * 

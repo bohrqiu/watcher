@@ -8,7 +8,7 @@
  * qiubo@yiji.com 2015-04-27 16:23 创建
  *
  */
-package com.yiji.framework.watcher;
+package com.yiji.framework.boot;
 
 import javax.servlet.ServletException;
 

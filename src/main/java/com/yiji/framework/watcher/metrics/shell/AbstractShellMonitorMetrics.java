@@ -10,11 +10,15 @@
  */
 package com.yiji.framework.watcher.metrics.shell;
 
+import java.util.Map;
+
+import com.yiji.framework.watcher.metrics.AbstractCachedMonitorMetrics;
 import com.yiji.framework.watcher.metrics.AbstractMonitorMetrics;
 
 /**
  * @author qiubo@yiji.com
  */
-public abstract class AbstractShellMonitorMetrics extends AbstractMonitorMetrics {
+public abstract class AbstractShellMonitorMetrics extends AbstractCachedMonitorMetrics {
 	protected ShellExecutor shellExecutor = new ShellExecutor();
+	
 }

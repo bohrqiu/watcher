@@ -12,7 +12,6 @@ package com.yiji.framework.watcher.metrics.os;
 
 import java.util.Map;
 
-import org.hyperic.sigar.SigarException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,12 +22,11 @@ public class UlimitMetircs extends AbstractOSMonitorMetrics {
 	private static final Logger logger = LoggerFactory.getLogger(UlimitMetircs.class);
 	
 	@Override
-	public Object doMonitor(Map<String, Object> params) throws SigarException {
+	public Object doMonitor(Map<String, Object> params) throws Exception {
 		WatcherUlimit watcherUlimit = new WatcherUlimit();
 		if (params.containsKey("help") || params.containsKey("h")) {
 			return watcherUlimit.getComment();
 		}
-
 		return watcherUlimit.getUlimitInfo();
 	}
 	

@@ -15,25 +15,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.hyperic.sigar.ProcExe;
-import org.hyperic.sigar.SigarException;
 
 /**
  * @author qiubo@yiji.com
  */
 public class ProcExeMetrics extends AbstractOSMonitorMetrics {
-	private Map result;
 	
-	public Object doMonitor(Map<String, Object> params) throws SigarException {
-		if (result != null) {
-			return result;
-		}
-		Map tmp = new HashMap<>();
+	public Object doMonitor(Map<String, Object> params) throws Exception {
+		Map<String, Object> result = new HashMap<>();
 		ProcExe procExe = SigarFactory.getSigar().getProcExe(SigarFactory.getSigar().getPid());
-		tmp.put("cmd", procExe.getCwd());
-		tmp.put("name", procExe.getName());
-		tmp.put("inputArguments", ManagementFactory.getRuntimeMXBean().getInputArguments());
-		result = tmp;
+		result.put("cmd", procExe.getCwd());
+		result.put("name", procExe.getName());
+		result.put("inputArguments", ManagementFactory.getRuntimeMXBean().getInputArguments());
 		return result;
+	}
+	
+	@Override
+	public CacheTime getCacheTime() {
+		return CacheTime.Forver;
 	}
 	
 	public String name() {

@@ -73,7 +73,7 @@
 
 ## 3. 快速体验
 
-下载源代码后导入IDE，执行`com.yiji.framework.watcher.WatherTomcatBootStrap`类，控制台会输出如下的提示，`http`端口11111，dubbo服务端口`20880`
+下载源代码后导入IDE，执行`com.yiji.framework.boot.WatherTomcatBootStrap`类，控制台会输出如下的提示，`http`端口11111，dubbo服务端口`20880`
 
 	应用启动成功,耗时:5235ms
 	web: http://127.0.0.1:11111/watcher/
@@ -122,6 +122,21 @@ watcher内部集成了[metrics](https://github.com/dropwizard/metrics),需要添
 
 ### 5.2 `watcher style`
 
+`watcher`提供了集中添加监控指标插件的方式:
+
+#### 5.2.1 `watcher`自动扫描包
+
+`DefaultMonitorService`默认会扫描`com.yiji.framework.watcher.metrics`包下所有实现`com.yiji.framework.watcher.MonitorMetrics`接口的类.
+
+您也可以简单把实现类放在`com.yiji.framework.watcher.metrics`包中，`watcher`会自动帮您添加到`com.yiji.framework.watcher.MonitorMetricsRepository`中。
+
+#### 5.2.2 Java SPI
+您也可以通过标准的Java SPI机制来添加您的插件，在您的类路径下新建文件`META-INFO/services/com.yiji.framework.watcher.MonitorMetrics`,在文件中写入实现类类名。
+
+java spi参考地址：[Introduction to the Service Provider Interfaces](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html)
+
+
+#### 5.2.3 
 继承`com.yiji.framework.watcher.metrics.AbstractMonitorMetrics`类，然后通过`DefaultMonitorService#addMonitorMetrics`注册。
 
 `DefaultMonitorService`默认会扫描`com.yiji.framework.watcher.metrics`下的所有`MonitorMetrics`.

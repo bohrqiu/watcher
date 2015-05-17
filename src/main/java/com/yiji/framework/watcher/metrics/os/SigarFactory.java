@@ -34,11 +34,12 @@ public class SigarFactory {
 		.getPath();
 	private static final String[] libs = new String[] { libPath + File.separator + sigarMacosxlib, libPath + File.separator + sigarLinuxAmd64lib,
 														libPath + File.separator + sigarLinuxX86lib };
+	
 	static {
 		initSigarLibPath();
 	}
 	
-	public static void initSigarLibPath() {
+	private static void initSigarLibPath() {
 		logger.info("watcher sigar本地库安装路径:{}", libPath);
 		try {
 			//如果临时目录存在sigar，则设置路径
@@ -54,9 +55,9 @@ public class SigarFactory {
 				Utils.unzip(new URL(file).getFile(), libPath);
 			}
 			System.setProperty("org.hyperic.sigar.path", libPath);
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			logger.error("sigar加载失败", e);
-			Throwables.propagate(e);
+			Throwables.propagateIfInstanceOf(e, Error.class);
 		}
 	}
 	

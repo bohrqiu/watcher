@@ -7,7 +7,7 @@ import com.codahale.metrics.*;
 import com.google.common.collect.Maps;
 import com.yiji.framework.watcher.MetricsHolder;
 import com.yiji.framework.watcher.MonitorMetrics;
-import com.yiji.framework.watcher.serilization.*;
+import com.yiji.framework.watcher.serialization.*;
 
 /**
  * @author daidai@yiji.com
