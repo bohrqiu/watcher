@@ -34,30 +34,41 @@ public class SigarFactory {
 		.getPath();
 	private static final String[] libs = new String[] { libPath + File.separator + sigarMacosxlib, libPath + File.separator + sigarLinuxAmd64lib,
 														libPath + File.separator + sigarLinuxX86lib };
+	private static volatile boolean inited = false;
 	
 	static {
 		initSigarLibPath();
 	}
 	
 	private static void initSigarLibPath() {
-		logger.info("watcher sigar本地库安装路径:{}", libPath);
-		try {
-			//如果临时目录存在sigar，则设置路径
-			if (!checkLocalLib()) {
-				//不存在，需要解压jar包中的库文件到sigar目录
-				URL libURL = Utils.getDefaultClassLoader().getResource(sigarLinuxX86lib);
-				if (libURL == null || libURL.getFile() == null) {
-					throw new RuntimeException("需要依赖org.fusesource:sigar:sigar-1.6.4-native,maven:\n" + "<dependency>\n"
-												+ "\t<groupId>org.fusesource</groupId>\n" + "\t<artifactId>sigar</artifactId>\n" + "\t<version>"
-												+ sigarVersion + "</version>\n" + "\t<classifier>native</classifier>\n" + "</dependency>");
-				}
-				String file = libURL.getFile().substring(0, libURL.getFile().indexOf(sigarLinuxX86lib) - 2);
-				Utils.unzip(new URL(file).getFile(), libPath);
+		if (inited) {
+			return;
+		}
+		synchronized (SigarFactory.class) {
+			if (inited) {
+				return;
 			}
-			System.setProperty("org.hyperic.sigar.path", libPath);
-		} catch (Throwable e) {
-			logger.error("sigar加载失败", e);
-			Throwables.propagateIfInstanceOf(e, Error.class);
+			logger.info("watcher sigar本地库安装路径:{}", libPath);
+			try {
+				//如果临时目录存在sigar，则设置路径
+				if (!checkLocalLib()) {
+					//不存在，需要解压jar包中的库文件到sigar目录
+					URL libURL = Utils.getDefaultClassLoader().getResource(sigarLinuxX86lib);
+					if (libURL == null || libURL.getFile() == null) {
+						throw new RuntimeException("需要依赖org.fusesource:sigar:sigar-1.6.4-native,maven:\n" + "<dependency>\n"
+													+ "\t<groupId>org.fusesource</groupId>\n" + "\t<artifactId>sigar</artifactId>\n" + "\t<version>"
+													+ sigarVersion + "</version>\n" + "\t<classifier>native</classifier>\n" + "</dependency>");
+					}
+					String file = libURL.getFile().substring(0, libURL.getFile().indexOf(sigarLinuxX86lib) - 2);
+					Utils.unzip(new URL(file).getFile(), libPath);
+				}
+				System.setProperty("org.hyperic.sigar.path", libPath);
+			} catch (Throwable e) {
+				logger.error("sigar加载失败", e);
+				Throwables.propagate(e);
+			} finally {
+				inited = true;
+			}
 		}
 	}
 	
@@ -71,6 +82,7 @@ public class SigarFactory {
 	}
 	
 	public static Sigar getSigar() {
+		initSigarLibPath();
 		return new Sigar();
 	}
 	

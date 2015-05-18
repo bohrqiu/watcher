@@ -33,7 +33,7 @@ public class DefaultMonitorService extends AbstractMonitorService {
 	}
 	
 	public String monitor(MonitorRequest request) {
-		logger.info("执行MonitorRequest={}", request);
+		logger.info("执行监控请求:action={},params={}", request.getAction(), request.getParams());
 		try {
 			Objects.requireNonNull(request, "request不能为空");
 			MonitorMetrics monitorMetrics = monitorMetricsMap.get(request.getAction());

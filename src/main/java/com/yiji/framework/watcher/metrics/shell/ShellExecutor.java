@@ -35,26 +35,29 @@ public class ShellExecutor {
 	private static final String scriptRelativePath = "watcher" + File.separator + "script";
 	private static final String scriptPath = new File(System.getProperty("java.io.tmpdir") + File.separator + scriptRelativePath).getPath();
 	
-	private static boolean init = false;
+	private static volatile boolean init = false;
 	
 	private static String initMsg = null;
 	
 	public ShellExecutor() {
-		if (!Utils.isLinux()) {
-			initMsg = "仅支持linux操作系统";
-		}
-		
+        init();
 	}
 	
 	public void init() {
-		if (!init) {
-			logger.info("watcher script安装路径:{}", scriptPath);
-			try {
-				initScript();
-				init = true;
-			} catch (Exception e) {
-				logger.info(e.getMessage(), e);
-				initMsg = Throwables.getStackTraceAsString(e);
+		if (init) {
+			return;
+		}
+		synchronized (ShellExecutor.class) {
+			if (!init) {
+				logger.info("watcher script安装路径:{}", scriptPath);
+				try {
+					initScript();
+				} catch (Exception e) {
+					logger.info(e.getMessage(), e);
+					initMsg = Throwables.getStackTraceAsString(e);
+				} finally {
+					init = true;
+				}
 			}
 		}
 	}
@@ -95,9 +98,6 @@ public class ShellExecutor {
 	
 	public String exeShellConetent(String content) {
 		Preconditions.checkNotNull(content);
-		if (!init) {
-			init();
-		}
 		if (Strings.isNullOrEmpty(initMsg)) {
 			return initMsg;
 		}

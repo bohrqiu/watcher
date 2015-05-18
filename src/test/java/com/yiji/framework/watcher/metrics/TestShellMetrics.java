@@ -24,7 +24,7 @@ public class TestShellMetrics extends AbstractShellMonitorMetrics {
 	private String lastResult;
 	
 	@Override
-	public Object monitor(Map<String, Object> params) {
+	public Object doMonitor(Map<String, Object> params) {
 		if (rateLimiter == null) {
 			rateLimiter = RateLimiter.create(1d / 5d);
 		}

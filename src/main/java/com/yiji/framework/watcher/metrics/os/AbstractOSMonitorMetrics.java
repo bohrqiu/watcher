@@ -16,5 +16,8 @@ import com.yiji.framework.watcher.metrics.AbstractCachedMonitorMetrics;
  * @author qiubo@yiji.com
  */
 public abstract class AbstractOSMonitorMetrics extends AbstractCachedMonitorMetrics {
-
+	public AbstractOSMonitorMetrics() {
+        //init Sigar
+		SigarFactory.getSigar();
+	}
 }

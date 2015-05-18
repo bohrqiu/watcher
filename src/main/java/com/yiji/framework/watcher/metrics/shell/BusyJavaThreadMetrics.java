@@ -16,6 +16,7 @@ import static com.yiji.framework.watcher.Utils.getPid;
 import java.util.Map;
 
 import com.google.common.util.concurrent.RateLimiter;
+import com.yiji.framework.watcher.Utils;
 
 /**
  * @author qiubo@yiji.com
@@ -23,6 +24,9 @@ import com.google.common.util.concurrent.RateLimiter;
 public class BusyJavaThreadMetrics extends AbstractShellMonitorMetrics {
 	@Override
 	public Object doMonitor(Map<String, Object> params) throws Throwable {
+		if (!Utils.isLinux()) {
+			return "此脚本仅支持linux";
+		}
 		Object count = getParam(params, "count", "5");
 		lastResult = shellExecutor.exeShell("show-busy-java-threads.sh", "-p " + getPid(), "-c " + count);
 		return lastResult;
