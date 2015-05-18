@@ -5,8 +5,8 @@ import java.util.Map;
 import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.codahale.metrics.*;
 import com.google.common.collect.Maps;
+import com.yiji.framework.watcher.Constants;
 import com.yiji.framework.watcher.MetricsHolder;
-import com.yiji.framework.watcher.MonitorMetrics;
 import com.yiji.framework.watcher.metrics.base.AbstractMonitorMetrics;
 import com.yiji.framework.watcher.serialization.*;
 
@@ -42,7 +42,7 @@ public class MetricRegistryMetrics extends AbstractMonitorMetrics {
 		if (param == null) {
 			return true;
 		}
-		String name = (String) param.get(MonitorMetrics.KEY);
+		String name = (String) param.get(Constants.KEY);
 		String type = (String) param.get("type");
 		if (metricName != null && name != null && !metricName.startsWith(name)) {
 			return false;

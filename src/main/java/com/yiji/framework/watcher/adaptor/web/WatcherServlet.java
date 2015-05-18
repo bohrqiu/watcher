@@ -68,8 +68,7 @@ public class WatcherServlet extends AccessControlServlet {
 		}
 		if (uri.equals("/") || uri.equals("/index.html") || uri.equals("/index.htm")) {
 			handleIndex(req, resp);
-			return;
-		} else if (uri.indexOf("q.do") != -1) {
+		} else if (uri.contains("q.do")) {
 			Map<String, Object> paramMap = getRequestParamMap(req);
 			MonitorRequest request = new MonitorRequest();
 			request.setParams(paramMap);

@@ -10,6 +10,7 @@
  */
 package com.yiji.framework.watcher.metrics;
 
+import com.yiji.framework.watcher.Constants;
 import com.yiji.framework.watcher.metrics.base.AbstractMonitorMetrics;
 
 import java.util.Map;
@@ -20,7 +21,7 @@ import java.util.Map;
 public class SysEnvMetrics extends AbstractMonitorMetrics {
 	
 	public Object monitor(Map<String, Object> params) {
-		String key = (String) params.get(KEY);
+		String key = (String) params.get(Constants.KEY);
 		if (key == null) {
 			return System.getenv();
 		} else {

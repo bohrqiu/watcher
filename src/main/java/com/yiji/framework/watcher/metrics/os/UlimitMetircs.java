@@ -10,8 +10,10 @@
  */
 package com.yiji.framework.watcher.metrics.os;
 
+import java.util.List;
 import java.util.Map;
 
+import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,8 +31,20 @@ public class UlimitMetircs extends AbstractOSMonitorMetrics {
 		}
 		return watcherUlimit.getUlimitInfo();
 	}
-	
-	@Override
+    @Override
+    public CacheTime getCacheTime() {
+        return CacheTime.THIRTY_SECOND;
+    }
+
+    @Override
+    protected List<String> getParamsBuildKey() {
+        List<String> keys=Lists.newArrayList(super.getParamsBuildKey());
+        keys.add("h");
+        keys.add("help");
+        return keys;
+    }
+
+    @Override
 	public String name() {
 		return "ulimit";
 	}

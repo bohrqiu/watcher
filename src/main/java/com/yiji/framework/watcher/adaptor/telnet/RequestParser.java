@@ -46,23 +46,27 @@ public class RequestParser {
 		if (!Utils.isEmpty(cmd)) {
 			MonitorRequest request = new MonitorRequest();
 			request.setAction(cmd);
-			if (!Utils.isEmpty(params)) {
-				String[] paramSecs = Utils.split(params, PARAM_SEPARATOR);
-				for (String param : paramSecs) {
-					param = param.trim();
-					if (!Utils.isEmpty(param)) {
-						String[] pair = param.split(KEY_VALUE_DELIM);
-						if (pair != null && pair.length >= 2) {
-							String key = pair[0].trim();
-							String value = pair[1].trim();
-							if (key.equals(PRETTY_FORMAT_KEY))
-								request.getParams().put(pair[0], pair[1]);
-						}
-					}
-				}
-			}
+			setParams(params, request);
 			return request;
 		}
 		return null;
+	}
+	
+	private static void setParams(String params, MonitorRequest request) {
+		if (!Utils.isEmpty(params)) {
+			String[] paramSecs = Utils.split(params, PARAM_SEPARATOR);
+			for (String param : paramSecs) {
+				param = param.trim();
+				if (!Utils.isEmpty(param)) {
+					String[] pair = param.split(KEY_VALUE_DELIM);
+					if (pair.length >= 2) {
+						String key = pair[0].trim();
+						String value = pair[1].trim();
+						if (key.equals(PRETTY_FORMAT_KEY))
+							request.getParams().put(key, value);
+					}
+				}
+			}
+		}
 	}
 }

@@ -66,7 +66,7 @@ public class Utils {
 			return EMPTY_STRINGS;
 		}
 		
-		List list = new ArrayList();
+		List<String> list = new ArrayList();
 		int i = 0;
 		int start = 0;
 		boolean match = false;
@@ -86,7 +86,7 @@ public class Utils {
 		if (match) {
 			list.add(str.substring(start, i));
 		}
-		return (String[]) list.toArray(new String[list.size()]);
+		return list.toArray(new String[list.size()]);
 	}
 	
 	public static Long getPid() {

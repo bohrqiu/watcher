@@ -15,7 +15,6 @@ import java.io.StringWriter;
 import java.lang.management.*;
 import java.util.Map;
 
-import com.yiji.framework.watcher.ResponseType;
 import com.yiji.framework.watcher.metrics.base.AbstractCachedMonitorMetrics;
 
 /**
@@ -25,8 +24,7 @@ public class JstackMetrics extends AbstractCachedMonitorMetrics {
 	private ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
 	
 	public Object doMonitor(Map<String, Object> params) {
-		ResponseType responseType = (ResponseType) params.get(ResponseType.RESPONSE_TYPE_KEY);
-		if (responseType == ResponseType.TEXT) {
+		if (isResponseText(params)) {
 			return dump();
 		}
 		return getThreadInfos();

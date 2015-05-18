@@ -17,12 +17,8 @@ import java.util.Map;
  * @author qiubo@yiji.com
  */
 public interface MonitorMetrics extends MetricsName, Comparable<MonitorMetrics> {
-	/**
-	 * 参数名字
-	 */
-	String KEY = "key";
-	
-	/**
+
+    /**
 	 * 通过请求参数返回监控结果对象
 	 */
 	Object monitor(Map<String, Object> params);

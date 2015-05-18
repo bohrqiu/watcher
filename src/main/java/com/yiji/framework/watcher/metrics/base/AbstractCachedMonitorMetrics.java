@@ -10,69 +10,90 @@
  */
 package com.yiji.framework.watcher.metrics.base;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
+
+import com.google.common.base.Joiner;
+import com.google.common.base.Throwables;
+import com.google.common.collect.ImmutableList;
+import com.yiji.framework.watcher.Constants;
 
 /**
  * @author qiubo@yiji.com
  */
-public abstract class AbstractCachedMonitorMetrics extends AbstractResultConvertedMonitorMetrics {
-	private long lastAccessTime = 0l;
+public abstract class AbstractCachedMonitorMetrics extends AbstractMonitorMetrics {
+    private static final List<String> DEFAULT_PARAM_KEY = ImmutableList.of(Constants.RES_TYPE_KEY, Constants.ACTION_KEY);
 	private CacheTime cacheTime;
-	private Object lastResult;
-	@Override
-	public final Object doResultConvertedMonitor(Map<String, Object> params) throws Throwable {
-		long now = System.currentTimeMillis();
+	
+	public final Object monitor(Map<String, Object> params) {
 		try {
-			//load cacheTime
 			if (cacheTime == null) {
 				cacheTime = getCacheTime();
 			}
-			
-			//first access
-			if (lastAccessTime == 0) {
-				//if cache isn't enable,cache nothing
-				if (isCacheNotEnable()) {
-					return doMonitor(params);
-				} else {
-					return moniter(params);
-				}
-			}
-			
 			if (isCacheNotEnable()) {
-				//never cache
-				//if cache isn't enable,cache nothing
 				return doMonitor(params);
-			} else if (isAlwaysCache()) {
-				//cache forver
-				return getResultFromCache();
 			} else {
-				long elaspe = now - lastAccessTime;
-				if (elaspe > cacheTime.getCacheTime()) {
-					return moniter(params);
+				String key = buildKey(params);
+				Object result = MetricsCache.INSTANCE.get(key);
+				if (result == null) {
+					result = doMonitor(params);
+					if (result == null) {
+						result = Constants.NULL;
+					}
+					if (isResponseText(params)) {
+						result = convertObjToStr(result);
+					}
+					MetricsCache.INSTANCE.put(key, result, cacheTime.getCacheTime());
+					return result;
 				} else {
-					return getResultFromCache();
+					return result;
 				}
 			}
-		} finally {
-			lastAccessTime = now;
+		} catch (Throwable throwable) {
+			throw Throwables.propagate(throwable);
 		}
 	}
 	
-	private boolean isAlwaysCache() {
-		return cacheTime == CacheTime.Forver;
+	private Object convertObjToStr(Object result) {
+		if (result instanceof Collection) {
+			Collection collection = (Collection) result;
+			return Joiner.on("\n").join(collection);
+		} else if (result instanceof Map) {
+			Map map = (Map) result;
+			return Joiner.on("\n").withKeyValueSeparator("=").join(map);
+		} else {
+			return result.toString();
+		}
+	}
+	
+	private String buildKey(Map<String, Object> params) {
+		StringBuilder key = new StringBuilder(this.getClass().getName());
+		if (params == null || params.isEmpty()) {
+			return key.toString();
+		} else {
+			for (String param : getParamsBuildKey()) {
+				Object value = params.get(param);
+				if (value == null) {
+					key.append((String) null);
+				} else {
+					key.append(value.toString());
+				}
+			}
+		}
+		return key.toString();
+	}
+	
+	/**
+	 * 获取参与cache的key计算的参数名列表
+	 * 
+	 */
+	protected List<String> getParamsBuildKey() {
+		return DEFAULT_PARAM_KEY;
 	}
 	
 	private boolean isCacheNotEnable() {
 		return cacheTime == null || cacheTime == CacheTime.Never;
-	}
-	
-	private Object moniter(Map<String, Object> params) throws Throwable {
-		lastResult = doMonitor(params);
-		return lastResult;
-	}
-	
-	private Object getResultFromCache() throws Throwable {
-		return lastResult;
 	}
 	
 	/**
@@ -99,11 +120,12 @@ public abstract class AbstractCachedMonitorMetrics extends AbstractResultConvert
 		CacheTime Forver = new CacheTime() {
 			@Override
 			public long getCacheTime() {
-				return -1;
+				return Long.MAX_VALUE;
 			}
 		};
 		
 		CacheTime FIVE_SECOND = new Time(5 * 1000);
+		
 		CacheTime THIRTY_SECOND = new Time(30 * 1000);
 		
 		class Time implements CacheTime {

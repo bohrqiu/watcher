@@ -40,7 +40,7 @@ public class DefaultMonitorService extends AbstractMonitorService {
 			if (monitorMetrics == null) {
 				throw new MonitorMetricsOperationException("unsupport monitor metrics:" + request.getAction());
 			}
-			request.addParam(ResponseType.RESPONSE_TYPE_KEY, request.getResponseType());
+			request.addParam(Constants.RES_TYPE_KEY, request.getResponseType());
 			Object result = monitorMetrics.monitor(request.getParams());
 			if (request.getResponseType() == ResponseType.TEXT) {
 				if (result == null) {

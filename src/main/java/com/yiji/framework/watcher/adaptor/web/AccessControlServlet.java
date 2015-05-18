@@ -11,6 +11,7 @@
 package com.yiji.framework.watcher.adaptor.web;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +32,7 @@ import com.yiji.framework.watcher.adaptor.web.util.IPRange;
 /**
  * @author qiubo@yiji.com
  */
-public class AccessControlServlet extends HttpServlet {
+public class AccessControlServlet extends HttpServlet implements Serializable {
 	private static final Logger logger = LoggerFactory.getLogger(AccessControlServlet.class);
 	public static final String PARAM_NAME_ALLOW = "allow";
 	public static final String PARAM_NAME_DENY = "deny";

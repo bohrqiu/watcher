@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import com.codahale.metrics.health.HealthCheckRegistry;
+import com.yiji.framework.watcher.Constants;
 import com.yiji.framework.watcher.MetricsHolder;
 import com.yiji.framework.watcher.health.ThreadDeadlockHealthCheck;
 import com.yiji.framework.watcher.metrics.base.AbstractMonitorMetrics;
@@ -30,7 +31,7 @@ public class HealthCheckMetrics extends AbstractMonitorMetrics {
 	
 	@Override
 	public Object monitor(Map<String, Object> params) {
-		Object key = params.get(KEY);
+		Object key = params.get(Constants.KEY);
 		if (key == null) {
 			return healthCheckRegistry.runHealthChecks();
 		} else {
