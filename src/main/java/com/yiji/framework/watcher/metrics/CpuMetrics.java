@@ -15,6 +15,7 @@ import java.lang.management.OperatingSystemMXBean;
 import java.util.Map;
 
 import com.google.common.collect.Maps;
+import com.yiji.framework.watcher.metrics.base.AbstractCachedMonitorMetrics;
 
 /**
  * @author qiubo@yiji.com

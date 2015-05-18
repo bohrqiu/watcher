@@ -10,10 +10,7 @@
  */
 package com.yiji.framework.watcher.metrics.shell;
 
-import java.util.Map;
-
-import com.yiji.framework.watcher.metrics.AbstractCachedMonitorMetrics;
-import com.yiji.framework.watcher.metrics.AbstractMonitorMetrics;
+import com.yiji.framework.watcher.metrics.base.AbstractCachedMonitorMetrics;
 
 /**
  * @author qiubo@yiji.com

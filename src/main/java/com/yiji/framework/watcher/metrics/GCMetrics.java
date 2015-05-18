@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import com.google.common.collect.Maps;
+import com.yiji.framework.watcher.metrics.base.AbstractCachedMonitorMetrics;
 
 /**
  * @author qiubo@yiji.com

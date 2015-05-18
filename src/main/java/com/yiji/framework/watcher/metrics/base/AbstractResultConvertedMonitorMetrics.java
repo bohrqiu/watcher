@@ -8,7 +8,7 @@
  * qzhanbo@yiji.com 2015-05-18 01:23 创建
  *
  */
-package com.yiji.framework.watcher.metrics;
+package com.yiji.framework.watcher.metrics.base;
 
 import java.util.Collection;
 import java.util.Map;

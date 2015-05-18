@@ -10,7 +10,7 @@
  */
 package com.yiji.framework.watcher.metrics.os;
 
-import com.yiji.framework.watcher.metrics.AbstractCachedMonitorMetrics;
+import com.yiji.framework.watcher.metrics.base.AbstractCachedMonitorMetrics;
 
 /**
  * @author qiubo@yiji.com

@@ -10,6 +10,8 @@
  */
 package com.yiji.framework.watcher.metrics;
 
+import com.yiji.framework.watcher.metrics.base.AbstractMonitorMetrics;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;

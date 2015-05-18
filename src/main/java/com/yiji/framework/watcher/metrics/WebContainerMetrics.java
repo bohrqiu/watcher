@@ -17,6 +17,7 @@ import javax.management.MBeanServer;
 import javax.management.MBeanServerFactory;
 import javax.management.ObjectName;
 
+import com.yiji.framework.watcher.metrics.base.AbstractCachedMonitorMetrics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

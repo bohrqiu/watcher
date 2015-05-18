@@ -8,19 +8,19 @@
  * qzhanbo@yiji.com 2015-05-18 00:53 创建
  *
  */
-package com.yiji.framework.watcher.metrics;
+package com.yiji.framework.watcher.metrics.base;
 
 import java.util.Map;
 
 /**
  * @author qiubo@yiji.com
  */
-public abstract class AbstractCachedMonitorMetrics extends AbstractRateLimiterMonitorMetrics {
+public abstract class AbstractCachedMonitorMetrics extends AbstractResultConvertedMonitorMetrics {
 	private long lastAccessTime = 0l;
 	private CacheTime cacheTime;
-	
+	private Object lastResult;
 	@Override
-	public final Object doRateLimiterMonitor(Map<String, Object> params) throws Throwable {
+	public final Object doResultConvertedMonitor(Map<String, Object> params) throws Throwable {
 		long now = System.currentTimeMillis();
 		try {
 			//load cacheTime

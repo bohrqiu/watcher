@@ -16,6 +16,7 @@ import java.lang.management.*;
 import java.util.Map;
 
 import com.yiji.framework.watcher.ResponseType;
+import com.yiji.framework.watcher.metrics.base.AbstractCachedMonitorMetrics;
 
 /**
  * @author qiubo@yiji.com

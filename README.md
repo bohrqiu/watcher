@@ -137,7 +137,7 @@ java spi参考地址：[Introduction to the Service Provider Interfaces](https:/
 
 
 #### 5.2.3 
-继承`com.yiji.framework.watcher.metrics.AbstractMonitorMetrics`类，然后通过`DefaultMonitorService#addMonitorMetrics`注册。
+继承`com.yiji.framework.watcher.metrics.base.AbstractMonitorMetrics`类，然后通过`DefaultMonitorService#addMonitorMetrics`注册。
 
 `DefaultMonitorService`默认会扫描`com.yiji.framework.watcher.metrics`下的所有`MonitorMetrics`.
 

@@ -16,6 +16,7 @@ import java.util.Map;
 import com.codahale.metrics.health.HealthCheckRegistry;
 import com.yiji.framework.watcher.MetricsHolder;
 import com.yiji.framework.watcher.health.ThreadDeadlockHealthCheck;
+import com.yiji.framework.watcher.metrics.base.AbstractMonitorMetrics;
 
 /**
  * @author qiubo@yiji.com

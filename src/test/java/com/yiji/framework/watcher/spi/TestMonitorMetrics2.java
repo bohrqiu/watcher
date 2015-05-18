@@ -12,7 +12,7 @@ package com.yiji.framework.watcher.spi;
 
 import java.util.Map;
 
-import com.yiji.framework.watcher.metrics.AbstractMonitorMetrics;
+import com.yiji.framework.watcher.metrics.base.AbstractMonitorMetrics;
 
 /**
  * @author qiubo@yiji.com
