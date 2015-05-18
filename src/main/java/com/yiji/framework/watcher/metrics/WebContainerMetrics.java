@@ -25,12 +25,12 @@ import com.google.common.collect.Maps;
 /**
  * @author qiubo@yiji.com
  */
-public class WebContainerMetrics extends AbstractMonitorMetrics {
+public class WebContainerMetrics extends AbstractCachedMonitorMetrics {
 	private static final Logger logger = LoggerFactory.getLogger(WebContainerMetrics.class);
 	private static final String tomcatEmbedDomain = "Tomcat";
 	private static final String tomcatDomain = "Catalina";
 	
-	public Object monitor(Map<String, Object> params) {
+	public Object doMonitor(Map<String, Object> params) {
 		Map<String, Object> map = Maps.newHashMap();
 		
 		List<MBeanServer> mBeanServers = MBeanServerFactory.findMBeanServer(null);
@@ -99,6 +99,11 @@ public class WebContainerMetrics extends AbstractMonitorMetrics {
 			}
 		}
 		return map;
+	}
+	
+	@Override
+	public CacheTime getCacheTime() {
+		return CacheTime.THIRTY_SECOND;
 	}
 	
 	private String getTomcatDomian(MBeanServer mBeanServer) {

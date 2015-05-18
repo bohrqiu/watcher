@@ -21,7 +21,11 @@ public class NetStatMetrics extends AbstractOSMonitorMetrics {
 		return SigarFactory.getSigar().getNetStat();
 	}
 	
-
+	@Override
+	public CacheTime getCacheTime() {
+		return CacheTime.FIVE_SECOND;
+	}
+	
 	public String name() {
 		return "netstat";
 	}

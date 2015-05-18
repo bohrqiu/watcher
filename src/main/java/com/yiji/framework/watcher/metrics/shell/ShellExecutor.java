@@ -15,14 +15,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.net.URL;
 
+import com.google.common.base.*;
 import org.apache.commons.exec.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Joiner;
-import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
-import com.google.common.base.Throwables;
 import com.google.common.io.ByteStreams;
 import com.yiji.framework.watcher.Utils;
 
@@ -119,7 +116,7 @@ public class ShellExecutor {
 			logger.error("脚本[{}]执行失败", content, e);
 			return Throwables.getStackTraceAsString(e);
 		}
-		return new String(byteArrayOutputStream.toByteArray());
+		return new String(byteArrayOutputStream.toByteArray(), Charsets.UTF_8);
 	}
 	
 	public String exeShell(String scriptName, String... params) {

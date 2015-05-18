@@ -19,16 +19,20 @@ import com.google.common.collect.Maps;
 /**
  * @author qiubo@yiji.com
  */
-public class ClassloadMetrics extends AbstractMonitorMetrics {
+public class ClassloadMetrics extends AbstractCachedMonitorMetrics {
 	
-	public Object monitor(Map<String, Object> params) {
+	public Object doMonitor(Map<String, Object> params) {
 		Map<String, Object> map = Maps.newHashMap();
 		ClassLoadingMXBean mxBean = ManagementFactory.getClassLoadingMXBean();
 		map.put("totalLoadedClassCount", mxBean.getTotalLoadedClassCount());
 		map.put("loadedClassCount", mxBean.getLoadedClassCount());
 		map.put("unloadedClassCount", mxBean.getUnloadedClassCount());
 		return map;
-		
+	}
+	
+	@Override
+	public CacheTime getCacheTime() {
+		return CacheTime.THIRTY_SECOND;
 	}
 	
 	public String name() {

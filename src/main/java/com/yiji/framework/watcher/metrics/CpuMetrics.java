@@ -19,14 +19,19 @@ import com.google.common.collect.Maps;
 /**
  * @author qiubo@yiji.com
  */
-public class CpuMetrics extends AbstractMonitorMetrics {
+public class CpuMetrics extends AbstractCachedMonitorMetrics {
 	
-	public Object monitor(Map<String, Object> params) {
+	public Object doMonitor(Map<String, Object> params) {
 		Map<String, Object> map = Maps.newHashMap();
 		OperatingSystemMXBean mxBean = ManagementFactory.getOperatingSystemMXBean();
 		map.put("processors", Runtime.getRuntime().availableProcessors());
 		map.put("systemLoadAverage", mxBean.getSystemLoadAverage());
 		return map;
+	}
+	
+	@Override
+	public CacheTime getCacheTime() {
+		return CacheTime.THIRTY_SECOND;
 	}
 	
 	public String name() {

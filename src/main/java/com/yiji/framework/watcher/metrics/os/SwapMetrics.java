@@ -23,7 +23,7 @@ public class SwapMetrics extends AbstractOSMonitorMetrics {
 
     @Override
     public CacheTime getCacheTime() {
-        return new CacheTime.Time(5 * 1000);
+        return CacheTime.FIVE_SECOND;
     }
 	public String name() {
 		return "swap";

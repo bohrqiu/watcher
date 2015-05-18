@@ -21,9 +21,9 @@ import com.google.common.collect.Maps;
 /**
  * @author qiubo@yiji.com
  */
-public class FileDescriptorMetrics extends AbstractMonitorMetrics {
+public class FileDescriptorMetrics extends AbstractCachedMonitorMetrics {
 	
-	public Object monitor(Map<String, Object> params) {
+	public Object doMonitor(Map<String, Object> params) {
 		OperatingSystemMXBean os = ManagementFactory.getOperatingSystemMXBean();
 		long maxFileDescriptorCount = invoke(os, "getMaxFileDescriptorCount");
 		long openFileDescriptorCount = invoke(os, "getOpenFileDescriptorCount");
@@ -41,6 +41,11 @@ public class FileDescriptorMetrics extends AbstractMonitorMetrics {
 		} catch (Exception e) {
 			return -1;
 		}
+	}
+	
+	@Override
+	public CacheTime getCacheTime() {
+		return CacheTime.THIRTY_SECOND;
 	}
 	
 	public String name() {

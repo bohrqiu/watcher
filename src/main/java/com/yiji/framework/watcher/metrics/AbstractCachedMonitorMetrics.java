@@ -18,7 +18,6 @@ import java.util.Map;
 public abstract class AbstractCachedMonitorMetrics extends AbstractRateLimiterMonitorMetrics {
 	private long lastAccessTime = 0l;
 	private CacheTime cacheTime;
-	private Throwable lastThrowable;
 	
 	@Override
 	public final Object doRateLimiterMonitor(Map<String, Object> params) throws Throwable {
@@ -68,20 +67,11 @@ public abstract class AbstractCachedMonitorMetrics extends AbstractRateLimiterMo
 	}
 	
 	private Object moniter(Map<String, Object> params) throws Throwable {
-		try {
-			lastResult = doMonitor(params);
-			lastThrowable = null;
-		} catch (Throwable e) {
-			lastThrowable = e;
-			throw e;
-		}
+		lastResult = doMonitor(params);
 		return lastResult;
 	}
 	
 	private Object getResultFromCache() throws Throwable {
-		if (lastThrowable != null) {
-			throw lastThrowable;
-		}
 		return lastResult;
 	}
 	
@@ -112,6 +102,9 @@ public abstract class AbstractCachedMonitorMetrics extends AbstractRateLimiterMo
 				return -1;
 			}
 		};
+		
+		CacheTime FIVE_SECOND = new Time(5 * 1000);
+		CacheTime THIRTY_SECOND = new Time(30 * 1000);
 		
 		class Time implements CacheTime {
 			private long cacheTime;

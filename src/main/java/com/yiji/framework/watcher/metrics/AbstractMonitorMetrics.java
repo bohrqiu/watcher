@@ -13,7 +13,6 @@ package com.yiji.framework.watcher.metrics;
 import java.util.Map;
 
 import com.yiji.framework.watcher.MonitorMetrics;
-import com.yiji.framework.watcher.MonitorMetricsOperationException;
 import com.yiji.framework.watcher.ResponseType;
 
 /**
@@ -21,7 +20,7 @@ import com.yiji.framework.watcher.ResponseType;
  */
 public abstract class AbstractMonitorMetrics implements MonitorMetrics {
 	
-	public static Object NULL = new Object() {
+	public static final Object NULL = new Object() {
 		
 		@Override
 		public String toString() {
@@ -31,7 +30,7 @@ public abstract class AbstractMonitorMetrics implements MonitorMetrics {
 	/**
 	 * 上次访问结果
 	 */
-	protected Object lastResult;
+
 	
 	@Override
 	public int compareTo(MonitorMetrics o) {
@@ -48,5 +47,4 @@ public abstract class AbstractMonitorMetrics implements MonitorMetrics {
 		return responseType == ResponseType.JSON;
 	}
 	
-
 }

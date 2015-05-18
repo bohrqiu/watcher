@@ -23,10 +23,10 @@ import com.google.common.collect.Maps;
 /**
  * @author qiubo@yiji.com
  */
-public class ThreadMetrics extends AbstractMonitorMetrics {
+public class ThreadMetrics extends AbstractCachedMonitorMetrics {
 	private static final int MAX_STACK_TRACE_DEPTH = 100;
 	
-	public Object monitor(Map<String, Object> params) {
+	public Object doMonitor(Map<String, Object> params) {
 		Map<String, Object> map = Maps.newHashMap();
 		ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
 		map.put("threadCount", threadMXBean.getThreadCount());
@@ -36,6 +36,11 @@ public class ThreadMetrics extends AbstractMonitorMetrics {
 		map.put("peakThreadCount", threadMXBean.getPeakThreadCount());
 		map.put("daemonThreadCount", threadMXBean.getDaemonThreadCount());
 		return map;
+	}
+	
+	@Override
+	public CacheTime getCacheTime() {
+		return CacheTime.THIRTY_SECOND;
 	}
 	
 	private Set<String> getDeadlockedThreads(ThreadMXBean threads) {

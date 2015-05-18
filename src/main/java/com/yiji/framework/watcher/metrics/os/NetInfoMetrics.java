@@ -18,9 +18,14 @@ import java.util.Map;
 public class NetInfoMetrics extends AbstractOSMonitorMetrics {
 	
 	public Object doMonitor(Map<String, Object> params) throws Exception {
-        return SigarFactory.getSigar().getNetInfo().toMap();
+		return SigarFactory.getSigar().getNetInfo().toMap();
 	}
-
+	
+	@Override
+	public CacheTime getCacheTime() {
+		return CacheTime.Forver;
+	}
+	
 	public String name() {
 		return "netinfo";
 	}

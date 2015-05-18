@@ -20,15 +20,20 @@ import com.yiji.framework.watcher.ResponseType;
 /**
  * @author qiubo@yiji.com
  */
-public class JstackMetrics extends AbstractMonitorMetrics {
+public class JstackMetrics extends AbstractCachedMonitorMetrics {
 	private ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
 	
-	public Object monitor(Map<String, Object> params) {
+	public Object doMonitor(Map<String, Object> params) {
 		ResponseType responseType = (ResponseType) params.get(ResponseType.RESPONSE_TYPE_KEY);
 		if (responseType == ResponseType.TEXT) {
 			return dump();
 		}
 		return getThreadInfos();
+	}
+	
+	@Override
+	public CacheTime getCacheTime() {
+		return CacheTime.FIVE_SECOND;
 	}
 	
 	public String dump() {

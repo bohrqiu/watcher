@@ -16,9 +16,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
-
 /**
  * @author qiubo@yiji.com
  */
@@ -28,7 +25,7 @@ public class IostatMetircs extends AbstractOSMonitorMetrics {
 	@Override
 	public Object doMonitor(Map<String, Object> params) throws Exception {
 		
-		List<String> result = Lists.newArrayList();
+		List<String> result;
 		
 		WatcherIostat iostat = new WatcherIostat();
 		iostat.processCommand(new String[0]);
@@ -36,7 +33,11 @@ public class IostatMetircs extends AbstractOSMonitorMetrics {
 		return result;
 	}
 	
-
+	@Override
+	public CacheTime getCacheTime() {
+		return CacheTime.FIVE_SECOND;
+	}
+	
 	@Override
 	public String name() {
 		return "iostat";

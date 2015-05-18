@@ -10,13 +10,10 @@
  */
 package com.yiji.framework.watcher.metrics.os;
 
-import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.common.base.Joiner;
 
 /**
  * @author qiubo@yiji.com
@@ -29,6 +26,11 @@ public class DfMetircs extends AbstractOSMonitorMetrics {
 		WatcherDf iostat = new WatcherDf();
 		iostat.processCommand(new String[0]);
 		return iostat.getResult();
+	}
+	
+	@Override
+	public CacheTime getCacheTime() {
+		return CacheTime.THIRTY_SECOND;
 	}
 	
 	@Override

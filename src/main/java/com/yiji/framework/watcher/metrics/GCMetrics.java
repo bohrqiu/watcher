@@ -21,10 +21,10 @@ import com.google.common.collect.Maps;
 /**
  * @author qiubo@yiji.com
  */
-public class GCMetrics extends AbstractMonitorMetrics {
+public class GCMetrics extends AbstractCachedMonitorMetrics {
 	private final Pattern WHITESPACE = Pattern.compile("[\\s]+");
 	
-	public Object monitor(Map<String, Object> params) {
+	public Object doMonitor(Map<String, Object> params) {
 		Map<String, Object> map = Maps.newHashMap();
 		List<GarbageCollectorMXBean> mxBeans = ManagementFactory.getGarbageCollectorMXBeans();
 		if (mxBeans == null || mxBeans.isEmpty()) {
@@ -44,6 +44,11 @@ public class GCMetrics extends AbstractMonitorMetrics {
 		map.put("totalTime", totalTime);
 		map.put("totalCount", totalCount);
 		return map;
+	}
+	
+	@Override
+	public CacheTime getCacheTime() {
+		return CacheTime.THIRTY_SECOND;
 	}
 	
 	public String name() {

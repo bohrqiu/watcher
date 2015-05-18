@@ -19,9 +19,9 @@ import com.google.common.collect.Maps;
 /**
  * @author qiubo@yiji.com
  */
-public class JvmMemMetrics extends AbstractMonitorMetrics {
+public class JvmMemMetrics extends AbstractCachedMonitorMetrics {
 	
-	public Object monitor(Map<String, Object> params) {
+	public Object doMonitor(Map<String, Object> params) {
 		Map<String, Object> map = Maps.newHashMap();
 		MemoryMXBean memoryMXBean = ManagementFactory.getMemoryMXBean();
 		map.put("heapMemoryUsage", memoryMXBean.getHeapMemoryUsage());
@@ -30,6 +30,11 @@ public class JvmMemMetrics extends AbstractMonitorMetrics {
 		map.put("freeMemory", Runtime.getRuntime().freeMemory() / 1024 / 1024 + "m");
 		map.put("maxMemory", Runtime.getRuntime().maxMemory() / 1024 / 1024 + "m");
 		return map;
+	}
+	
+	@Override
+	public CacheTime getCacheTime() {
+		return CacheTime.THIRTY_SECOND;
 	}
 	
 	public String name() {

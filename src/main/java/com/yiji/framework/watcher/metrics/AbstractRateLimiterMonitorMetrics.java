@@ -20,7 +20,7 @@ import com.google.common.util.concurrent.RateLimiter;
  */
 public abstract class AbstractRateLimiterMonitorMetrics extends AbstractResultConvertedMonitorMetrics {
 	private volatile RateLimiter rateLimiter;
-	
+    protected Object lastResult;
 	public final Object doResultConvertedMonitor(Map<String, Object> params) throws Throwable {
 		return rateLimiterMonitor(params);
 	}
