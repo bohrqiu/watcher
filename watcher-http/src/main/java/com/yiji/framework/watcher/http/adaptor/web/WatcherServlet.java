@@ -34,7 +34,7 @@ import com.yiji.framework.watcher.MonitorRequest;
  */
 public class WatcherServlet extends AccessControlServlet {
 	
-	private static String velocityPath = "com/yiji/framework/watcher/adaptor/web/index.vm";
+	private static String velocityPath = "com/yiji/framework/watcher/http/adaptor/web/index.vm";
 	private static VelocityEngine velocity;
 	private static String vmContent = null;
 	

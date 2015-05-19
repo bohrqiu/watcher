@@ -23,7 +23,7 @@
 
     <servlet>
         <servlet-name>WatcherServlet</servlet-name>
-        <servlet-class>com.yiji.framework.watcher.adaptor.web.WatcherServlet</servlet-class>
+        <servlet-class>com.yiji.framework.watcher.http.adaptor.web.WatcherServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>WatcherServlet</servlet-name>
