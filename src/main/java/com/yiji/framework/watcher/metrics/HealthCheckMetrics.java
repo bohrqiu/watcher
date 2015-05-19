@@ -37,8 +37,18 @@ public class HealthCheckMetrics extends AbstractMonitorMetrics {
 		HealthCheckRepository healthCheckRepository = new HealthCheckRepository();
 		extensionLoader.load(healthCheckRepository, HealthCheck.class);
 		for (HealthCheck healthCheck : healthCheckRepository.set()) {
-			healthCheckRegistry.register(healthCheck.getClass().getSimpleName(), healthCheck);
+			healthCheckRegistry.register(getHealthCheckerName(healthCheck), healthCheck);
 		}
+	}
+	
+	private String getHealthCheckerName(HealthCheck healthCheck) {
+		String simpleName = healthCheck.getClass().getSimpleName();
+		int idx = simpleName.lastIndexOf("HealthCheck");
+        if(idx<0){
+            return simpleName;
+        }else {
+            return simpleName.substring(0,idx);
+        }
 	}
 	
 	@Override
