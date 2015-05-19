@@ -24,7 +24,7 @@ public class WatcherTelnetHandler implements TelnetHandler {
 	public WatcherTelnetHandler() {
 		String[] header = { "metricName", "description" };
 		List<List<String>> table = Lists.newLinkedList();
-		for (MonitorMetrics monitorMetrics : monitorService.monitorMetricses()) {
+		for (MonitorMetrics monitorMetrics : monitorService.set()) {
 			List<String> row = Lists.newLinkedList();
 			row.add(monitorMetrics.name());
 			row.add(monitorMetrics.desc());
@@ -43,7 +43,7 @@ public class WatcherTelnetHandler implements TelnetHandler {
 				request.setPrettyFormat(false);
 				setResType(request.getParams(), request);
 				if (request.getAction().equals("jstack")) {
-					request.setResponseType(ResponseType.TEXT);
+					request.setResponseType(MonitorRequest.ResponseType.TEXT);
 				}
 				return monitorService.monitor(request);
 			} catch (IllegalArgumentException e) {
@@ -56,13 +56,13 @@ public class WatcherTelnetHandler implements TelnetHandler {
 		try {
 			Object resType = paramMap.get("resType");
 			if (resType == null) {
-				request.setResponseType(ResponseType.JSON);
+				request.setResponseType(MonitorRequest.ResponseType.JSON);
 			} else {
 				String str = resType.toString().toUpperCase();
-				request.setResponseType(ResponseType.valueOf(str));
+				request.setResponseType(MonitorRequest.ResponseType.valueOf(str));
 			}
 		} catch (IllegalArgumentException e) {
-			request.setResponseType(ResponseType.JSON);
+			request.setResponseType(MonitorRequest.ResponseType.JSON);
 		}
 	}
 	

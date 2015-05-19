@@ -74,16 +74,20 @@ public class MonitorRequest {
 	public void setPrettyFormat(boolean prettyFormat) {
 		this.prettyFormat = prettyFormat;
 	}
-
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("MonitorRequest{");
-        sb.append("action='").append(action).append('\'');
-        sb.append(", responseType=").append(responseType);
-        sb.append(", params=").append(params);
-        sb.append(", prettyFormat=").append(prettyFormat);
-        sb.append('}');
-        return sb.toString();
-    }
+	
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder("MonitorRequest{");
+		sb.append("action='").append(action).append('\'');
+		sb.append(", responseType=").append(responseType);
+		sb.append(", params=").append(params);
+		sb.append(", prettyFormat=").append(prettyFormat);
+		sb.append('}');
+		return sb.toString();
+	}
+	
+	public enum ResponseType {
+		TEXT,
+		JSON;
+	}
 }

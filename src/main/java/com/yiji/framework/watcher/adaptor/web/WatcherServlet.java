@@ -28,7 +28,6 @@ import com.google.common.collect.Maps;
 import com.google.common.io.Resources;
 import com.yiji.framework.watcher.DefaultMonitorService;
 import com.yiji.framework.watcher.MonitorRequest;
-import com.yiji.framework.watcher.ResponseType;
 
 /**
  * @author qiubo@yiji.com
@@ -80,7 +79,7 @@ public class WatcherServlet extends AccessControlServlet {
 			request.setAction(paramMap.get("action").toString());
 			setPrettyFormat(paramMap, request);
 			setResType(paramMap, request);
-			if (request.getResponseType() == ResponseType.JSON) {
+			if (request.getResponseType() == MonitorRequest.ResponseType.JSON) {
 				resp.setContentType("application/json;charset=utf-8");
 			}
 			resp.getWriter().write(DefaultMonitorService.INSTANCE.monitor(request));
@@ -93,7 +92,7 @@ public class WatcherServlet extends AccessControlServlet {
 		try {
 			Map<String, Object> params = Maps.newHashMap();
 			params.put("appName", appName);
-			params.put("metricses", DefaultMonitorService.INSTANCE.monitorMetricses());
+			params.put("metricses", DefaultMonitorService.INSTANCE.set());
 			if (vmContent == null) {
 				vmContent = readFile(velocityPath);
 			}
@@ -130,13 +129,13 @@ public class WatcherServlet extends AccessControlServlet {
 		try {
 			Object resType = paramMap.get("resType");
 			if (resType == null) {
-				request.setResponseType(ResponseType.JSON);
+				request.setResponseType(MonitorRequest.ResponseType.JSON);
 			} else {
 				String str = resType.toString().toUpperCase();
-				request.setResponseType(ResponseType.valueOf(str));
+				request.setResponseType(MonitorRequest.ResponseType.valueOf(str));
 			}
 		} catch (IllegalArgumentException e) {
-			request.setResponseType(ResponseType.JSON);
+			request.setResponseType(MonitorRequest.ResponseType.JSON);
 		}
 	}
 	

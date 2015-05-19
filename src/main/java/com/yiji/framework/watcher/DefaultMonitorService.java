@@ -12,6 +12,7 @@ package com.yiji.framework.watcher;
 
 import java.util.Objects;
 
+import com.yiji.framework.watcher.extension.ExtensionLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,8 +29,8 @@ public class DefaultMonitorService extends AbstractMonitorService {
 	public static final DefaultMonitorService INSTANCE = new DefaultMonitorService();
 	
 	private DefaultMonitorService() {
-		MonitorMetricsLoader loader = new MonitorMetricsLoader();
-		loader.loadMonitorMetrics(this);
+		ExtensionLoader loader = new ExtensionLoader();
+		loader.load(this, MonitorMetrics.class);
 	}
 	
 	public String monitor(MonitorRequest request) {
@@ -42,7 +43,7 @@ public class DefaultMonitorService extends AbstractMonitorService {
 			}
 			request.addParam(Constants.RES_TYPE_KEY, request.getResponseType());
 			Object result = monitorMetrics.monitor(request.getParams());
-			if (request.getResponseType() == ResponseType.TEXT) {
+			if (request.getResponseType() == MonitorRequest.ResponseType.TEXT) {
 				if (result == null) {
 					return "null";
 				} else {
@@ -53,7 +54,7 @@ public class DefaultMonitorService extends AbstractMonitorService {
 			}
 		} catch (Throwable e) {
 			logger.info("执行错误,MonitorRequest={}", request, e);
-			if (request.getResponseType() == ResponseType.TEXT) {
+			if (request.getResponseType() == MonitorRequest.ResponseType.TEXT) {
 				return Throwables.getStackTraceAsString(e);
 			} else {
 				ExceptionResult exceptionResult = new ExceptionResult();

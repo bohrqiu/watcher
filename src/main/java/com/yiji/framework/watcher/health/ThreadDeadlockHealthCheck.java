@@ -15,6 +15,7 @@ import java.util.Set;
 import com.codahale.metrics.health.HealthCheck;
 
 /**
+ * 线程死锁健康检查
  * @author qiubo@yiji.com
  */
 public class ThreadDeadlockHealthCheck extends HealthCheck {

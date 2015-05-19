@@ -10,11 +10,13 @@
  */
 package com.yiji.framework.watcher;
 
+import com.yiji.framework.watcher.extension.ExtensionRepository;
+
 /**
  * 监控服务接口
  * @author qiubo@yiji.com
  */
-public interface MonitorService extends MonitorMetricsRepository {
+public interface MonitorService extends ExtensionRepository<MonitorMetrics> {
 	/**
 	 * 通过监控请求获取到监控结果数据
 	 * @param request 监控请求

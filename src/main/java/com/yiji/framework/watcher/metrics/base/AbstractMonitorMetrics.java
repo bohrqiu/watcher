@@ -14,7 +14,7 @@ import java.util.Map;
 
 import com.yiji.framework.watcher.Constants;
 import com.yiji.framework.watcher.MonitorMetrics;
-import com.yiji.framework.watcher.ResponseType;
+import com.yiji.framework.watcher.MonitorRequest;
 
 /**
  * @author qiubo@yiji.com
@@ -27,13 +27,13 @@ public abstract class AbstractMonitorMetrics implements MonitorMetrics {
 	}
 	
 	protected boolean isResponseText(Map<String, Object> params) {
-		ResponseType responseType = (ResponseType) params.get(Constants.RES_TYPE_KEY);
-		return responseType == ResponseType.TEXT;
+		MonitorRequest.ResponseType responseType = (MonitorRequest.ResponseType) params.get(Constants.RES_TYPE_KEY);
+		return responseType == MonitorRequest.ResponseType.TEXT;
 	}
 	
 	protected boolean isResponseJson(Map<String, Object> params) {
-		ResponseType responseType = (ResponseType) params.get(Constants.RES_TYPE_KEY);
-		return responseType == ResponseType.JSON;
+		MonitorRequest.ResponseType responseType = (MonitorRequest.ResponseType) params.get(Constants.RES_TYPE_KEY);
+		return responseType == MonitorRequest.ResponseType.JSON;
 	}
 	
 }

@@ -23,7 +23,7 @@ import com.google.common.collect.Maps;
 public abstract class AbstractMonitorService implements MonitorService {
 	protected Map<String, MonitorMetrics> monitorMetricsMap = Maps.newConcurrentMap();
 	
-	public void addMonitorMetrics(MonitorMetrics monitorMetrics) {
+	public void add(MonitorMetrics monitorMetrics) {
 		Objects.requireNonNull(monitorMetrics, "监控指标不能为空");
 		Objects.requireNonNull(monitorMetrics.name(), "监控指标名字不能为空");
 		if (monitorMetricsMap.containsKey(monitorMetrics.name())) {
@@ -33,7 +33,7 @@ public abstract class AbstractMonitorService implements MonitorService {
 	}
 	
 	@Override
-	public Set<MonitorMetrics> monitorMetricses() {
+	public Set<MonitorMetrics> set() {
 		return new TreeSet<>(monitorMetricsMap.values());
 	}
 }

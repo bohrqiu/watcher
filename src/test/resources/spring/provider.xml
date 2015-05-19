@@ -12,8 +12,8 @@
     <dubbo:registry protocol="local"
                     register="false"/>
 
-    <dubbo:protocol name="dubbo" port="20881"
-                    threads="200" queues="100"/>
+    <dubbo:protocol name="dubbo" port="20880"
+                    threads="5" queues="2"/>
 
     <dubbo:provider timeout="60000" cluster="failfast" telnet="watch"/>
 

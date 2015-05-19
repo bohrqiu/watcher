@@ -24,10 +24,6 @@
     <servlet>
         <servlet-name>WatcherServlet</servlet-name>
         <servlet-class>com.yiji.framework.watcher.adaptor.web.WatcherServlet</servlet-class>
-        <init-param>
-            <param-name>deny</param-name>
-            <param-value>127.0.0.1</param-value>
-        </init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>WatcherServlet</servlet-name>
