@@ -8,7 +8,7 @@
  * qiubo@yiji.com 2015-04-27 11:25 创建
  *
  */
-package com.yiji.framework.watcher.metrics;
+package com.yiji.framework.watcher.http.metrics;
 
 import java.util.List;
 import java.util.Map;

@@ -59,7 +59,7 @@ public class DefaultMonitorService extends AbstractMonitorService {
 			} else {
 				ExceptionResult exceptionResult = new ExceptionResult();
 				exceptionResult.setSuccess(false);
-				exceptionResult.setMsg(e.getMessage());
+				exceptionResult.setMessage(e.getMessage());
 				exceptionResult.setStackTrace(Throwables.getStackTraceAsString(e));
 				return toJson(exceptionResult, request.isPrettyFormat());
 			}
@@ -90,21 +90,21 @@ public class DefaultMonitorService extends AbstractMonitorService {
 		serializer.config(SerializerFeature.WriteDateUseDateFormat, true);
 		serializer.setDateFormat("yyyy-MM-dd HH:mm:ss");
 		serializer.config(SerializerFeature.QuoteFieldNames, true);
-		serializer.config(SerializerFeature.DisableCircularReferenceDetect, false);
+		serializer.config(SerializerFeature.DisableCircularReferenceDetect, true);
 		return serializer;
 	}
 	
 	private static class ExceptionResult {
 		private boolean success;
-		private String msg;
+		private String message;
 		private String stackTrace;
 		
-		public String getMsg() {
-			return msg;
+		public String getMessage() {
+			return message;
 		}
 		
-		public void setMsg(String msg) {
-			this.msg = msg;
+		public void setMessage(String message) {
+			this.message = message;
 		}
 		
 		public String getStackTrace() {

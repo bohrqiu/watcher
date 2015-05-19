@@ -17,5 +17,11 @@
             <artifactId>watcher-core</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>dubbo</artifactId>
+            <version>2.5.3</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>
