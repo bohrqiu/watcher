@@ -16,20 +16,20 @@ import java.util.Map;
 import com.alibaba.dubbo.registry.Registry;
 import com.alibaba.dubbo.registry.support.AbstractRegistryFactory;
 import com.google.common.collect.Maps;
-import com.yiji.framework.watcher.metrics.base.AbstractCachedMonitorMetrics;
+import com.yiji.framework.watcher.OperationException;
+import com.yiji.framework.watcher.metrics.base.AbstractCachedWatcherMetrics;
 
 /**
  * @author qiubo@yiji.com
  */
-public class DubboRegistryStatusMetrics extends AbstractCachedMonitorMetrics {
+public class DubboRegistryStatusMetrics extends AbstractCachedWatcherMetrics {
 	@Override
 	public Object doMonitor(Map<String, Object> params) throws Throwable {
 		Map<String, Object> result = Maps.newHashMap();
 		
 		Collection<Registry> regsitries = AbstractRegistryFactory.getRegistries();
 		if (regsitries.size() == 0) {
-			result.put("message", "no registry found");
-			return result;
+			throw OperationException.throwIt("no registry found");
 		}
 		for (Registry registry : regsitries) {
 			result.put(registry.getUrl().getAddress(), registry.isAvailable());

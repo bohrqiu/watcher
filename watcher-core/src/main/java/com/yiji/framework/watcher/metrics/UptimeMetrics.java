@@ -16,16 +16,16 @@ import java.util.Date;
 import java.util.Map;
 
 import com.google.common.collect.Maps;
-import com.yiji.framework.watcher.metrics.base.AbstractMonitorMetrics;
+import com.yiji.framework.watcher.metrics.base.AbstractWatcherMetrics;
 
 /**
  * @author qiubo@yiji.com
  */
-public class UptimeMetrics extends AbstractMonitorMetrics {
+public class UptimeMetrics extends AbstractWatcherMetrics {
 	public static final String simple = "yyyy-MM-dd HH:mm:ss";
 	private static String startTime = null;
 	
-	public Object monitor(Map<String, Object> params) {
+	public Object watch(Map<String, Object> params) {
 		long uptime = ManagementFactory.getRuntimeMXBean().getUptime() / 1000;
 		long s = uptime % 60;//秒
 		long m = uptime / 60 % 60;//分

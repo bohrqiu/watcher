@@ -11,16 +11,16 @@
 package com.yiji.framework.watcher.metrics;
 
 import com.yiji.framework.watcher.Constants;
-import com.yiji.framework.watcher.metrics.base.AbstractMonitorMetrics;
+import com.yiji.framework.watcher.metrics.base.AbstractWatcherMetrics;
 
 import java.util.Map;
 
 /**
  * @author qiubo@yiji.com
  */
-public class SysEnvMetrics extends AbstractMonitorMetrics {
+public class SysEnvMetrics extends AbstractWatcherMetrics {
 	
-	public Object monitor(Map<String, Object> params) {
+	public Object watch(Map<String, Object> params) {
 		String key = (String) params.get(Constants.KEY);
 		if (key == null) {
 			return System.getenv();

@@ -12,14 +12,14 @@ package com.yiji.framework.watcher.spi;
 
 import java.util.Map;
 
-import com.yiji.framework.watcher.metrics.base.AbstractMonitorMetrics;
+import com.yiji.framework.watcher.metrics.base.AbstractWatcherMetrics;
 
 /**
  * @author qiubo@yiji.com
  */
-public class TestMonitorMetrics2 extends AbstractMonitorMetrics {
+public class TestWatcherMetrics1 extends AbstractWatcherMetrics {
 	@Override
-	public Object monitor(Map<String, Object> params) {
+	public Object watch(Map<String, Object> params) {
 		return "test";
 	}
 	

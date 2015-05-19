@@ -11,7 +11,7 @@
 package com.yiji.framework.watcher.metrics;
 
 import com.yiji.framework.watcher.Constants;
-import com.yiji.framework.watcher.metrics.base.AbstractMonitorMetrics;
+import com.yiji.framework.watcher.metrics.base.AbstractWatcherMetrics;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,9 +20,9 @@ import java.util.Properties;
 /**
  * @author qiubo@yiji.com
  */
-public class SysPropMetrics extends AbstractMonitorMetrics {
+public class SysPropMetrics extends AbstractWatcherMetrics {
 	
-	public Object monitor(Map<String, Object> params) {
+	public Object watch(Map<String, Object> params) {
 		String key = (String) params.get(Constants.KEY);
 		if (key == null) {
 			return toMap(System.getProperties());

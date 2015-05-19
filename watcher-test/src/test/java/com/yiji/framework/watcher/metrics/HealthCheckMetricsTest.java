@@ -34,7 +34,7 @@ public class HealthCheckMetricsTest {
 	public void testThreadDeadlockHealthCheck() throws Exception {
 		Map<String, Object> params = Maps.newHashMap();
 		params.put(Constants.KEY, "ThreadDeadlock");
-		Object result = healthCheckMetrics.monitor(params);
+		Object result = healthCheckMetrics.watch(params);
 		logger.info("healthCheck result:{}", result);
 		assertThat(result.toString()).contains("isHealthy");
 	}
@@ -43,7 +43,7 @@ public class HealthCheckMetricsTest {
 	public void testMemoryStatusHealthCheck() throws Exception {
 		Map<String, Object> params = Maps.newHashMap();
 		params.put(Constants.KEY, "MemoryStatus");
-		Object result = healthCheckMetrics.monitor(params);
+		Object result = healthCheckMetrics.watch(params);
         logger.info("healthCheck result:{}", result);
 		assertThat(result.toString()).contains("isHealthy");
 	}
@@ -52,7 +52,7 @@ public class HealthCheckMetricsTest {
     public void testSystemLoadHealthCheck() throws Exception {
         Map<String, Object> params = Maps.newHashMap();
         params.put(Constants.KEY, "SystemLoad");
-        Object result = healthCheckMetrics.monitor(params);
+        Object result = healthCheckMetrics.watch(params);
         logger.info("healthCheck result:{}", result);
         assertThat(result.toString()).contains("isHealthy");
     }

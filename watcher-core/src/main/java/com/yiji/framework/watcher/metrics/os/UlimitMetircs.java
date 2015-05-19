@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author qiubo@yiji.com
  */
-public class UlimitMetircs extends AbstractOSMonitorMetrics {
+public class UlimitMetircs extends AbstractOSWatcherMetrics {
 	private static final Logger logger = LoggerFactory.getLogger(UlimitMetircs.class);
 	
 	@Override

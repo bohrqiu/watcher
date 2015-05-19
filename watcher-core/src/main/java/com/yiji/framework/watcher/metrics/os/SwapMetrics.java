@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * @author qiubo@yiji.com
  */
-public class SwapMetrics extends AbstractOSMonitorMetrics {
+public class SwapMetrics extends AbstractOSWatcherMetrics {
 	
 	public Object doMonitor(Map<String, Object> params) throws Exception {
         return SigarFactory.getSigar().getSwap().toMap();

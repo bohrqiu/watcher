@@ -24,14 +24,14 @@ import com.yiji.framework.watcher.Constants;
 import com.yiji.framework.watcher.MetricsHolder;
 import com.yiji.framework.watcher.extension.ExtensionLoader;
 import com.yiji.framework.watcher.health.HealthCheckRepository;
-import com.yiji.framework.watcher.metrics.base.AbstractMonitorMetrics;
+import com.yiji.framework.watcher.metrics.base.AbstractWatcherMetrics;
 
 /**
- * healtch check monitor metrics,it will load {@link HealthCheck} use
+ * healtch check watch metrics,it will load {@link HealthCheck} use
  * {@link ExtensionLoader}
  * @author qiubo@yiji.com
  */
-public class HealthCheckMetrics extends AbstractMonitorMetrics {
+public class HealthCheckMetrics extends AbstractWatcherMetrics {
 	private HealthCheckRegistry healthCheckRegistry = MetricsHolder.healthCheckRegistry();
 	
 	public HealthCheckMetrics() {
@@ -54,7 +54,7 @@ public class HealthCheckMetrics extends AbstractMonitorMetrics {
 	}
 	
 	@Override
-	public Object monitor(Map<String, Object> params) {
+	public Object watch(Map<String, Object> params) {
 		Object key = checkNotNull(params).get(Constants.KEY);
 		if (key == null) {
 			SortedMap<String, HealthCheck.Result> healthChecks = healthCheckRegistry.runHealthChecks();

@@ -13,18 +13,17 @@ package com.yiji.framework.watcher.metrics;
 import java.util.Map;
 
 import com.yiji.framework.watcher.Utils;
-import com.yiji.framework.watcher.metrics.base.AbstractMonitorMetrics;
+import com.yiji.framework.watcher.metrics.base.AbstractWatcherMetrics;
 
 /**
  * @author qiubo@yiji.com
  */
-public class PidMetrics extends AbstractMonitorMetrics {
-	public Object monitor(Map<String, Object> params) {
+public class PidMetrics extends AbstractWatcherMetrics {
+	public Object watch(Map<String, Object> params) {
 		return getProcessId();
 	}
 	
 	private Long getProcessId() {
-		
 		return Utils.getPid();
 	}
 	

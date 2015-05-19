@@ -2,7 +2,7 @@ package com.yiji.framework.watcher.dubbo.adaptor.telnet;
 
 import java.util.regex.Pattern;
 
-import com.yiji.framework.watcher.MonitorRequest;
+import com.yiji.framework.watcher.model.Request;
 import com.yiji.framework.watcher.Utils;
 
 /**
@@ -18,16 +18,16 @@ public class RequestParser {
 	
 	/**
 	 * 解析telnet命令行。命令行的格式如下： metricName key1=value1,key2=value2,...
-	 * @param commandLine
+	 * @param commandLine 请求字符串
 	 * @return 解析出来的MonitorRequest对象
 	 * @throws IllegalArgumentException
 	 */
-	public static MonitorRequest parse(String commandLine) throws IllegalArgumentException {
+	public static Request parse(String commandLine) throws IllegalArgumentException {
 		String processed = Utils.trim(commandLine);
 		if (Utils.isEmpty(processed))
 			throw new IllegalArgumentException("命令为空");
 		String[] parts = BLANK_CHAR_PATTERN.split(processed);
-		String cmd = null;
+		String cmd ;
 		String params = null;
 		if (parts != null) {
 			if (parts.length <= 0) {
@@ -44,7 +44,7 @@ public class RequestParser {
 			throw new IllegalArgumentException("应该至少有一组匹配");
 		}
 		if (!Utils.isEmpty(cmd)) {
-			MonitorRequest request = new MonitorRequest();
+			Request request = new Request();
 			request.setAction(cmd);
 			setParams(params, request);
 			return request;
@@ -52,7 +52,7 @@ public class RequestParser {
 		return null;
 	}
 	
-	private static void setParams(String params, MonitorRequest request) {
+	private static void setParams(String params, Request request) {
 		if (!Utils.isEmpty(params)) {
 			String[] paramSecs = Utils.split(params, PARAM_SEPARATOR);
 			for (String param : paramSecs) {

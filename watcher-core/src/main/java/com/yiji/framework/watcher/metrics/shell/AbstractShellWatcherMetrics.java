@@ -10,12 +10,12 @@
  */
 package com.yiji.framework.watcher.metrics.shell;
 
-import com.yiji.framework.watcher.metrics.base.AbstractCachedMonitorMetrics;
+import com.yiji.framework.watcher.metrics.base.AbstractCachedWatcherMetrics;
 
 /**
  * @author qiubo@yiji.com
  */
-public abstract class AbstractShellMonitorMetrics extends AbstractCachedMonitorMetrics {
+public abstract class AbstractShellWatcherMetrics extends AbstractCachedWatcherMetrics {
 	protected ShellExecutor shellExecutor = new ShellExecutor();
 	
 }

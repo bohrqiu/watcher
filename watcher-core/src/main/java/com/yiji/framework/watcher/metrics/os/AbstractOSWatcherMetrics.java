@@ -10,13 +10,13 @@
  */
 package com.yiji.framework.watcher.metrics.os;
 
-import com.yiji.framework.watcher.metrics.base.AbstractCachedMonitorMetrics;
+import com.yiji.framework.watcher.metrics.base.AbstractCachedWatcherMetrics;
 
 /**
  * @author qiubo@yiji.com
  */
-public abstract class AbstractOSMonitorMetrics extends AbstractCachedMonitorMetrics {
-	public AbstractOSMonitorMetrics() {
+public abstract class AbstractOSWatcherMetrics extends AbstractCachedWatcherMetrics {
+	public AbstractOSWatcherMetrics() {
         //init Sigar
 		SigarFactory.getSigar();
 	}

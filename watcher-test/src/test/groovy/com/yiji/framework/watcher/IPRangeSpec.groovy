@@ -1,6 +1,7 @@
-import com.yiji.framework.watcher.adaptor.web.util.IPAddress
-import com.yiji.framework.watcher.adaptor.web.util.IPRange
+package com.yiji.framework.watcher
 
+import com.yiji.framework.watcher.http.adaptor.web.util.IPAddress
+import com.yiji.framework.watcher.http.adaptor.web.util.IPRange
 
 class IPRangeSpec extends spock.lang.Specification {
 

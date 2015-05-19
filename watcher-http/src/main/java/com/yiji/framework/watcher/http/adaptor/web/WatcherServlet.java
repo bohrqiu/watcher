@@ -26,8 +26,9 @@ import com.google.common.base.Charsets;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Maps;
 import com.google.common.io.Resources;
-import com.yiji.framework.watcher.DefaultMonitorService;
-import com.yiji.framework.watcher.MonitorRequest;
+import com.yiji.framework.watcher.Constants;
+import com.yiji.framework.watcher.DefaultWatcherService;
+import com.yiji.framework.watcher.model.Request;
 
 /**
  * @author qiubo@yiji.com
@@ -57,7 +58,7 @@ public class WatcherServlet extends AccessControlServlet {
 	public WatcherServlet(String appName) {
 		this.appName = appName;
 	}
-
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		final String uri = req.getPathInfo();
@@ -69,7 +70,7 @@ public class WatcherServlet extends AccessControlServlet {
 			handleIndex(req, resp);
 		} else if (uri.contains("q.do")) {
 			Map<String, Object> paramMap = getRequestParamMap(req);
-			MonitorRequest request = new MonitorRequest();
+			Request request = new Request();
 			request.setParams(paramMap);
 			String action = (String) paramMap.get("action");
 			if (action == null) {
@@ -79,10 +80,10 @@ public class WatcherServlet extends AccessControlServlet {
 			request.setAction(paramMap.get("action").toString());
 			setPrettyFormat(paramMap, request);
 			setResType(paramMap, request);
-			if (request.getResponseType() == MonitorRequest.ResponseType.JSON) {
+			if (request.getResponseType() == Constants.ResponseType.JSON) {
 				resp.setContentType("application/json;charset=utf-8");
 			}
-			resp.getWriter().write(DefaultMonitorService.INSTANCE.monitor(request));
+			resp.getWriter().write(DefaultWatcherService.INSTANCE.watchAndMarshall(request));
 		} else {
 			resp.getWriter().write("不支持的请求");
 		}
@@ -92,7 +93,7 @@ public class WatcherServlet extends AccessControlServlet {
 		try {
 			Map<String, Object> params = Maps.newHashMap();
 			params.put("appName", appName);
-			params.put("metricses", DefaultMonitorService.INSTANCE.set());
+			params.put("metricses", DefaultWatcherService.INSTANCE.set());
 			if (vmContent == null) {
 				vmContent = readFile(velocityPath);
 			}
@@ -118,24 +119,24 @@ public class WatcherServlet extends AccessControlServlet {
 		return paramMap;
 	}
 	
-	private void setPrettyFormat(Map<String, Object> paramMap, MonitorRequest request) {
+	private void setPrettyFormat(Map<String, Object> paramMap, Request request) {
 		Object prettyFormat = paramMap.get("prettyFormat");
 		if (prettyFormat != null) {
 			request.setPrettyFormat(Boolean.parseBoolean(prettyFormat.toString()));
 		}
 	}
 	
-	private void setResType(Map<String, Object> paramMap, MonitorRequest request) {
+	private void setResType(Map<String, Object> paramMap, Request request) {
 		try {
 			Object resType = paramMap.get("resType");
 			if (resType == null) {
-				request.setResponseType(MonitorRequest.ResponseType.JSON);
+				request.setResponseType(Constants.ResponseType.JSON);
 			} else {
 				String str = resType.toString().toUpperCase();
-				request.setResponseType(MonitorRequest.ResponseType.valueOf(str));
+				request.setResponseType(Constants.ResponseType.valueOf(str));
 			}
 		} catch (IllegalArgumentException e) {
-			request.setResponseType(MonitorRequest.ResponseType.JSON);
+			request.setResponseType(Constants.ResponseType.JSON);
 		}
 	}
 	

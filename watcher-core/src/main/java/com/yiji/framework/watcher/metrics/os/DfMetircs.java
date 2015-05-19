@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author qiubo@yiji.com
  */
-public class DfMetircs extends AbstractOSMonitorMetrics {
+public class DfMetircs extends AbstractOSWatcherMetrics {
 	private static final Logger logger = LoggerFactory.getLogger(DfMetircs.class);
 	
 	@Override

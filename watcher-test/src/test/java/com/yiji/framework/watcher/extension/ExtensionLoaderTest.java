@@ -12,12 +12,11 @@ package com.yiji.framework.watcher.extension;
 
 import java.util.Set;
 
-import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.google.common.collect.Sets;
-import com.yiji.framework.watcher.MonitorMetrics;
+import com.yiji.framework.watcher.WatcherMetrics;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -25,20 +24,20 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author qiubo@yiji.com
  */
 public class ExtensionLoaderTest {
-	private ExtensionRepository<MonitorMetrics> repository;
+	private ExtensionRepository<WatcherMetrics> repository;
 	
 	@Before
 	public void setUp() throws Exception {
-		repository = new ExtensionRepository<MonitorMetrics>() {
-			Set<MonitorMetrics> set = Sets.newHashSet();
+		repository = new ExtensionRepository<WatcherMetrics>() {
+			Set<WatcherMetrics> set = Sets.newHashSet();
 			
 			@Override
-			public void add(MonitorMetrics monitorMetrics) {
-				set.add(monitorMetrics);
+			public void add(WatcherMetrics watcherMetrics) {
+				set.add(watcherMetrics);
 			}
 			
 			@Override
-			public Set<MonitorMetrics> set() {
+			public Set<WatcherMetrics> set() {
 				return set;
 			}
 		};
@@ -48,16 +47,16 @@ public class ExtensionLoaderTest {
 	@Test
 	public void testLoadMetricsFromSPI() throws Exception {
 		ExtensionLoader loader = new ExtensionLoader();
-		loader.loadMetricsFromSPI(repository, MonitorMetrics.class);
-		Set<MonitorMetrics> set = repository.set();
+		loader.loadMetricsFromSPI(repository, WatcherMetrics.class);
+		Set<WatcherMetrics> set = repository.set();
 		assertThat(set).hasSize(2);
 	}
 	
 	@Test
 	public void testLoadMetricsFromDefaultPackage() throws Exception {
 		ExtensionLoader loader = new ExtensionLoader();
-		loader.loadExtensionFromDefaultPackage(repository, MonitorMetrics.class);
-		Set<MonitorMetrics> set = repository.set();
+		loader.loadExtensionFromDefaultPackage(repository, WatcherMetrics.class);
+		Set<WatcherMetrics> set = repository.set();
 		assertThat(set).isNotEmpty();
 	}
 	

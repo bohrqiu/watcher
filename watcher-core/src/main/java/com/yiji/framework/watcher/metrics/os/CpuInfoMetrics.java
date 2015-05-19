@@ -20,7 +20,7 @@ import com.google.common.collect.Lists;
 /**
  * @author qiubo@yiji.com
  */
-public class CpuInfoMetrics extends AbstractOSMonitorMetrics {
+public class CpuInfoMetrics extends AbstractOSWatcherMetrics {
 	
 	public Object doMonitor(Map<String, Object> params) throws Exception {
 		CpuInfo[] cpuInfos = SigarFactory.getSigar().getCpuInfoList();

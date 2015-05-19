@@ -21,18 +21,10 @@ import com.codahale.metrics.health.HealthCheck;
 public class ThreadDeadlockHealthCheck extends HealthCheck {
 	private final ThreadDeadlockDetector detector;
 	
-	/**
-	 * Creates a new health check.
-	 */
 	public ThreadDeadlockHealthCheck() {
 		this(new ThreadDeadlockDetector());
 	}
 	
-	/**
-	 * Creates a new health check with the given detector.
-	 *
-	 * @param detector a thread deadlock detector
-	 */
 	public ThreadDeadlockHealthCheck(ThreadDeadlockDetector detector) {
 		this.detector = detector;
 	}

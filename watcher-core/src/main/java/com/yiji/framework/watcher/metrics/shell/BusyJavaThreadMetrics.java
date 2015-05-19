@@ -15,16 +15,17 @@ import static com.yiji.framework.watcher.Utils.getPid;
 
 import java.util.Map;
 
+import com.yiji.framework.watcher.OperationException;
 import com.yiji.framework.watcher.Utils;
 
 /**
  * @author qiubo@yiji.com
  */
-public class BusyJavaThreadMetrics extends AbstractShellMonitorMetrics {
+public class BusyJavaThreadMetrics extends AbstractShellWatcherMetrics {
 	@Override
 	public Object doMonitor(Map<String, Object> params) throws Throwable {
 		if (!Utils.isLinux()) {
-			return "此脚本仅支持linux";
+            throw OperationException.throwIt("此脚本仅支持linux");
 		}
 		Object count = getParam(params, "count", "5");
 		return shellExecutor.exeShell("show-busy-java-threads.sh", "-p " + getPid(), "-c " + count);

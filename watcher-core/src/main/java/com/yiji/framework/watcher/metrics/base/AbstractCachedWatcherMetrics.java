@@ -10,11 +10,9 @@
  */
 package com.yiji.framework.watcher.metrics.base;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import com.google.common.base.Joiner;
 import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableList;
 import com.yiji.framework.watcher.Constants;
@@ -22,11 +20,11 @@ import com.yiji.framework.watcher.Constants;
 /**
  * @author qiubo@yiji.com
  */
-public abstract class AbstractCachedMonitorMetrics extends AbstractMonitorMetrics {
-    private static final List<String> DEFAULT_PARAM_KEY = ImmutableList.of(Constants.RES_TYPE_KEY, Constants.ACTION_KEY);
+public abstract class AbstractCachedWatcherMetrics extends AbstractWatcherMetrics {
+	private static final List<String> DEFAULT_PARAM_KEY = ImmutableList.of(Constants.RES_TYPE_KEY, Constants.ACTION_KEY);
 	private CacheTime cacheTime;
 	
-	public final Object monitor(Map<String, Object> params) {
+	public final Object watch(Map<String, Object> params) {
 		try {
 			if (cacheTime == null) {
 				cacheTime = getCacheTime();
@@ -41,9 +39,6 @@ public abstract class AbstractCachedMonitorMetrics extends AbstractMonitorMetric
 					if (result == null) {
 						result = Constants.NULL;
 					}
-					if (isResponseText(params)) {
-						result = convertObjToStr(result);
-					}
 					MetricsCache.INSTANCE.put(key, result, cacheTime.getCacheTime());
 					return result;
 				} else {
@@ -55,18 +50,7 @@ public abstract class AbstractCachedMonitorMetrics extends AbstractMonitorMetric
 		}
 	}
 	
-	private Object convertObjToStr(Object result) {
-		if (result instanceof Collection) {
-			Collection collection = (Collection) result;
-			return Joiner.on("\n").join(collection);
-		} else if (result instanceof Map) {
-			Map map = (Map) result;
-			return Joiner.on("\n").withKeyValueSeparator("=").join(map);
-		} else {
-			return result.toString();
-		}
-	}
-	
+
 	private String buildKey(Map<String, Object> params) {
 		StringBuilder key = new StringBuilder(this.getClass().getName());
 		if (params == null || params.isEmpty()) {

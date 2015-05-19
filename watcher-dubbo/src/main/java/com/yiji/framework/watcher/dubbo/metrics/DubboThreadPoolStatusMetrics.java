@@ -20,17 +20,21 @@ import com.alibaba.dubbo.common.extension.ExtensionLoader;
 import com.alibaba.dubbo.common.store.DataStore;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.yiji.framework.watcher.metrics.base.AbstractCachedMonitorMetrics;
+import com.yiji.framework.watcher.OperationException;
+import com.yiji.framework.watcher.metrics.base.AbstractCachedWatcherMetrics;
 
 /**
  * @author qiubo@yiji.com
  */
-public class DubboThreadPoolStatusMetrics extends AbstractCachedMonitorMetrics {
+public class DubboThreadPoolStatusMetrics extends AbstractCachedWatcherMetrics {
 	@Override
 	public Object doMonitor(Map<String, Object> params) throws Throwable {
-        List<Map<String,Object>> result= Lists.newArrayList();
-        DataStore dataStore = ExtensionLoader.getExtensionLoader(DataStore.class).getDefaultExtension();
+		List<Map<String, Object>> result = Lists.newArrayList();
+		DataStore dataStore = ExtensionLoader.getExtensionLoader(DataStore.class).getDefaultExtension();
 		Map<String, Object> executors = dataStore.get(Constants.EXECUTOR_SERVICE_COMPONENT_KEY);
+		if (executors == null ||executors.isEmpty()) {
+            throw OperationException.throwIt("no executors found");
+        }
 		for (Map.Entry<String, Object> entry : executors.entrySet()) {
 			String port = entry.getKey();
 			ExecutorService executor = (ExecutorService) entry.getValue();
@@ -42,9 +46,9 @@ public class DubboThreadPoolStatusMetrics extends AbstractCachedMonitorMetrics {
 				threadPoolResult.put("largestPoolSize", tp.getLargestPoolSize());
 				threadPoolResult.put("activeCount", tp.getActiveCount());
 				threadPoolResult.put("queuedTask", tp.getQueue().size());
-                threadPoolResult.put("queueRemainingCapacity", tp.getQueue().remainingCapacity());
-                threadPoolResult.put("port",port);
-                result.add(threadPoolResult);
+				threadPoolResult.put("queueRemainingCapacity", tp.getQueue().remainingCapacity());
+				threadPoolResult.put("port", port);
+				result.add(threadPoolResult);
 			}
 		}
 		return result;

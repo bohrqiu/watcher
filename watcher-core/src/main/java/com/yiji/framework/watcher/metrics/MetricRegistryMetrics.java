@@ -7,13 +7,13 @@ import com.codahale.metrics.*;
 import com.google.common.collect.Maps;
 import com.yiji.framework.watcher.Constants;
 import com.yiji.framework.watcher.MetricsHolder;
-import com.yiji.framework.watcher.metrics.base.AbstractMonitorMetrics;
-import com.yiji.framework.watcher.serialization.*;
+import com.yiji.framework.watcher.marshaller.*;
+import com.yiji.framework.watcher.metrics.base.AbstractWatcherMetrics;
 
 /**
  * @author daidai@yiji.com
  */
-public class MetricRegistryMetrics extends AbstractMonitorMetrics {
+public class MetricRegistryMetrics extends AbstractWatcherMetrics {
 	private MetricRegistry metricRegistry;
 	
 	public MetricRegistryMetrics() {
@@ -26,14 +26,13 @@ public class MetricRegistryMetrics extends AbstractMonitorMetrics {
 	}
 	
 	@Override
-	public Object monitor(Map<String, Object> params) {
+	public Object watch(Map<String, Object> params) {
 		Map<String, Metric> metrics = metricRegistry.getMetrics();
 		Map<String, Metric> ret = Maps.newHashMap();
 		for (Map.Entry<String, Metric> metricEntry : metrics.entrySet()) {
 			if (matches(params, metricEntry.getKey(), metricEntry.getValue())) {
 				ret.put(metricEntry.getKey(), metricEntry.getValue());
 			}
-			
 		}
 		return ret;
 	}
@@ -48,7 +47,7 @@ public class MetricRegistryMetrics extends AbstractMonitorMetrics {
 			return false;
 		}
 		if (type != null) {
-			MetricType chosen = null;
+			MetricType chosen;
 			try {
 				chosen = MetricType.valueOf(type);
 			} catch (Exception e) {

@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * @author qiubo@yiji.com
  */
-public class NetInfoMetrics extends AbstractOSMonitorMetrics {
+public class NetInfoMetrics extends AbstractOSWatcherMetrics {
 	
 	public Object doMonitor(Map<String, Object> params) throws Exception {
 		return SigarFactory.getSigar().getNetInfo().toMap();

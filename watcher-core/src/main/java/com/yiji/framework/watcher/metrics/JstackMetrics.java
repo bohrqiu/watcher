@@ -15,12 +15,12 @@ import java.io.StringWriter;
 import java.lang.management.*;
 import java.util.Map;
 
-import com.yiji.framework.watcher.metrics.base.AbstractCachedMonitorMetrics;
+import com.yiji.framework.watcher.metrics.base.AbstractCachedWatcherMetrics;
 
 /**
  * @author qiubo@yiji.com
  */
-public class JstackMetrics extends AbstractCachedMonitorMetrics {
+public class JstackMetrics extends AbstractCachedWatcherMetrics {
 	private ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
 	
 	public Object doMonitor(Map<String, Object> params) {

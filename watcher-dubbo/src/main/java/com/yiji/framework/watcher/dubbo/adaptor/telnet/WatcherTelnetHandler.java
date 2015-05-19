@@ -9,10 +9,10 @@ import com.alibaba.dubbo.remoting.telnet.TelnetHandler;
 import com.alibaba.dubbo.remoting.telnet.support.Help;
 import com.alibaba.dubbo.remoting.telnet.support.TelnetUtils;
 import com.google.common.collect.Lists;
-import com.yiji.framework.watcher.DefaultMonitorService;
-import com.yiji.framework.watcher.MonitorMetrics;
-import com.yiji.framework.watcher.MonitorRequest;
-import com.yiji.framework.watcher.MonitorService;
+import com.yiji.framework.watcher.Constants;
+import com.yiji.framework.watcher.DefaultWatcherService;
+import com.yiji.framework.watcher.WatcherMetrics;
+import com.yiji.framework.watcher.model.Request;
 
 /**
  * Dubbo的Telnet扩展。参见：http://dubbo.io/Developer+Guide-zh.htm#DeveloperGuide-zh-
@@ -22,16 +22,15 @@ import com.yiji.framework.watcher.MonitorService;
 @Help(parameter = "[-h] metricName [key1=val1,...]", summary = "show indicators provided by watcher",
 		detail = "show watcher indicators. Usage: watch [-h] metricName key1=value1,key2=value2,...")
 public class WatcherTelnetHandler implements TelnetHandler {
-	private MonitorService monitorService = DefaultMonitorService.INSTANCE;
 	private String helpInfo;
 	
 	public WatcherTelnetHandler() {
 		String[] header = { "metricName", "description" };
 		List<List<String>> table = Lists.newLinkedList();
-		for (MonitorMetrics monitorMetrics : monitorService.set()) {
+		for (WatcherMetrics watcherMetrics : DefaultWatcherService.INSTANCE.set()) {
 			List<String> row = Lists.newLinkedList();
-			row.add(monitorMetrics.name());
-			row.add(monitorMetrics.desc());
+			row.add(watcherMetrics.name());
+			row.add(watcherMetrics.desc());
 			table.add(row);
 		}
 		helpInfo = TelnetUtils.toTable(header, table);
@@ -43,33 +42,33 @@ public class WatcherTelnetHandler implements TelnetHandler {
 			return helpInfo;
 		} else {
 			try {
-				MonitorRequest request = RequestParser.parse(message);
+				Request request = RequestParser.parse(message);
 				if (request == null) {
 					return "参数错误";
 				}
 				request.setPrettyFormat(false);
 				setResType(request.getParams(), request);
 				if (request.getAction().equals("jstack")) {
-					request.setResponseType(MonitorRequest.ResponseType.TEXT);
+					request.setResponseType(Constants.ResponseType.TEXT);
 				}
-				return monitorService.monitor(request);
+				return DefaultWatcherService.INSTANCE.watchAndMarshall(request);
 			} catch (IllegalArgumentException e) {
 				return "命令格式错误，正确的格式：metricName key1=value1,key2=value2,...";
 			}
 		}
 	}
 	
-	private void setResType(Map<String, Object> paramMap, MonitorRequest request) {
+	private void setResType(Map<String, Object> paramMap, Request request) {
 		try {
 			Object resType = paramMap.get("resType");
 			if (resType == null) {
-				request.setResponseType(MonitorRequest.ResponseType.JSON);
+				request.setResponseType(Constants.ResponseType.JSON);
 			} else {
 				String str = resType.toString().toUpperCase();
-				request.setResponseType(MonitorRequest.ResponseType.valueOf(str));
+				request.setResponseType(Constants.ResponseType.valueOf(str));
 			}
 		} catch (IllegalArgumentException e) {
-			request.setResponseType(MonitorRequest.ResponseType.JSON);
+			request.setResponseType(Constants.ResponseType.JSON);
 		}
 	}
 	

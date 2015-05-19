@@ -13,12 +13,12 @@ package com.yiji.framework.watcher.metrics;
 import java.util.Map;
 
 import com.google.common.util.concurrent.RateLimiter;
-import com.yiji.framework.watcher.metrics.shell.AbstractShellMonitorMetrics;
+import com.yiji.framework.watcher.metrics.shell.AbstractShellWatcherMetrics;
 
 /**
  * @author qiubo@yiji.com
  */
-public class TestShellMetrics extends AbstractShellMonitorMetrics {
+public class TestShellMetrics extends AbstractShellWatcherMetrics {
 	//速度限制为每5s一次
 	private RateLimiter rateLimiter;
 	private String lastResult;

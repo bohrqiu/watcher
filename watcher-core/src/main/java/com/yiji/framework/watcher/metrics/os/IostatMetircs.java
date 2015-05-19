@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author qiubo@yiji.com
  */
-public class IostatMetircs extends AbstractOSMonitorMetrics {
+public class IostatMetircs extends AbstractOSWatcherMetrics {
 	private static final Logger logger = LoggerFactory.getLogger(IostatMetircs.class);
 	
 	@Override

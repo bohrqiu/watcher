@@ -17,12 +17,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.common.collect.Maps;
-import com.yiji.framework.watcher.metrics.base.AbstractCachedMonitorMetrics;
+import com.yiji.framework.watcher.metrics.base.AbstractCachedWatcherMetrics;
 
 /**
  * @author qiubo@yiji.com
  */
-public class FileDescriptorMetrics extends AbstractCachedMonitorMetrics {
+public class FileDescriptorMetrics extends AbstractCachedWatcherMetrics {
 	
 	public Object doMonitor(Map<String, Object> params) {
 		OperatingSystemMXBean os = ManagementFactory.getOperatingSystemMXBean();

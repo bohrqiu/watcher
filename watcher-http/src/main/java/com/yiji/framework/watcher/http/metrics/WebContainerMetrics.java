@@ -17,7 +17,8 @@ import javax.management.MBeanServer;
 import javax.management.MBeanServerFactory;
 import javax.management.ObjectName;
 
-import com.yiji.framework.watcher.metrics.base.AbstractCachedMonitorMetrics;
+import com.yiji.framework.watcher.OperationException;
+import com.yiji.framework.watcher.metrics.base.AbstractCachedWatcherMetrics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +27,7 @@ import com.google.common.collect.Maps;
 /**
  * @author qiubo@yiji.com
  */
-public class WebContainerMetrics extends AbstractCachedMonitorMetrics {
+public class WebContainerMetrics extends AbstractCachedWatcherMetrics {
 	private static final Logger logger = LoggerFactory.getLogger(WebContainerMetrics.class);
 	private static final String tomcatEmbedDomain = "Tomcat";
 	private static final String tomcatDomain = "Catalina";
@@ -96,7 +97,7 @@ public class WebContainerMetrics extends AbstractCachedMonitorMetrics {
 				}
 			} catch (Exception e) {
 				logger.warn("获取信息失败", e);
-				map.put("errorMsg", e.getMessage());
+                throw OperationException.throwIt(e);
 			}
 		}
 		return map;

@@ -33,4 +33,9 @@ public class Constants {
      * 参数名字
      */
     public static final String KEY = "key";
+
+    public enum ResponseType {
+        TEXT,
+        JSON;
+    }
 }

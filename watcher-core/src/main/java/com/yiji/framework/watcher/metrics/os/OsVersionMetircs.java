@@ -19,7 +19,7 @@ import com.google.common.collect.Maps;
 /**
  * @author qiubo@yiji.com
  */
-public class OsVersionMetircs extends AbstractOSMonitorMetrics {
+public class OsVersionMetircs extends AbstractOSWatcherMetrics {
 	@Override
 	public Object doMonitor(Map<String, Object> params) throws Exception {
 		return getResult();

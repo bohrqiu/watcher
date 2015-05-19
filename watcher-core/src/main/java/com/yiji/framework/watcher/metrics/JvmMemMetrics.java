@@ -15,12 +15,12 @@ import java.lang.management.MemoryMXBean;
 import java.util.Map;
 
 import com.google.common.collect.Maps;
-import com.yiji.framework.watcher.metrics.base.AbstractCachedMonitorMetrics;
+import com.yiji.framework.watcher.metrics.base.AbstractCachedWatcherMetrics;
 
 /**
  * @author qiubo@yiji.com
  */
-public class JvmMemMetrics extends AbstractCachedMonitorMetrics {
+public class JvmMemMetrics extends AbstractCachedWatcherMetrics {
 	
 	public Object doMonitor(Map<String, Object> params) {
 		Map<String, Object> map = Maps.newHashMap();

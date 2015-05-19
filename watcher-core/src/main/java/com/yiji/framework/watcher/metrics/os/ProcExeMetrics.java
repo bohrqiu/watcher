@@ -19,7 +19,7 @@ import org.hyperic.sigar.ProcExe;
 /**
  * @author qiubo@yiji.com
  */
-public class ProcExeMetrics extends AbstractOSMonitorMetrics {
+public class ProcExeMetrics extends AbstractOSWatcherMetrics {
 	
 	public Object doMonitor(Map<String, Object> params) throws Exception {
 		Map<String, Object> result = new HashMap<>();

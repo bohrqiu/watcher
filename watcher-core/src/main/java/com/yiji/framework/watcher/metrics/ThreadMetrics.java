@@ -19,12 +19,12 @@ import java.util.Map;
 import java.util.Set;
 
 import com.google.common.collect.Maps;
-import com.yiji.framework.watcher.metrics.base.AbstractCachedMonitorMetrics;
+import com.yiji.framework.watcher.metrics.base.AbstractCachedWatcherMetrics;
 
 /**
  * @author qiubo@yiji.com
  */
-public class ThreadMetrics extends AbstractCachedMonitorMetrics {
+public class ThreadMetrics extends AbstractCachedWatcherMetrics {
 	private static final int MAX_STACK_TRACE_DEPTH = 100;
 	
 	public Object doMonitor(Map<String, Object> params) {

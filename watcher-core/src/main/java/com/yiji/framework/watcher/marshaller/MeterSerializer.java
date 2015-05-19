@@ -8,7 +8,7 @@
  * daidai@yiji.com 2015-04-21 14:37 创建
  *
  */
-package com.yiji.framework.watcher.serialization;
+package com.yiji.framework.watcher.marshaller;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
