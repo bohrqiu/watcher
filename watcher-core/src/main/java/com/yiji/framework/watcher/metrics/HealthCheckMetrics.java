@@ -15,9 +15,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
 
 import com.codahale.metrics.health.HealthCheck;
 import com.codahale.metrics.health.HealthCheckRegistry;
+import com.google.common.collect.Maps;
 import com.yiji.framework.watcher.Constants;
 import com.yiji.framework.watcher.MetricsHolder;
 import com.yiji.framework.watcher.extension.ExtensionLoader;
@@ -44,18 +46,29 @@ public class HealthCheckMetrics extends AbstractMonitorMetrics {
 	private String getHealthCheckerName(HealthCheck healthCheck) {
 		String simpleName = healthCheck.getClass().getSimpleName();
 		int idx = simpleName.lastIndexOf("HealthCheck");
-        if(idx<0){
-            return simpleName;
-        }else {
-            return simpleName.substring(0,idx);
-        }
+		if (idx < 0) {
+			return simpleName;
+		} else {
+			return simpleName.substring(0, idx);
+		}
 	}
 	
 	@Override
 	public Object monitor(Map<String, Object> params) {
 		Object key = checkNotNull(params).get(Constants.KEY);
 		if (key == null) {
-			return healthCheckRegistry.runHealthChecks();
+			SortedMap<String, HealthCheck.Result> healthChecks = healthCheckRegistry.runHealthChecks();
+			boolean isAllOk = true;
+			for (HealthCheck.Result singleResult : healthChecks.values()) {
+				if (!singleResult.isHealthy()) {
+					isAllOk = false;
+					break;
+				}
+			}
+			Map<String, Object> result = Maps.newHashMap();
+			result.put("healthy", isAllOk);
+			result.put("healthChecks", healthChecks);
+			return result;
 		} else {
 			if (!healthCheckRegistry.getNames().contains(key.toString())) {
 				return Collections.emptyMap();

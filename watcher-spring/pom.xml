@@ -16,6 +16,11 @@
             <artifactId>watcher-core</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
 </project>
