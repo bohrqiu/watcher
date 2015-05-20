@@ -15,11 +15,16 @@ import java.util.Collection;
 import com.alibaba.dubbo.registry.Registry;
 import com.alibaba.dubbo.registry.support.AbstractRegistryFactory;
 import com.codahale.metrics.health.HealthCheck;
+import com.yiji.framework.watcher.dubbo.DubboDependencyChecker;
 
 /**
  * @author qiubo@yiji.com
  */
 public class DubboRegistryStatusHealthCheck extends HealthCheck {
+	public DubboRegistryStatusHealthCheck() {
+		new DubboDependencyChecker().check();
+	}
+	
 	@Override
 	protected Result check() throws Exception {
 		Collection<Registry> regsitries = AbstractRegistryFactory.getRegistries();

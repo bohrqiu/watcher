@@ -17,7 +17,7 @@ import javax.management.MBeanServer;
 import javax.management.MBeanServerFactory;
 import javax.management.ObjectName;
 
-import com.yiji.framework.watcher.OperationException;
+import com.yiji.framework.watcher.WatcherException;
 import com.yiji.framework.watcher.metrics.base.AbstractCachedWatcherMetrics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -97,7 +97,7 @@ public class WebContainerMetrics extends AbstractCachedWatcherMetrics {
 				}
 			} catch (Exception e) {
 				logger.warn("获取信息失败", e);
-                throw OperationException.throwIt(e);
+                throw WatcherException.throwIt(e);
 			}
 		}
 		return map;

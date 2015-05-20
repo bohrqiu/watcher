@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.reflect.ClassPath;
+import com.yiji.framework.watcher.WatcherDependencyNotFoundException;
 
 /**
  * 扩展加载器，默认从{@link ExtensionLoader#getScanPackage()}包中和java spi机制中加载扩展
@@ -28,13 +29,13 @@ import com.google.common.reflect.ClassPath;
  */
 public class ExtensionLoader {
 	private static final Logger logger = LoggerFactory.getLogger(ExtensionLoader.class);
-
-    /**
-     * 加载扩展类到仓储中
-     * @param repository 扩展类存储仓储
-     * @param extensionType 扩展类类型
-     * @param <T> 类型
-     */
+	
+	/**
+	 * 加载扩展类到仓储中
+	 * @param repository 扩展类存储仓储
+	 * @param extensionType 扩展类类型
+	 * @param <T> 类型
+	 */
 	public <T> void load(ExtensionRepository<T> repository, Class<T> extensionType) {
 		loadExtensionFromDefaultPackage(repository, extensionType);
 		loadMetricsFromSPI(repository, extensionType);
@@ -48,26 +49,21 @@ public class ExtensionLoader {
 			Set<ClassPath.ClassInfo> classInfos = ClassPath.from(classLoader).getTopLevelClassesRecursive(scanPackage);
 			for (ClassPath.ClassInfo classInfo : classInfos) {
 				String clazzName = classInfo.getName();
+				Class clazz;
 				try {
-					Class clazz = null;
-					try {
-						clazz = classLoader.loadClass(clazzName);
-					} catch (Exception e) {
-						logger.warn("{}加载失败,原因:{}", clazzName, e.getMessage());
-						return;
-					}
+					clazz = classLoader.loadClass(clazzName);
 					if (extensionType.isAssignableFrom(clazz) && !clazz.isInterface() && !Modifier.isAbstract(clazz.getModifiers())) {
-						T extension = null;
-						try {
-							extension = (T) clazz.newInstance();
-							logger.info("load extension:{}", extension.getClass().getName());
-							repository.add(extension);
-						} catch (Exception e) {
-							logger.error("load extension error:", clazzName, e.getMessage());
-						}
+						T extension;
+						extension = (T) clazz.newInstance();
+						logger.info("load extension:{}", extension.getClass().getName());
+						repository.add(extension);
 					}
+				} catch (WatcherDependencyNotFoundException e) {
+					logger.info("load extension {} error,",clazzName,e.getMessage());
 				} catch (Exception e) {
-					logger.error("load extension error:{}", clazzName, e);
+					logger.warn("load extension error:{}", clazzName, e);
+				} catch (NoClassDefFoundError e) {
+					logger.info("scan class:{} error:NoClassDefFoundError-{},this excepiton can be ignore", clazzName, e.getMessage());
 				}
 			}
 		} catch (Exception e) {

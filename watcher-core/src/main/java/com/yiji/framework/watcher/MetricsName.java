@@ -15,14 +15,12 @@ package com.yiji.framework.watcher;
  */
 public interface MetricsName {
 	/**
-	 * 监控指标名称
-	 * @return
+	 * watcher指标名称
 	 */
 	String name();
 	
 	/**
-	 * 监控指标描述
-	 * @return
+	 * watcher指标描述
 	 */
 	String desc();
 }

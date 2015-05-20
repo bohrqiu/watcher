@@ -19,7 +19,6 @@ class MonitorServiceSpec extends Specification {
         when:
         monitorRequest.action = action;
         String result=monitorService.watchAndMarshall(monitorRequest);
-        print(result)
         def object = JSON.parse(result);
         then:
         null != object.get("data").get(key)

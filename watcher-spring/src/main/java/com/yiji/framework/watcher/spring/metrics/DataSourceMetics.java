@@ -23,7 +23,7 @@ import org.springframework.context.ApplicationContext;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.yiji.framework.watcher.OperationException;
+import com.yiji.framework.watcher.WatcherException;
 import com.yiji.framework.watcher.metrics.base.AbstractCachedWatcherMetrics;
 import com.yiji.framework.watcher.spring.SpringApplicationContextHolder;
 
@@ -38,11 +38,11 @@ public class DataSourceMetics extends AbstractCachedWatcherMetrics {
 		List<Map<String, Object>> result = Lists.newArrayList();
 		ApplicationContext context = SpringApplicationContextHolder.get();
 		if (context == null) {
-			throw OperationException.throwIt("no applicationContext found");
+			throw WatcherException.throwIt("no applicationContext found");
 		}
 		Map<String, DataSource> dataSources = context.getBeansOfType(DataSource.class, false, false);
 		if (dataSources == null || dataSources.size() == 0) {
-			throw OperationException.throwIt("no dataSource found");
+			throw WatcherException.throwIt("no dataSource found");
 		}
 		for (Map.Entry<String, DataSource> entry : dataSources.entrySet()) {
 			Map<String, Object> dataSourceResult = Maps.newHashMap();
@@ -64,7 +64,7 @@ public class DataSourceMetics extends AbstractCachedWatcherMetrics {
 				}
 			} catch (Throwable e) {
 				logger.error(e.getMessage(), e);
-				throw OperationException.throwIt(e);
+				throw WatcherException.throwIt(e);
 			}
 			result.add(dataSourceResult);
 		}

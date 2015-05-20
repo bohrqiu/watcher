@@ -18,19 +18,24 @@ import com.alibaba.dubbo.remoting.exchange.ExchangeServer;
 import com.alibaba.dubbo.rpc.protocol.dubbo.DubboProtocol;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.yiji.framework.watcher.OperationException;
+import com.yiji.framework.watcher.WatcherException;
+import com.yiji.framework.watcher.dubbo.DubboDependencyChecker;
 import com.yiji.framework.watcher.metrics.base.AbstractCachedWatcherMetrics;
 
 /**
  * @author qiubo@yiji.com
  */
 public class DubboServerStatusMetrics extends AbstractCachedWatcherMetrics {
+	public DubboServerStatusMetrics() {
+		new DubboDependencyChecker().check();
+	}
+	
 	@Override
 	public Object doMonitor(Map<String, Object> params) throws Throwable {
 		List<Map<String, Object>> result = Lists.newArrayList();
 		Collection<ExchangeServer> servers = DubboProtocol.getDubboProtocol().getServers();
 		if (servers == null || servers.size() == 0) {
-			throw OperationException.throwIt("no server found");
+			throw WatcherException.throwIt("no server found");
 		}
 		for (ExchangeServer server : servers) {
 			Map<String, Object> serverResult = Maps.newHashMap();

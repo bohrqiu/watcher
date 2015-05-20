@@ -15,7 +15,7 @@ import static com.yiji.framework.watcher.Utils.getPid;
 
 import java.util.Map;
 
-import com.yiji.framework.watcher.OperationException;
+import com.yiji.framework.watcher.WatcherException;
 import com.yiji.framework.watcher.Utils;
 
 /**
@@ -25,7 +25,7 @@ public class BusyJavaThreadMetrics extends AbstractShellWatcherMetrics {
 	@Override
 	public Object doMonitor(Map<String, Object> params) throws Throwable {
 		if (!Utils.isLinux()) {
-            throw OperationException.throwIt("此脚本仅支持linux");
+            throw WatcherException.throwIt("此脚本仅支持linux");
 		}
 		Object count = getParam(params, "count", "5");
 		return shellExecutor.exeShell("show-busy-java-threads.sh", "-p " + getPid(), "-c " + count);

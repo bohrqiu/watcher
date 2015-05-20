@@ -15,14 +15,14 @@ import com.yiji.framework.watcher.model.Request;
 import com.yiji.framework.watcher.model.Result;
 
 /**
- * 监控服务接口
+ * watcher服务接口
  * @author qiubo@yiji.com
  */
 public interface WatcherService extends ExtensionRepository<WatcherMetrics> {
 	/**
-	 * 通过监控请求获取到监控结果数据
-	 * @param request 监控请求
-	 * @return 监控结果
+	 * 通过请求获取到watcher结果数据
+	 * @param request 请求
+	 * @return 结果
 	 */
     Result watch(Request request);
 }

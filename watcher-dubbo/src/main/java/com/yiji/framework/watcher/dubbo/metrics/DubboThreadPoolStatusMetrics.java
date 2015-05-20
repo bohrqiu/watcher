@@ -20,21 +20,26 @@ import com.alibaba.dubbo.common.extension.ExtensionLoader;
 import com.alibaba.dubbo.common.store.DataStore;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.yiji.framework.watcher.OperationException;
+import com.yiji.framework.watcher.WatcherException;
+import com.yiji.framework.watcher.dubbo.DubboDependencyChecker;
 import com.yiji.framework.watcher.metrics.base.AbstractCachedWatcherMetrics;
 
 /**
  * @author qiubo@yiji.com
  */
 public class DubboThreadPoolStatusMetrics extends AbstractCachedWatcherMetrics {
+	public DubboThreadPoolStatusMetrics() {
+		new DubboDependencyChecker().check();
+	}
+	
 	@Override
 	public Object doMonitor(Map<String, Object> params) throws Throwable {
 		List<Map<String, Object>> result = Lists.newArrayList();
 		DataStore dataStore = ExtensionLoader.getExtensionLoader(DataStore.class).getDefaultExtension();
 		Map<String, Object> executors = dataStore.get(Constants.EXECUTOR_SERVICE_COMPONENT_KEY);
-		if (executors == null ||executors.isEmpty()) {
-            throw OperationException.throwIt("no executors found");
-        }
+		if (executors == null || executors.isEmpty()) {
+			throw WatcherException.throwIt("no executors found");
+		}
 		for (Map.Entry<String, Object> entry : executors.entrySet()) {
 			String port = entry.getKey();
 			ExecutorService executor = (ExecutorService) entry.getValue();

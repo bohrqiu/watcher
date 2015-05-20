@@ -24,7 +24,7 @@ public abstract class AbstractWatcherService implements MarshalledWatcherService
 		Objects.requireNonNull(watcherMetrics, "指标不能为空");
 		Objects.requireNonNull(watcherMetrics.name(), "指标名字不能为空");
 		if (monitorMetricsMap.containsKey(watcherMetrics.name())) {
-			throw new OperationException(watcherMetrics.name() + "指标已经存在!");
+			throw new WatcherException(watcherMetrics.name() + "指标已经存在!");
 		}
 		monitorMetricsMap.put(watcherMetrics.name(), watcherMetrics);
 	}

@@ -15,11 +15,16 @@ import java.util.Collection;
 import com.alibaba.dubbo.remoting.exchange.ExchangeServer;
 import com.alibaba.dubbo.rpc.protocol.dubbo.DubboProtocol;
 import com.codahale.metrics.health.HealthCheck;
+import com.yiji.framework.watcher.dubbo.DubboDependencyChecker;
 
 /**
  * @author qiubo@yiji.com
  */
 public class DubboServerStatusHealthCheck extends HealthCheck {
+	public DubboServerStatusHealthCheck() {
+		new DubboDependencyChecker().check();
+	}
+	
 	@Override
 	protected Result check() throws Exception {
 		Collection<ExchangeServer> servers = DubboProtocol.getDubboProtocol().getServers();

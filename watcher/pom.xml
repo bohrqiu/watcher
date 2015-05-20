@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>watcher-parent</artifactId>
+        <groupId>com.yiji.framework</groupId>
+        <version>1.4</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <description>this module only for package</description>
+
+    <artifactId>watcher</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>com.yiji.framework</groupId>
+            <artifactId>watcher-core</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yiji.framework</groupId>
+            <artifactId>watcher-dubbo</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yiji.framework</groupId>
+            <artifactId>watcher-spring</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yiji.framework</groupId>
+            <artifactId>watcher-http</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+    </dependencies>
+</project>

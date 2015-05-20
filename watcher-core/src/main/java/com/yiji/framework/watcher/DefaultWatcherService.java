@@ -40,7 +40,7 @@ public class DefaultWatcherService extends AbstractWatcherService {
 	}
 	
 	public Result watch(Request request) {
-		logger.info("执行监控请求:action={},params={}", request.getAction(), request.getParams());
+		logger.info("执行watcher请求:action={},params={}", request.getAction(), request.getParams());
 		try {
 			Objects.requireNonNull(request, "request不能为空");
 			WatcherMetrics watcherMetrics = monitorMetricsMap.get(request.getAction());
@@ -55,11 +55,11 @@ public class DefaultWatcherService extends AbstractWatcherService {
 				return Result.success(request, result);
 			}
 		} catch (Throwable e) {
-			logger.info("执行错误,action={},params={}", request.getAction(), request.getParams(), e);
+			logger.warn("执行错误,action={},params={},error={}", request.getAction(), request.getParams(), e.getMessage());
 			if (Strings.isNullOrEmpty(e.getMessage())) {
 				return Result.fail(request, Throwables.getStackTraceAsString(e));
 			} else {
-				return Result.fail(request, e.getMessage());
+				return Result.fail(request, e.getClass().getSimpleName() + ":" + e.getMessage());
 			}
 		}
 	}

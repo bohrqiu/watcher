@@ -11,6 +11,7 @@
 package com.yiji.framework.watcher.extension;
 
 import java.util.Set;
+import java.util.UUID;
 
 import org.junit.Before;
 import org.junit.Test;
