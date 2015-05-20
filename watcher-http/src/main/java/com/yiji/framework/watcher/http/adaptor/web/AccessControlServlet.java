@@ -59,7 +59,9 @@ public class AccessControlServlet extends HttpServlet implements Serializable {
 	 * 是否禁止所有的请求访问
 	 */
 	private boolean denyAll = false;
-	
+    /**
+     * 内网ip地址范围
+     */
 	private List<IPRange> intranetIpRange = Lists
 		.newArrayList(new IPRange("10.0.0.0/8"), new IPRange("172.16.0.0/12"), new IPRange("192.168.0.0/16"));
 	

@@ -81,7 +81,7 @@ public class ExtensionLoader {
 				repository.add(extension);
 				logger.info("load extension:{}", extension.getClass().getName());
 			} catch (Exception | ServiceConfigurationError e) {
-				logger.warn("load extension from spi error", e);
+				logger.warn("load extension from spi error:{}", e.getMessage());
 			}
 		}
 	}

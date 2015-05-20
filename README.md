@@ -42,8 +42,8 @@
 	
 	<dependency>
  		<groupId>com.yiji.framework</groupId>
-    	<artifactId>yiji-watcher</artifactId>
-    	<version>1.3</version>
+    	<artifactId>watcher</artifactId>
+    	<version>1.4</version>
 	</dependency>
 	
 ### 2.2 web应用配置：
@@ -52,7 +52,7 @@
 	 
 	<servlet>
         <servlet-name>WatcherServlet</servlet-name>
-        <servlet-class>com.yiji.framework.watcher.adaptor.web.WatcherServlet</servlet-class>
+        <servlet-class>com.yiji.framework.watcher.http.adaptor.web.WatcherServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>WatcherServlet</servlet-name>
@@ -82,34 +82,44 @@
 
 ## 4. 提供的监控能力
 
-	+----------------+----------------------------------------------------------	+
-	| metricName     | description                                              	|
-	+----------------+----------------------------------------------------------	+
-	| classload      | show jvm classload stats                                 	|
-	| cpu            | show processor info and system load                      	|
-	| cpuinfo        | cpu details                                              	|
-	| fileDescriptor | show file descriptors in use                             	|
-	| gc             | show gc stats                                            	|
-	| healthCheck    | health check. Optional parameter: key=xx                 	|
-	| jstack         | print java stack trace.                                  	|
-	| jvmMem         | jvm memory use stats                                     	|
-	| metricRegistry | Metric indicators. Optional parameters: key=xx[&type=yy] 	|
-	| netinfo        | network configuration info                               	|
-	| netstat        | network use stats                                        	|
-	| pid            | process id                                               	|
-	| procExe        | show process starting command and arguments              	|
-	| resourceLimit  | resource limits by the underlying OS                     	|
-	| swap           | os swap use stats                                        	|
-	| sysEnv         | system environment vars. Optional parameter: key=xx      	|
-	| sysProp        | system properties. Optional parameter: key=xx            	|
-	| thread         | show thread stats                                        	|
-	| uptime         | show process up time                                     	|
-	| webContainer   | web container info                                       	|
-	+----------------+----------------------------------------------------------+
-	
+	+-----------------------+---------------------------------------------------+	
+	| metricName            | description                                       |	
+	+-----------------------+---------------------------------------------------+	
+	| busyJavaThread        | show busy java thread,Optional parameters:count=10,default 	count=5 |
+	| classload             | show jvm classload stats                          |
+	| cpu                   | show processor info and system load               |
+	| cpuinfo               | cpu details                                       |
+	| datasource            | datasource                                        |
+	| df                    | filesystem disk space usage                       |
+	| dubboRegistryStatus   | dubbo registry status                             |
+	| dubboServerStatus     | dubbo server status                               |
+	| dubboThreadPoolStatus | dubbo thread pool status                          |
+	| fileDescriptor        | show file descriptors in use                      |
+	| gc                    | show gc stats                                     |
+	| healthCheck           | health check. Optional parameter: key=xx          |
+	| iostat                | io usage                                          |
+	| jstack                | print java stack trace.                           |
+	| jvmMem                | jvm memory use stats                              |
+	| metricRegistry        | Metric indicators. Optional parameters: key=xx[&type=yy] |
+	| netinfo               | network configuration info                        |
+	| netstat               | network use stats                                 |
+	| osVersion             | os version info                                   |
+	| pid                   | process id                                        |
+	| procExe               | show process starting command and arguments       |
+	| swap                  | os swap use stats                                 |
+	| sysEnv                | system environment vars. Optional parameter: key=xx |
+	| sysProp               | system properties. Optional parameter: key=xx     |
+	| test                  | test                                              |
+	| testshell             | only for test                                     |
+	| thread                | show thread stats                                 |
+	| ulimit                | system resource limits,h/help show help           |
+	| uptime                | show process up time                              |
+	| webContainer          | web container info                                |
+	+-----------------------+---------------------------------------------------+
+
 操作系统相关的信息，通过[sigar](https://github.com/hyperic/sigar)获取,sigar不支持window,window下某些监控数据获取不到。
 
-## 5. 如何添加指标
+## 5. 如何添加监控插件
 
 `watcher`提供了通过`metrics`来添加监控指标。当然也可以通过`watcher`的方式来添加监控指标。
 
@@ -118,7 +128,7 @@ watcher内部集成了[metrics](https://github.com/dropwizard/metrics),需要添
 
 当然，您的核心公共库(方便其他组件添加指标)不想依赖`watcher`，也没有关系(其实我们也有这样的问题)，`MetricsHolder`内部使用的`SharedMetricRegistries`,您只需要在您的核心公共库中保证名字相同就ok。
 
-访问时，通过`metricName=metricRegistry`来访问`MetricRegistry，通过`metricName=healthCheck`来访问监控检查。
+访问时，通过`metricName=metricRegistry`来访问MetricRegistry，通过`metricName=healthCheck`来访问监控检查。
 
 ### 5.2 `watcher style`
 
@@ -126,24 +136,31 @@ watcher内部集成了[metrics](https://github.com/dropwizard/metrics),需要添
 
 #### 5.2.1 `watcher`自动扫描包
 
-`DefaultMonitorService`默认会扫描`com.yiji.framework.watcher.metrics`包下所有实现`com.yiji.framework.watcher.MonitorMetrics`接口的类.
+`DefaultWatcherService`默认会扫描`com.yiji.framework.watcher`包下所有实现`WatcherMetrics`接口的类.
 
-您也可以简单把实现类放在`com.yiji.framework.watcher.metrics`包中，`watcher`会自动帮您添加到`com.yiji.framework.watcher.MonitorMetricsRepository`中。
+您也可以把实现类放在`com.yiji.framework.watcher`包中，`watcher`会自动帮您添加到`com.yiji.framework.watcher.extension.ExtensionRepository`中。
 
 #### 5.2.2 Java SPI
-您也可以通过标准的Java SPI机制来添加您的插件，在您的类路径下新建文件`META-INFO/services/com.yiji.framework.watcher.MonitorMetrics`,在文件中写入实现类类名。
+您也可以通过标准的Java SPI机制来添加您的插件，在您的类路径下新建文件`META-INFO/services/com.yiji.framework.watcher.WatcherMetrics`,在文件中写入实现类类名。
 
 java spi参考地址：[Introduction to the Service Provider Interfaces](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html)
 
 
-#### 5.2.3 
-继承`com.yiji.framework.watcher.metrics.base.AbstractMonitorMetrics`类，然后通过`DefaultMonitorService#addMonitorMetrics`注册。
+#### 5.2.3 编程式添加插件
+`DefaultWatcherService`类是单例的，并且实现了`ExtensionRepository`接口。所以您可以
+通过`DefaultWatcherService.INSTANCE#add`注册自己开发的监控指标。
 
-`DefaultMonitorService`默认会扫描`com.yiji.framework.watcher.metrics`下的所有`MonitorMetrics`.
+## 6. 如何添加健康检查插件
+
+添加健康检查插件的方式和上节提到的方式类似：
+
+1. 通过metric `HealthCheckRegistry`添加
+2. 通过 `watcher`自动扫描，扫描包为`com.yiji.framework.watcher`,实现类为`com.codahale.metrics.health.HealthCheck`
+3. 通过Java SPI机制，在`META-INFO/services/com.codahale.metrics.health.HealthCheck`中加入实现类。
 
 
-## 6.其他
+## 7.其他
 
 ### 6.1 访问控制
 
-`watcher`中的`WatcherServlet`提供了访问控制能力,详情见代码注释。
+`watcher`中的`WatcherServlet`提供了访问控制能力,默认只允许内网访问，详情见`AccessControlServlet`代码注释。
