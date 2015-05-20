@@ -6,7 +6,7 @@
     <groupId>com.yiji.framework</groupId>
     <artifactId>watcher-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.4</version>
+    <version>1.5</version>
     <description>应用监控，提供监控应用/系统的能力</description>
     <modules>
         <module>watcher-core</module>
