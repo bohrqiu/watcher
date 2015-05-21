@@ -20,8 +20,8 @@ import com.alibaba.dubbo.common.extension.ExtensionLoader;
 import com.alibaba.dubbo.common.store.DataStore;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.yiji.framework.watcher.Utils;
 import com.yiji.framework.watcher.WatcherException;
-import com.yiji.framework.watcher.dubbo.DubboDependencyChecker;
 import com.yiji.framework.watcher.metrics.base.AbstractCachedWatcherMetrics;
 
 /**
@@ -29,7 +29,7 @@ import com.yiji.framework.watcher.metrics.base.AbstractCachedWatcherMetrics;
  */
 public class DubboThreadPoolStatusMetrics extends AbstractCachedWatcherMetrics {
 	public DubboThreadPoolStatusMetrics() {
-		new DubboDependencyChecker().check();
+        Utils.checkClassExists("com.alibaba.dubbo.registry.support.AbstractRegistryFactory", "dubbo");
 	}
 	
 	@Override

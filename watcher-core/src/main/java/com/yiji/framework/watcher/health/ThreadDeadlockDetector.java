@@ -1,13 +1,3 @@
-/*
- * www.yiji.com Inc.
- * Copyright (c) 2014 All Rights Reserved
- */
-
-/*
- * 修订记录:
- * qiubo@yiji.com 2015-04-28 15:13 创建
- *
- */
 package com.yiji.framework.watcher.health;
 
 import java.lang.management.ManagementFactory;
@@ -18,7 +8,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @author qiubo@yiji.com
+ * A utility class for detecting deadlocked threads. code from <a
+ * href="https://github.com/dropwizard/metrics">dropwizard metrics</a>.
  */
 public class ThreadDeadlockDetector {
 	private static final int MAX_STACK_TRACE_DEPTH = 100;

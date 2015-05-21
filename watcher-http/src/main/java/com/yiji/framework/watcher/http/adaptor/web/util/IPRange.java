@@ -1,13 +1,3 @@
-/*
- * www.yiji.com Inc.
- * Copyright (c) 2014 All Rights Reserved
- */
-
-/*
- * 修订记录:
- * qzhanbo@yiji.com 2015-04-30 12:23 创建
- *
- */
 package com.yiji.framework.watcher.http.adaptor.web.util;
 
 /**

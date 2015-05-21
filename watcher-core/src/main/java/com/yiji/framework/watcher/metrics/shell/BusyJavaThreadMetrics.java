@@ -19,6 +19,7 @@ import com.yiji.framework.watcher.WatcherException;
 import com.yiji.framework.watcher.Utils;
 
 /**
+ * 执行show-busy-java-threads.sh脚本，脚本作者:Jerry Lee
  * @author qiubo@yiji.com
  */
 public class BusyJavaThreadMetrics extends AbstractShellWatcherMetrics {

@@ -29,7 +29,7 @@ public class DataSourceStatusHealthCheck extends HealthCheck {
 	protected Result check() throws Exception {
 		ApplicationContext context = SpringApplicationContextHolder.get();
 		if (context == null) {
-			return Result.unhealthy("applicationContext not found");
+			return Result.healthy("applicationContext not found");
 		}
 		Map<String, DataSource> dataSources = context.getBeansOfType(DataSource.class, false, false);
 		if (dataSources == null || dataSources.size() == 0) {

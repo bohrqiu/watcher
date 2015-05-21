@@ -16,8 +16,8 @@ import java.util.Map;
 import com.alibaba.dubbo.registry.Registry;
 import com.alibaba.dubbo.registry.support.AbstractRegistryFactory;
 import com.google.common.collect.Maps;
+import com.yiji.framework.watcher.Utils;
 import com.yiji.framework.watcher.WatcherException;
-import com.yiji.framework.watcher.dubbo.DubboDependencyChecker;
 import com.yiji.framework.watcher.metrics.base.AbstractCachedWatcherMetrics;
 
 /**
@@ -25,7 +25,7 @@ import com.yiji.framework.watcher.metrics.base.AbstractCachedWatcherMetrics;
  */
 public class DubboRegistryStatusMetrics extends AbstractCachedWatcherMetrics {
 	public DubboRegistryStatusMetrics() {
-		new DubboDependencyChecker().check();
+		Utils.checkClassExists("com.alibaba.dubbo.registry.support.AbstractRegistryFactory", "dubbo");
 	}
 	
 	@Override

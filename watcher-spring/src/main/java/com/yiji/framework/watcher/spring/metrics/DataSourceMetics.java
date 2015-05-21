@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 
+import com.codahale.metrics.health.HealthCheck;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.yiji.framework.watcher.WatcherException;
@@ -38,7 +39,7 @@ public class DataSourceMetics extends AbstractCachedWatcherMetrics {
 		List<Map<String, Object>> result = Lists.newArrayList();
 		ApplicationContext context = SpringApplicationContextHolder.get();
 		if (context == null) {
-			throw WatcherException.throwIt("no applicationContext found");
+			return HealthCheck.Result.healthy("applicationContext not found");
 		}
 		Map<String, DataSource> dataSources = context.getBeansOfType(DataSource.class, false, false);
 		if (dataSources == null || dataSources.size() == 0) {

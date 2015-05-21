@@ -25,7 +25,7 @@ public class SpringStatusHealthCheck extends HealthCheck {
 	protected Result check() throws Exception {
 		ApplicationContext context = SpringApplicationContextHolder.get();
 		if (context == null) {
-			return Result.unhealthy("applicationContext not found");
+			return Result.healthy("applicationContext not found");
 		}
 		if (context instanceof Lifecycle) {
 			if (((Lifecycle) context).isRunning()) {
