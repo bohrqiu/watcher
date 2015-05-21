@@ -1,6 +1,46 @@
 ## watcher
 **watcher**(守望者)提供监控系统/jvm的能力。应用使用它，可以把相关的指标暴露出来，目前支持`http`和`dubbo`两种方式暴露监控指标。
 
+**watcher**运行在应用中，依托于应用暴露各种数据。**watcher**目前内置了以下扩展:
+
+	com.yiji.framework.watcher.dubbo.metrics.DubboRegistryStatusMetrics
+	com.yiji.framework.watcher.dubbo.metrics.DubboServerStatusMetrics
+	com.yiji.framework.watcher.dubbo.metrics.DubboThreadPoolStatusMetrics
+	com.yiji.framework.watcher.http.metrics.WebContainerMetrics
+	com.yiji.framework.watcher.metrics.ClassloadMetrics
+	com.yiji.framework.watcher.metrics.CpuMetrics
+	com.yiji.framework.watcher.metrics.FileDescriptorMetrics
+	com.yiji.framework.watcher.metrics.GCMetrics
+	com.yiji.framework.watcher.dubbo.health.DubboRegistryStatusHealthCheck
+	com.yiji.framework.watcher.dubbo.health.DubboServerStatusHealthCheck
+	com.yiji.framework.watcher.dubbo.health.DubboThreadPoolStatusHealthCheck
+	com.yiji.framework.watcher.health.MemoryStatusHealthCheck
+	com.yiji.framework.watcher.health.SystemLoadHealthCheck
+	com.yiji.framework.watcher.health.ThreadDeadlockHealthCheck
+	com.yiji.framework.watcher.spring.health.DataSourceStatusHealthCheck
+	com.yiji.framework.watcher.spring.health.SpringStatusHealthCheck
+	com.yiji.framework.watcher.metrics.HealthCheckMetrics
+	com.yiji.framework.watcher.metrics.JstackMetrics
+	com.yiji.framework.watcher.metrics.JvmMemMetrics
+	com.yiji.framework.watcher.metrics.MetricRegistryMetrics
+	com.yiji.framework.watcher.metrics.PidMetrics
+	com.yiji.framework.watcher.metrics.SysEnvMetrics
+	com.yiji.framework.watcher.metrics.SysPropMetrics
+	com.yiji.framework.watcher.metrics.TestShellMetrics
+	com.yiji.framework.watcher.metrics.ThreadMetrics
+	com.yiji.framework.watcher.metrics.UptimeMetrics
+	com.yiji.framework.watcher.metrics.os.CpuInfoMetrics
+	com.yiji.framework.watcher.metrics.os.DfMetircs
+	com.yiji.framework.watcher.metrics.os.IostatMetircs
+	com.yiji.framework.watcher.metrics.os.NetInfoMetrics
+	com.yiji.framework.watcher.metrics.os.NetStatMetrics
+	com.yiji.framework.watcher.metrics.os.OsVersionMetircs
+	com.yiji.framework.watcher.metrics.os.ProcExeMetrics
+	com.yiji.framework.watcher.metrics.os.SwapMetrics
+	com.yiji.framework.watcher.metrics.os.UlimitMetircs
+	com.yiji.framework.watcher.metrics.shell.BusyJavaThreadMetrics
+	com.yiji.framework.watcher.spring.metrics.DataSourceMetics
+
 ## 1. showcase
 
 ### 1.1 http
@@ -37,14 +77,41 @@
 
 
 ## 2. 如何使用
+
+### 2.1 模块介绍
+watcher提供了下面几个模块：
+
+* watcher-core
+
+	watcher核心功能模块
 	
+* watcher-dubbo
+
+	提供dubbo相关的监控、健康检查，并提供`com.yiji.framework.watcher.dubbo.adaptor.telnet.WatcherTelnetHandler`暴露数据
+	
+* watcher-spring
+
+	spring的相关组件监控、健康检查能力。使用此模块时，需要把`com.yiji.framework.watcher.spring.SpringApplicationContextHolder`配置到spring容器内，watcher扩展会通过此类获取到spring `ApplicationContext`
+
+* watcher-http
+
+	提供tomcat容器的监控能力，并提供`com.yiji.framework.watcher.http.adaptor.web.WatcherServlet`用于暴露数据
+
+* watcher
+
+	此模块仅用于依赖，他依赖了上面所有的module
+
 ### 2.1 依赖：
+
+使用所有功能，请依赖：
 	
 	<dependency>
  		<groupId>com.yiji.framework</groupId>
     	<artifactId>watcher</artifactId>
-    	<version>1.4</version>
+    	<version>${watcher.version}</version>
 	</dependency>
+
+仅仅使用部分功能，请加上部分模块的依赖。
 	
 ### 2.2 web应用配置：
 
@@ -159,8 +226,12 @@ java spi参考地址：[Introduction to the Service Provider Interfaces](https:/
 3. 通过Java SPI机制，在`META-INFO/services/com.codahale.metrics.health.HealthCheck`中加入实现类。
 
 
-## 7.其他
+## 7.FAQ
 
-### 6.1 访问控制
+### 7.1 访问控制
 
 `watcher`中的`WatcherServlet`提供了访问控制能力,默认只允许内网访问，详情见`AccessControlServlet`代码注释。
+
+### 7.2 watcher会对性能造成影响吗？
+
+基本上不会，那些会对性能造成影响的扩展，我们都加上了缓存。而且大多数扩展不会介入业务的运行，不会对业务的执行造成影响。
