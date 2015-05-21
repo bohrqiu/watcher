@@ -8,19 +8,27 @@
  * qzhanbo@yiji.com 2015-05-17 17:52 创建
  *
  */
-package com.yiji.framework.watcher.spi;
+package xxx.spi;
 
 import java.util.Map;
 
+import com.codahale.metrics.Timer;
+import com.yiji.framework.watcher.MetricsHolder;
 import com.yiji.framework.watcher.metrics.base.AbstractWatcherMetrics;
 
 /**
  * @author qiubo@yiji.com
  */
-public abstract class TestWatcherMetrics extends AbstractWatcherMetrics {
+public class TestWatcherMetrics1 extends AbstractWatcherMetrics {
+	public TestWatcherMetrics1() {
+		Timer requests = MetricsHolder.metricRegistry().timer("requests");
+		requests.time();
+
+    }
+	
 	@Override
 	public Object watch(Map<String, Object> params) {
-		return "test";
+		return TestWatcherMetrics1.class.getName();
 	}
 	
 	@Override
