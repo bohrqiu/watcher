@@ -8,6 +8,7 @@
     <packaging>pom</packaging>
     <version>1.5</version>
     <description>提供暴露应用监控/健康检查的能力</description>
+    <url>https://github.com/cqyijifu/watcher</url>
     <modules>
         <module>watcher-core</module>
         <module>watcher-spring</module>
@@ -49,6 +50,11 @@
             <organizationUrl>https://www.yiji.com/</organizationUrl>
         </developer>
     </developers>
+    <scm>
+        <connection>scm:git:git@github.com:cqyijifu/watcher.git</connection>
+        <developerConnection>scm:git:git@github.com:cqyijifu/watcher.git</developerConnection>
+        <url>git@github.com:cqyijifu/watcher.git</url>
+    </scm>
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -211,30 +217,4 @@
             </plugin>
         </plugins>
     </build>
-    <profiles>
-        <profile>
-            <id>dev</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <distributionManagement>
-                <repository>
-                    <id>nexus-releases</id>
-                    <name>Internal Release Repository</name>
-                    <url>http://192.168.45.35:8081/nexus/content/repositories/releases/</url>
-                </repository>
-            </distributionManagement>
-        </profile>
-        <profile>
-            <id>online</id>
-            <distributionManagement>
-                <repository>
-                    <id>nexus-releases</id>
-                    <name>Internal Release Repository</name>
-                    <url>http://192.168.45.199:8081/nexus/content/repositories/releases/</url>
-                </repository>
-            </distributionManagement>
-        </profile>
-    </profiles>
-
 </project>

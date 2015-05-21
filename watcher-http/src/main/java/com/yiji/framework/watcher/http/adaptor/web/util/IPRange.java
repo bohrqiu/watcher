@@ -19,21 +19,7 @@ package com.yiji.framework.watcher.http.adaptor.web.util;
  * 130.5.5.25 with a subnet mask of 255.255.255.0 can also be expressed as
  * 130.5.5.25/24. The /<prefix-length> notation is more compact and easier to
  * understand than writing out the mask in its traditional dotted-decimal
- * format.<br/>
- * <br/>
- * <code>
- * &nbsp;&nbsp;&nbsp;&nbsp;130.5.5.25&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- * <b>10</b>000010 . 00000101 . 00000101 . 00011001<br/>
- * &nbsp;&nbsp;&nbsp;&nbsp;255.255.255.0&nbsp;&nbsp;
- * 11111111 . 11111111 . 11111111 . 00000000<br/>
- * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<--extended-network-prefix --><br/>
- * or<br/>
- * &nbsp;&nbsp;&nbsp;&nbsp;130.5.5.25/24&nbsp;&nbsp;
- * <b>10</b>000010 . 00000101 . 00000101 . 00011001<br/>
- * </code> <br/>
- * This class supports both standards : the extended network prefix and the
- * subnet mask.
+ * format.
  *
  * @author Marcel Dullaart
  * @version 1.0
