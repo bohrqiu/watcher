@@ -15,6 +15,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 /**
+ * 此module的扩展通过此类获取到spring ApplicationContext，使用时，需要把此类配置到spring容器中
  * @author qiubo@yiji.com
  */
 public class SpringApplicationContextHolder implements ApplicationContextAware {

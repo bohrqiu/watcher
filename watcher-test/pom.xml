@@ -10,6 +10,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>watcher-test</artifactId>
+    <name>${project.artifactId}</name>
+
+
     <properties>
         <deploy.skip>true</deploy.skip>
     </properties>

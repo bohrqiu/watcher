@@ -7,7 +7,8 @@
     <artifactId>watcher-parent</artifactId>
     <packaging>pom</packaging>
     <version>1.5</version>
-    <description>提供暴露应用监控/健康检查的能力</description>
+    <name>${project.artifactId}</name>
+    <description>a way to expose monitor metrics and health check data to human or API</description>
     <url>https://github.com/cqyijifu/watcher</url>
     <modules>
         <module>watcher-core</module>
@@ -215,6 +216,23 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.5</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
