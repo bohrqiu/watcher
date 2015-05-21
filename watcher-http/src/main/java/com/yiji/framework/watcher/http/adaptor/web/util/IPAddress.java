@@ -90,7 +90,7 @@ import java.util.NoSuchElementException;
  * @author Marcel Dullaart
  * @version 1.0
  */
-public class IPAddress implements Cloneable {
+public class IPAddress {
 	
 	/** IP address */
 	protected int ipAddress = 0;

@@ -23,7 +23,7 @@ import com.yiji.framework.watcher.metrics.base.AbstractWatcherMetrics;
  */
 public class UptimeMetrics extends AbstractWatcherMetrics {
 	public static final String simple = "yyyy-MM-dd HH:mm:ss";
-	private static String startTime = null;
+	private  String startTime = null;
 	
 	public Object watch(Map<String, Object> params) {
 		long uptime = ManagementFactory.getRuntimeMXBean().getUptime() / 1000;

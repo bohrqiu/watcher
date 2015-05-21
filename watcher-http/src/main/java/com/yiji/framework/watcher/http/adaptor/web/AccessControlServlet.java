@@ -11,7 +11,6 @@
 package com.yiji.framework.watcher.http.adaptor.web;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +31,7 @@ import com.yiji.framework.watcher.http.adaptor.web.util.IPRange;
 /**
  * @author qiubo@yiji.com
  */
-public class AccessControlServlet extends HttpServlet implements Serializable {
+public class AccessControlServlet extends HttpServlet {
 	private static final Logger logger = LoggerFactory.getLogger(AccessControlServlet.class);
 	public static final String PARAM_NAME_ALLOW = "allow";
 	public static final String PARAM_NAME_DENY = "deny";
@@ -59,9 +58,9 @@ public class AccessControlServlet extends HttpServlet implements Serializable {
 	 * 是否禁止所有的请求访问
 	 */
 	private boolean denyAll = false;
-    /**
-     * 内网ip地址范围
-     */
+	/**
+	 * 内网ip地址范围
+	 */
 	private List<IPRange> intranetIpRange = Lists
 		.newArrayList(new IPRange("10.0.0.0/8"), new IPRange("172.16.0.0/12"), new IPRange("192.168.0.0/16"));
 	

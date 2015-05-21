@@ -45,7 +45,7 @@ public class DataSourceStatusHealthCheck extends HealthCheck {
 					return Result.unhealthy("database is invalid with timeout " + timeout + " second");
 				}
 			} catch (Exception e) {
-				Result.unhealthy(e.getMessage());
+				return Result.unhealthy(e.getMessage());
 			}
 		}
 		return Result.healthy();
