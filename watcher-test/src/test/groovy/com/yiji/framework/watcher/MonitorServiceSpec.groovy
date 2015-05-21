@@ -27,6 +27,7 @@ class MonitorServiceSpec extends Specification {
         "swap"    | "Used"
         "netinfo" | "PrimaryDns"
         "netstat" | "tcpInboundTotal"
+        "busyJavaThread"|"xx"
 
     }
 
