@@ -15,21 +15,21 @@ import java.util.Collection;
 import com.alibaba.dubbo.registry.Registry;
 import com.alibaba.dubbo.registry.support.AbstractRegistryFactory;
 import com.codahale.metrics.health.HealthCheck;
-import com.yiji.framework.watcher.dubbo.DubboDependencyChecker;
+import com.yiji.framework.watcher.Utils;
 
 /**
  * @author qiubo@yiji.com
  */
 public class DubboRegistryStatusHealthCheck extends HealthCheck {
 	public DubboRegistryStatusHealthCheck() {
-		new DubboDependencyChecker().check();
+        Utils.checkClassExists("com.alibaba.dubbo.registry.support.AbstractRegistryFactory", "dubbo");
 	}
 	
 	@Override
 	protected Result check() throws Exception {
 		Collection<Registry> regsitries = AbstractRegistryFactory.getRegistries();
 		if (regsitries.size() == 0) {
-			return Result.unhealthy("no registry found");
+			return Result.healthy("no registry found");
 		}
 		boolean isOK = true;
 		StringBuilder buf = new StringBuilder();

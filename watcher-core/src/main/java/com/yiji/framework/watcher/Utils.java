@@ -231,4 +231,17 @@ public class Utils {
 		return System.getProperty("os.name").toLowerCase().contains("linux");
 	}
 	
+	/**
+	 * 检查依赖是否存在
+	 * @param className 类名
+	 * @param msg 依赖名称
+	 */
+	public static void checkClassExists(String className, String msg) {
+		try {
+			Thread.currentThread().getContextClassLoader().loadClass(className);
+		} catch (ClassNotFoundException e) {
+			throw new WatcherDependencyNotFoundException(msg);
+		}
+	}
+	
 }

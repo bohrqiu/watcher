@@ -18,15 +18,15 @@ import com.alibaba.dubbo.common.Constants;
 import com.alibaba.dubbo.common.extension.ExtensionLoader;
 import com.alibaba.dubbo.common.store.DataStore;
 import com.codahale.metrics.health.HealthCheck;
-import com.yiji.framework.watcher.dubbo.DubboDependencyChecker;
+import com.yiji.framework.watcher.Utils;
 
 /**
  * @author qiubo@yiji.com
  */
 public class DubboThreadPoolStatusHealthCheck extends HealthCheck {
 	public DubboThreadPoolStatusHealthCheck() {
-		new DubboDependencyChecker().check();
-	}
+        Utils.checkClassExists("com.alibaba.dubbo.common.extension.ExtensionLoader", "dubbo");
+    }
 	
 	@Override
 	protected Result check() throws Exception {

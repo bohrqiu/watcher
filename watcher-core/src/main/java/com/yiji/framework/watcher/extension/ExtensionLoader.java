@@ -59,7 +59,7 @@ public class ExtensionLoader {
 						repository.add(extension);
 					}
 				} catch (WatcherDependencyNotFoundException e) {
-					logger.info("load extension {} error,",clazzName,e.getMessage());
+					logger.info("load extension {} error,cause of {} dont exists", clazzName, e.getMessage());
 				} catch (Exception e) {
 					logger.warn("load extension error:{}", clazzName, e);
 				} catch (NoClassDefFoundError e) {
