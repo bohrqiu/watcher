@@ -15,21 +15,25 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.net.URL;
 
-import com.google.common.base.*;
 import org.apache.commons.exec.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.*;
 import com.google.common.io.ByteStreams;
 import com.yiji.framework.watcher.Utils;
 
 /**
+ * 脚本执行器
  * @author qiubo@yiji.com
  */
 public class ShellExecutor {
 	private static final Logger logger = LoggerFactory.getLogger(ShellExecutor.class);
 	
 	private static final String scriptRelativePath = "watcher" + File.separator + "script";
+	/**
+	 * 脚本安装路径
+	 */
 	private static final String scriptPath = new File(System.getProperty("java.io.tmpdir") + File.separator + scriptRelativePath).getPath();
 	
 	private static volatile boolean init = false;
@@ -37,7 +41,7 @@ public class ShellExecutor {
 	private static String initMsg = null;
 	
 	public ShellExecutor() {
-        init();
+		init();
 	}
 	
 	public void init() {

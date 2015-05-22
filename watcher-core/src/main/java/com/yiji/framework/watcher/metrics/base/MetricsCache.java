@@ -23,37 +23,49 @@ import com.google.common.collect.MapMaker;
  */
 public class MetricsCache {
 	private static final Logger logger = LoggerFactory.getLogger(MetricsCache.class);
-	
-	private static ConcurrentMap<String, CreateTimeWrapperedValue> cache = new MapMaker().concurrencyLevel(4).weakValues().makeMap();
-	private static volatile ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor(new ThreadFactory() {
-		@Override
-		public Thread newThread(Runnable r) {
-			Thread thread = new Thread(r);
-			thread.setDaemon(true);
-			thread.setName("watcher-cache-evict-thread");
-			return thread;
-		}
-	});
+	private static ConcurrentMap<String, CreateTimeWrapperedValue> cache;
+	private static volatile ScheduledExecutorService scheduledExecutorService;
 	public static final MetricsCache INSTANCE = new MetricsCache();
-	static {
-		scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
-			@Override
-			public void run() {
-				INSTANCE.evict();
-			}
-		}, 1l, 1l, TimeUnit.SECONDS);
-	}
+	private static volatile boolean init = false;
 	
 	private MetricsCache() {
 		
 	}
 	
+	private static void init() {
+		if (!init) {
+			synchronized (MetricsCache.class) {
+				if (!init) {
+					cache = new MapMaker().concurrencyLevel(4).weakValues().makeMap();
+					scheduledExecutorService = Executors.newSingleThreadScheduledExecutor(new ThreadFactory() {
+						@Override
+						public Thread newThread(Runnable r) {
+							Thread thread = new Thread(r);
+							thread.setDaemon(true);
+							thread.setName("watcher-cache-evict-thread");
+							return thread;
+						}
+					});
+					scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
+						@Override
+						public void run() {
+							INSTANCE.evict();
+						}
+					}, 1l, 1l, TimeUnit.SECONDS);
+					init = true;
+				}
+			}
+		}
+	}
+	
 	public void put(String key, Object value, long expire) {
+		init();
 		logger.debug("cache put:key={},value={},expire={}", key, value, expire);
 		cache.put(key, new CreateTimeWrapperedValue(value, expire));
 	}
 	
 	public Object get(String key) {
+		init();
 		logger.debug("cache get:key={}", key);
 		CreateTimeWrapperedValue value = cache.get(key);
 		if (value == null) {
@@ -75,6 +87,14 @@ public class MetricsCache {
 	
 	public void clear() {
 		cache.clear();
+	}
+	
+	public static void stop() {
+		if (scheduledExecutorService != null) {
+			scheduledExecutorService.shutdownNow();
+		}
+		cache.clear();
+		init = false;
 	}
 	
 	private static class CreateTimeWrapperedValue {

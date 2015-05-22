@@ -21,6 +21,7 @@ import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import com.google.common.base.Strings;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Closeables;
 
@@ -244,4 +245,18 @@ public class Utils {
 		}
 	}
 	
+	public static boolean isIE(String userAgent) {
+		if (Strings.isNullOrEmpty(userAgent)) {
+			return false;
+		}
+		userAgent = userAgent.toLowerCase();
+		if (userAgent.contains("msie")) {
+			return true;
+		} else if (userAgent.contains("trident/")) {
+            return true;
+        }else if(userAgent.contains("edge/")){
+            return true;
+        }
+		return false;
+	}
 }

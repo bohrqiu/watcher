@@ -28,6 +28,8 @@ import com.google.common.collect.Maps;
 import com.google.common.io.Resources;
 import com.yiji.framework.watcher.Constants;
 import com.yiji.framework.watcher.DefaultWatcherService;
+import com.yiji.framework.watcher.Utils;
+import com.yiji.framework.watcher.metrics.base.MetricsCache;
 import com.yiji.framework.watcher.model.Request;
 
 /**
@@ -80,9 +82,17 @@ public class WatcherServlet extends AccessControlServlet {
 			request.setAction(paramMap.get("action").toString());
 			setPrettyFormat(paramMap, request);
 			setResType(paramMap, request);
+			System.out.println(req.getHeader("user-agent"));
 			if (request.getResponseType() == Constants.ResponseType.JSON) {
-				resp.setContentType("application/json;charset=utf-8");
-			}
+				if (Utils.isIE(req.getHeader("user-agent"))) {
+					resp.setContentType("text/plain;charset=utf-8");
+					resp.setHeader("Damned internet explorer", "Do you agree?");
+				} else {
+					resp.setContentType("application/json;charset=utf-8");
+				}
+			}else{
+				resp.setContentType("text/plain;charset=utf-8");
+            }
 			resp.getWriter().write(DefaultWatcherService.INSTANCE.watchAndMarshall(request));
 		} else {
 			resp.getWriter().write("不支持的请求");
@@ -156,4 +166,9 @@ public class WatcherServlet extends AccessControlServlet {
 		return w.toString();
 	}
 	
+	@Override
+	public void destroy() {
+		super.destroy();
+		MetricsCache.stop();
+	}
 }
