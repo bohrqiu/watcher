@@ -82,7 +82,6 @@ public class WatcherServlet extends AccessControlServlet {
 			request.setAction(paramMap.get("action").toString());
 			setPrettyFormat(paramMap, request);
 			setResType(paramMap, request);
-			System.out.println(req.getHeader("user-agent"));
 			if (request.getResponseType() == Constants.ResponseType.JSON) {
 				if (Utils.isIE(req.getHeader("user-agent"))) {
 					resp.setContentType("text/plain;charset=utf-8");
@@ -90,9 +89,9 @@ public class WatcherServlet extends AccessControlServlet {
 				} else {
 					resp.setContentType("application/json;charset=utf-8");
 				}
-			}else{
+			} else {
 				resp.setContentType("text/plain;charset=utf-8");
-            }
+			}
 			resp.getWriter().write(DefaultWatcherService.INSTANCE.watchAndMarshall(request));
 		} else {
 			resp.getWriter().write("不支持的请求");
