@@ -137,8 +137,6 @@ watcher提供了下面几个模块：
 	| swap                  | os swap use stats                                 |
 	| sysEnv                | system environment vars. Optional parameter: key=xx |
 	| sysProp               | system properties. Optional parameter: key=xx     |
-	| test                  | test                                              |
-	| testshell             | only for test                                     |
 	| thread                | show thread stats                                 |
 	| ulimit                | system resource limits,h/help show help           |
 	| uptime                | show process up time                              |
