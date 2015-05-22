@@ -66,13 +66,19 @@ watcher提供了下面几个模块：
 
 使用所有功能，请依赖：
 	
-	<dependency>
- 		<groupId>com.yiji.framework</groupId>
-    	<artifactId>watcher</artifactId>
-    	<version>${watcher.version}</version>
-	</dependency>
+    <dependency>
+        <groupId>com.yiji.framework</groupId>
+        <artifactId>watcher</artifactId>
+        <version>1.5.1</version>
+    </dependency>
 
-仅仅使用部分功能，请加上部分模块的依赖。
+仅仅使用部分功能，比如只依赖http:
+
+    <dependency>
+     		<groupId>com.yiji.framework</groupId>
+        	<artifactId>watcher-http</artifactId>
+        	<version>1.5.1</version>
+    </dependency>
 	
 ### 2.2 web应用配置：
 
