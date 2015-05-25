@@ -62,7 +62,7 @@ watcher提供了下面几个模块：
 
 	此模块仅用于依赖，他依赖了上面所有的module
 
-### 2.1 依赖：
+### 2.2 依赖：
 
 使用所有功能，请依赖：
 	
@@ -80,9 +80,9 @@ watcher提供了下面几个模块：
         	<version>1.5.1</version>
     </dependency>
 	
-### 2.2 web应用配置：
+### 2.3 web应用配置：
 
-#### 2.2.1 配置web.xml
+#### 2.3.1 配置web.xml
 	 
 	<servlet>
         <servlet-name>WatcherServlet</servlet-name>
@@ -93,13 +93,13 @@ watcher提供了下面几个模块：
         <url-pattern>/watcher/*</url-pattern>
     </servlet-mapping>
 
-#### 2.2.2 servlet 3.0 java编程式配置
+#### 2.3.2 servlet 3.0 java编程式配置
 
 	WatcherServlet watcherServlet = new WatcherServlet("test");
 	ServletRegistration.Dynamic servletRegistration = servletContext.addServlet("watcherServlet", watcherServlet);
 			servletRegistration.addMapping("/watcher/*");
     
-### 2.3 dubbo应用配置：
+### 2.4 dubbo应用配置：
  
  	<dubbo:provider timeout="60000" cluster="failfast" telnet="watch"/>
 	
