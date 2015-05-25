@@ -11,7 +11,6 @@
 package com.yiji.framework.watcher.extension;
 
 import java.util.Set;
-import java.util.UUID;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -56,7 +55,7 @@ public class ExtensionLoaderTest {
 	@Test
 	public void testLoadMetricsFromDefaultPackage() throws Exception {
 		ExtensionLoader loader = new ExtensionLoader();
-		loader.loadExtensionFromDefaultPackage(repository, WatcherMetrics.class);
+		loader.loadExtensionFromPackage(repository, WatcherMetrics.class, loader.getDefaultScanPackage());
 		Set<WatcherMetrics> set = repository.set();
 		assertThat(set).isNotEmpty();
 	}
@@ -64,6 +63,12 @@ public class ExtensionLoaderTest {
 	@Test
 	public void testGetScanPackage() throws Exception {
         ExtensionLoader loader = new ExtensionLoader();
-        assertThat(loader.getScanPackage()).isEqualTo("com.yiji.framework.watcher");
+        assertThat(loader.getDefaultScanPackage()).isEqualTo("com.yiji.framework.watcher");
 	}
+
+    @Test
+    public void testGetCustomScanPackage() throws Exception {
+        ExtensionLoader loader = new ExtensionLoader();
+        assertThat(loader.getCustomScanPackage()).isNotEmpty();
+    }
 }

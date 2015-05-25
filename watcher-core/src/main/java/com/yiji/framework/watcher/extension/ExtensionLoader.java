@@ -11,20 +11,20 @@
 package com.yiji.framework.watcher.extension;
 
 import java.lang.reflect.Modifier;
-import java.util.Iterator;
-import java.util.ServiceConfigurationError;
-import java.util.ServiceLoader;
-import java.util.Set;
+import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Strings;
 import com.google.common.reflect.ClassPath;
+import com.yiji.framework.watcher.Constants;
+import com.yiji.framework.watcher.Utils;
 import com.yiji.framework.watcher.WatcherDependencyNotFoundException;
 
 /**
- * 扩展加载器，默认从{@link ExtensionLoader#getScanPackage()}包中和java spi机制中加载扩展
+ * 扩展加载器，默认从{@link ExtensionLoader#getDefaultScanPackage()}包中和java spi机制中加载扩展
  * @author qiubo@yiji.com
  */
 public class ExtensionLoader {
@@ -37,15 +37,18 @@ public class ExtensionLoader {
 	 * @param <T> 类型
 	 */
 	public <T> void load(ExtensionRepository<T> repository, Class<T> extensionType) {
-		loadExtensionFromDefaultPackage(repository, extensionType);
+		loadExtensionFromPackage(repository, extensionType, getDefaultScanPackage());
+		String customScanPackage = getCustomScanPackage();
+		if (!Strings.isNullOrEmpty(customScanPackage)) {
+			loadExtensionFromPackage(repository, extensionType, customScanPackage);
+		}
 		loadMetricsFromSPI(repository, extensionType);
 	}
 	
 	@VisibleForTesting
-	<T> void loadExtensionFromDefaultPackage(ExtensionRepository<T> repository, Class<T> extensionType) {
+	<T> void loadExtensionFromPackage(ExtensionRepository<T> repository, Class<T> extensionType, String scanPackage) {
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		try {
-			String scanPackage = getScanPackage();
 			Set<ClassPath.ClassInfo> classInfos = ClassPath.from(classLoader).getTopLevelClassesRecursive(scanPackage);
 			for (ClassPath.ClassInfo classInfo : classInfos) {
 				String clazzName = classInfo.getName();
@@ -87,8 +90,27 @@ public class ExtensionLoader {
 	}
 	
 	@VisibleForTesting
-	String getScanPackage() {
+	String getDefaultScanPackage() {
 		String curPackage = ExtensionLoader.class.getPackage().getName();
 		return curPackage.substring(0, curPackage.lastIndexOf('.'));
+	}
+	
+	@VisibleForTesting
+	String getCustomScanPackage() {
+		String scanPackage = null;
+		String sysProp = (String) System.getProperties().get(Constants.WATCHER_SCAN_PACKAGE);
+		if (!Strings.isNullOrEmpty(sysProp)) {
+			scanPackage = sysProp;
+		}
+		try {
+			Map<Object, Object> props = Utils.getProperties(Constants.WATCHER_CONFIG_LOCATION);
+			String configProp = (String) props.get(Constants.WATCHER_SCAN_PACKAGE);
+			if (!Strings.isNullOrEmpty(configProp)) {
+				scanPackage = configProp;
+			}
+		} catch (Exception e) {
+			logger.info("watcher 配置文件:{} 不存在", Constants.WATCHER_CONFIG_LOCATION);
+		}
+		return scanPackage;
 	}
 }

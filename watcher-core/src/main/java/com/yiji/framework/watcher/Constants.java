@@ -29,13 +29,17 @@ public class Constants {
 	 * 请求类型key
 	 */
 	public static final String ACTION_KEY = "action";
-    /**
-     * 参数名字
-     */
-    public static final String KEY = "key";
-
-    public enum ResponseType {
-        TEXT,
-        JSON;
-    }
+	/**
+	 * 参数名字
+	 */
+	public static final String KEY = "key";
+	
+	public static final String WATCHER_SCAN_PACKAGE = "watcher.scan.package";
+	
+	public static final String WATCHER_CONFIG_LOCATION = "watcher/watcher.properties";
+	
+	public enum ResponseType {
+		TEXT,
+		JSON;
+	}
 }

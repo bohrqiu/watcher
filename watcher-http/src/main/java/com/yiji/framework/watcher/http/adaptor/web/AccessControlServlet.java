@@ -23,7 +23,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Charsets;
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
+import com.yiji.framework.watcher.Constants;
 import com.yiji.framework.watcher.Utils;
 import com.yiji.framework.watcher.http.adaptor.web.util.IPAddress;
 import com.yiji.framework.watcher.http.adaptor.web.util.IPRange;
@@ -113,6 +115,13 @@ public class AccessControlServlet extends HttpServlet {
 			
 		} catch (Exception e) {
 			logger.error("initParameter config error, deny : " + getInitParameter(PARAM_NAME_DENY), e);
+		}
+		setScanPackage(getInitParameter(Constants.WATCHER_SCAN_PACKAGE));
+	}
+	
+	public void setScanPackage(String scanPackage) {
+		if (!Strings.isNullOrEmpty(scanPackage)) {
+			System.setProperty(Constants.WATCHER_SCAN_PACKAGE, scanPackage);
 		}
 	}
 	

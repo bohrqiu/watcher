@@ -239,7 +239,7 @@ public class Utils {
 	 */
 	public static void checkClassExists(String className, String msg) {
 		try {
-			Thread.currentThread().getContextClassLoader().loadClass(className);
+			getDefaultClassLoader().loadClass(className);
 		} catch (ClassNotFoundException e) {
 			throw new WatcherDependencyNotFoundException(msg);
 		}
@@ -253,10 +253,23 @@ public class Utils {
 		if (userAgent.contains("msie")) {
 			return true;
 		} else if (userAgent.contains("trident/")) {
-            return true;
-        }else if(userAgent.contains("edge/")){
-            return true;
-        }
+			return true;
+		} else if (userAgent.contains("edge/")) {
+			return true;
+		}
 		return false;
+	}
+	
+	public static Map<Object, Object> getProperties(String location) {
+		try {
+			try (InputStream in = getDefaultClassLoader().getResourceAsStream(location)) {
+				Properties p = new Properties();
+				p.load(in);
+				return new HashMap<>(p);
+			}
+		} catch (IOException e) {
+			throw new WatcherException("properties:" + location + " not found");
+		}
+		
 	}
 }
