@@ -17,17 +17,11 @@ import java.util.concurrent.ThreadPoolExecutor;
 import com.alibaba.dubbo.common.Constants;
 import com.alibaba.dubbo.common.extension.ExtensionLoader;
 import com.alibaba.dubbo.common.store.DataStore;
-import com.codahale.metrics.health.HealthCheck;
-import com.yiji.framework.watcher.Utils;
 
 /**
  * @author qiubo@yiji.com
  */
-public class DubboThreadPoolStatusHealthCheck extends HealthCheck {
-	public DubboThreadPoolStatusHealthCheck() {
-        Utils.checkClassExists("com.alibaba.dubbo.common.extension.ExtensionLoader", "dubbo");
-    }
-	
+public class DubboThreadPoolStatusHealthCheck extends AbstractDubboHealthCheck {
 	@Override
 	protected Result check() throws Exception {
 		DataStore dataStore = ExtensionLoader.getExtensionLoader(DataStore.class).getDefaultExtension();

@@ -16,18 +16,12 @@ import java.util.Map;
 import com.alibaba.dubbo.registry.Registry;
 import com.alibaba.dubbo.registry.support.AbstractRegistryFactory;
 import com.google.common.collect.Maps;
-import com.yiji.framework.watcher.Utils;
 import com.yiji.framework.watcher.WatcherException;
-import com.yiji.framework.watcher.metrics.base.AbstractCachedWatcherMetrics;
 
 /**
  * @author qiubo@yiji.com
  */
-public class DubboRegistryStatusMetrics extends AbstractCachedWatcherMetrics {
-	public DubboRegistryStatusMetrics() {
-		Utils.checkClassExists("com.alibaba.dubbo.registry.support.AbstractRegistryFactory", "dubbo");
-	}
-	
+public class DubboRegistryStatusMetrics extends AbstractDubboWatcherMetrics {
 	@Override
 	public Object doMonitor(Map<String, Object> params) throws Throwable {
 		Map<String, Object> result = Maps.newHashMap();

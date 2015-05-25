@@ -14,17 +14,11 @@ import java.util.Collection;
 
 import com.alibaba.dubbo.remoting.exchange.ExchangeServer;
 import com.alibaba.dubbo.rpc.protocol.dubbo.DubboProtocol;
-import com.codahale.metrics.health.HealthCheck;
-import com.yiji.framework.watcher.Utils;
 
 /**
  * @author qiubo@yiji.com
  */
-public class DubboServerStatusHealthCheck extends HealthCheck {
-	public DubboServerStatusHealthCheck() {
-		Utils.checkClassExists("com.alibaba.dubbo.registry.support.AbstractRegistryFactory", "dubbo");
-		
-	}
+public class DubboServerStatusHealthCheck extends AbstractDubboHealthCheck {
 	
 	@Override
 	protected Result check() throws Exception {

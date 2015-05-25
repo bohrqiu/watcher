@@ -18,17 +18,12 @@ import com.alibaba.dubbo.remoting.exchange.ExchangeServer;
 import com.alibaba.dubbo.rpc.protocol.dubbo.DubboProtocol;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.yiji.framework.watcher.Utils;
 import com.yiji.framework.watcher.WatcherException;
-import com.yiji.framework.watcher.metrics.base.AbstractCachedWatcherMetrics;
 
 /**
  * @author qiubo@yiji.com
  */
-public class DubboServerStatusMetrics extends AbstractCachedWatcherMetrics {
-	public DubboServerStatusMetrics() {
-        Utils.checkClassExists("com.alibaba.dubbo.registry.support.AbstractRegistryFactory", "dubbo");
-	}
+public class DubboServerStatusMetrics extends AbstractDubboWatcherMetrics {
 	
 	@Override
 	public Object doMonitor(Map<String, Object> params) throws Throwable {

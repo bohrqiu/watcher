@@ -14,16 +14,11 @@ import java.util.Collection;
 
 import com.alibaba.dubbo.registry.Registry;
 import com.alibaba.dubbo.registry.support.AbstractRegistryFactory;
-import com.codahale.metrics.health.HealthCheck;
-import com.yiji.framework.watcher.Utils;
 
 /**
  * @author qiubo@yiji.com
  */
-public class DubboRegistryStatusHealthCheck extends HealthCheck {
-	public DubboRegistryStatusHealthCheck() {
-        Utils.checkClassExists("com.alibaba.dubbo.registry.support.AbstractRegistryFactory", "dubbo");
-	}
+public class DubboRegistryStatusHealthCheck extends AbstractDubboHealthCheck {
 	
 	@Override
 	protected Result check() throws Exception {
