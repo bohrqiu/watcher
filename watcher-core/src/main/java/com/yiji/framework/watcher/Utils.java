@@ -224,8 +224,8 @@ public class Utils {
 	
 	public static boolean isJarResource(URL url) throws IOException {
 		String protocol = url.getProtocol();
-		return "jar".equals(protocol) || "zip".equals(protocol) || "vfszip".equals(protocol) || "wsjar".equals(protocol)
-				|| "code-source".equals(protocol) && url.getPath().contains("!/");
+		return "jar".equals(protocol) || "zip".equals(protocol) || "vfszip".equals(protocol)
+				|| "wsjar".equals(protocol) || "code-source".equals(protocol) && url.getPath().contains("!/");
 	}
 	
 	public static boolean isLinux() {
@@ -270,6 +270,13 @@ public class Utils {
 		} catch (IOException e) {
 			throw new WatcherException("properties:" + location + " not found");
 		}
-		
+	}
+	
+	/**
+	 *
+	 * @return 获取系统名称
+	 */
+	public static String getSysName() throws WatcherException {
+        return System.getProperty(Constants.WATCHER_APP_NAME);
 	}
 }

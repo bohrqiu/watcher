@@ -19,6 +19,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.common.base.Strings;
+import com.yiji.framework.watcher.*;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 
@@ -26,17 +28,15 @@ import com.google.common.base.Charsets;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Maps;
 import com.google.common.io.Resources;
-import com.yiji.framework.watcher.Constants;
-import com.yiji.framework.watcher.DefaultWatcherService;
-import com.yiji.framework.watcher.Utils;
 import com.yiji.framework.watcher.metrics.base.MetricsCache;
 import com.yiji.framework.watcher.model.Request;
+import com.yiji.framework.watcher.Constants;
 
 /**
  * @author qiubo@yiji.com
  */
 public class WatcherServlet extends AccessControlServlet {
-	
+	public static final String SYS_NAME = "";
 	private static String velocityPath = "com/yiji/framework/watcher/http/adaptor/web/index.vm";
 	private static VelocityEngine velocity;
 	private static String vmContent = null;
@@ -54,12 +54,34 @@ public class WatcherServlet extends AccessControlServlet {
 	public WatcherServlet() {
 	}
 	
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		initAppName();
+	}
+	
+	private void initAppName() {
+		if (Strings.isNullOrEmpty(this.appName)) {
+			String appName = System.getProperty(Constants.WATCHER_APP_NAME);
+			if (Strings.isNullOrEmpty(appName)) {
+				appName = getInitParameter(Constants.WATCHER_APP_NAME);
+				if (!Strings.isNullOrEmpty(appName)) {
+					this.appName = appName;
+				}
+			} else {
+				this.appName = appName;
+			}
+		}
+		System.setProperty(Constants.WATCHER_APP_NAME, appName);
+	}
+	
 	/**
 	 * @param appName 应用名称
 	 */
 	public WatcherServlet(String appName) {
 		this.appName = appName;
-	}
+        System.setProperty(Constants.WATCHER_APP_NAME, appName);
+    }
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

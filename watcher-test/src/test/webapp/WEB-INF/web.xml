@@ -24,9 +24,14 @@
     <servlet>
         <servlet-name>WatcherServlet</servlet-name>
         <servlet-class>com.yiji.framework.watcher.http.adaptor.web.WatcherServlet</servlet-class>
+   <init-param>
+       <param-name>watcher.app.name</param-name>
+       <param-value>test</param-value>
+   </init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>WatcherServlet</servlet-name>
         <url-pattern>/watcher/*</url-pattern>
+
     </servlet-mapping>
 </web-app>

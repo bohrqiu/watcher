@@ -35,6 +35,8 @@ public class Constants {
 	public static final String KEY = "key";
 	
 	public static final String WATCHER_SCAN_PACKAGE = "watcher.scan.package";
+
+    public static final String WATCHER_APP_NAME = "watcher.app.name";
 	
 	public static final String WATCHER_CONFIG_LOCATION = "watcher/watcher.properties";
 	

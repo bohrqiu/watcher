@@ -33,7 +33,7 @@ public class DataSourceStatusHealthCheck extends HealthCheck {
 		}
 		Map<String, DataSource> dataSources = context.getBeansOfType(DataSource.class, false, false);
 		if (dataSources == null || dataSources.size() == 0) {
-			return Result.unhealthy("dataSource not found");
+			return Result.healthy("dataSource not found");
 		}
 		for (Map.Entry<String, DataSource> entry : dataSources.entrySet()) {
 			DataSource dataSource = entry.getValue();

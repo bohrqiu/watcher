@@ -12,13 +12,18 @@
 例如查看thread，访问`http://127.0.0.1:11111/watcher/q.do?action=thread`返回:
 
 	{
-		"deadlockedThreadsCount":0,
-		"deadlockedThreads":[],
-		"threadCount":19,
-		"totalStartedThreadCount":145,
-		"daemonThreadCount":18,
-		"peakThreadCount":19
-	}
+    	"success":true,
+    	"appName":"test",
+    	"data":{
+    		"deadlockedThreadsCount":0,
+    		"threadCount":24,
+    		"totalStartedThreadCount":264,
+    		"peakThreadCount":24,
+    		"daemonThreadCount":23,
+    		"deadlockedThreads":[]
+    	}
+    }
+    
 ### 1.2 dubbo
 
 连接dubbo端口并且执行监控命令:
@@ -34,7 +39,18 @@
 
 返回：
 
-	{"deadlockedThreadsCount":0,"deadlockedThreads":[],"threadCount":26,"totalStartedThreadCount":173,"daemonThreadCount":25,"peakThreadCount":26}
+	{
+    	"success":true,
+    	"appName":"test",
+    	"data":{
+    		"deadlockedThreadsCount":0,
+    		"threadCount":24,
+    		"totalStartedThreadCount":264,
+    		"peakThreadCount":24,
+    		"daemonThreadCount":23,
+    		"deadlockedThreads":[]
+    	}
+    }
 
 
 ## 2. 如何使用
@@ -87,11 +103,17 @@ watcher提供了下面几个模块：
 	<servlet>
         <servlet-name>WatcherServlet</servlet-name>
         <servlet-class>com.yiji.framework.watcher.http.adaptor.web.WatcherServlet</servlet-class>
+        <init-param>
+               <param-name>watcher.app.name</param-name>
+               <param-value>xxxx</param-value>
+        </init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>WatcherServlet</servlet-name>
         <url-pattern>/watcher/*</url-pattern>
     </servlet-mapping>
+
+参数`watcher.app.name`为系统名称
 
 #### 2.3.2 servlet 3.0 java编程式配置
 
