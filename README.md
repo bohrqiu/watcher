@@ -85,7 +85,7 @@ watcher提供了下面几个模块：
     <dependency>
         <groupId>com.yiji.framework</groupId>
         <artifactId>watcher</artifactId>
-        <version>1.5.1</version>
+        <version>1.5.2</version>
     </dependency>
 
 仅仅使用部分功能，比如只依赖http:
@@ -93,7 +93,7 @@ watcher提供了下面几个模块：
     <dependency>
      		<groupId>com.yiji.framework</groupId>
         	<artifactId>watcher-http</artifactId>
-        	<version>1.5.1</version>
+        	<version>1.5.2</version>
     </dependency>
 	
 ### 2.3 web应用配置：
