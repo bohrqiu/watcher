@@ -19,5 +19,5 @@
 
     <dubbo:service interface="com.yiji.framework.watcher.dubbo.DemoService" ref="demoService"/>
     <bean id="demoService" class="com.yiji.framework.watcher.dubbo.DemoServiceImpl"/>
-    <bean id="springApplicationContext" class="com.yiji.framework.watcher.spring.SpringApplicationContextHolder"/>
+    <bean id="watcherSpringApplicationContext" class="com.yiji.framework.watcher.spring.SpringApplicationContextHolder"/>
 </beans>

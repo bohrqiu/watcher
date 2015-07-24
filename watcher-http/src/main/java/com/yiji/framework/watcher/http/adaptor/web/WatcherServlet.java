@@ -72,7 +72,14 @@ public class WatcherServlet extends AccessControlServlet {
 				this.appName = appName;
 			}
 		}
+		setSystemProptery(appName);
+	}
+	
+	private void setSystemProptery(String appName) {
 		System.setProperty(Constants.WATCHER_APP_NAME, appName);
+		if (Strings.isNullOrEmpty(System.getProperty("yiji.appName"))) {
+			System.setProperty("yiji.appName", appName);
+		}
 	}
 	
 	/**
@@ -80,8 +87,8 @@ public class WatcherServlet extends AccessControlServlet {
 	 */
 	public WatcherServlet(String appName) {
 		this.appName = appName;
-        System.setProperty(Constants.WATCHER_APP_NAME, appName);
-    }
+		setSystemProptery(appName);
+	}
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

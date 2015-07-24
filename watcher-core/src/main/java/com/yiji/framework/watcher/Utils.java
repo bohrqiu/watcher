@@ -32,6 +32,8 @@ public class Utils {
 	
 	public static final String[] EMPTY_STRINGS = {};
 	
+	private static String appName = null;
+	
 	private static Long pid = null;
 	
 	public static String trim(String str) {
@@ -277,6 +279,13 @@ public class Utils {
 	 * @return 获取系统名称
 	 */
 	public static String getSysName() throws WatcherException {
-        return System.getProperty(Constants.WATCHER_APP_NAME);
+		if (appName != null) {
+			return appName;
+		}
+		appName = System.getProperty(Constants.WATCHER_APP_NAME);
+		if (Strings.isNullOrEmpty(appName)) {
+			appName = System.getProperty("yiji.appName");
+		}
+		return appName;
 	}
 }
