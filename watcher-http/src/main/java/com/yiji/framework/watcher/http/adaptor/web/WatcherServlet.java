@@ -10,27 +10,28 @@
  */
 package com.yiji.framework.watcher.http.adaptor.web;
 
-import java.io.IOException;
-import java.io.StringWriter;
-import java.net.URL;
-import java.util.Map;
+import com.google.common.base.Charsets;
+import com.google.common.base.Strings;
+import com.google.common.base.Throwables;
+import com.google.common.collect.Maps;
+import com.google.common.io.Resources;
+import com.yiji.framework.watcher.Constants;
+import com.yiji.framework.watcher.DefaultWatcherService;
+import com.yiji.framework.watcher.Utils;
+import com.yiji.framework.watcher.http.adaptor.web.util.VelocityLogChute;
+import com.yiji.framework.watcher.metrics.base.MetricsCache;
+import com.yiji.framework.watcher.model.Request;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.RuntimeConstants;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.google.common.base.Strings;
-import com.yiji.framework.watcher.*;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.VelocityEngine;
-
-import com.google.common.base.Charsets;
-import com.google.common.base.Throwables;
-import com.google.common.collect.Maps;
-import com.google.common.io.Resources;
-import com.yiji.framework.watcher.metrics.base.MetricsCache;
-import com.yiji.framework.watcher.model.Request;
-import com.yiji.framework.watcher.Constants;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.net.URL;
+import java.util.Map;
 
 /**
  * @author qiubo@yiji.com
@@ -43,6 +44,7 @@ public class WatcherServlet extends AccessControlServlet {
 	
 	static {
 		velocity = new VelocityEngine();
+		velocity.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM, new VelocityLogChute());
 		//模板内引用解析失败时不抛出异常
 		velocity.setProperty("runtime.references.strict", "false");
 		velocity.init();
