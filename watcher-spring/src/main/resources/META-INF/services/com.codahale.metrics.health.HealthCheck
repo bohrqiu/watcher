@@ -1,0 +1,2 @@
+com.yiji.framework.watcher.spring.health.DataSourceStatusHealthCheck
+com.yiji.framework.watcher.spring.health.SpringStatusHealthCheck

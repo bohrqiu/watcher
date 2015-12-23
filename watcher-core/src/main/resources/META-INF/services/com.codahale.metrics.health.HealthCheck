@@ -1,0 +1,3 @@
+com.yiji.framework.watcher.health.MemoryStatusHealthCheck
+com.yiji.framework.watcher.health.SystemLoadHealthCheck
+com.yiji.framework.watcher.health.ThreadDeadlockHealthCheck

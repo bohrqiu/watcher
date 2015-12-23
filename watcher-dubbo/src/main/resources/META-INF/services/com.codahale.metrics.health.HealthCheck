@@ -1,0 +1,3 @@
+com.yiji.framework.watcher.dubbo.health.DubboRegistryStatusHealthCheck
+com.yiji.framework.watcher.dubbo.health.DubboServerStatusHealthCheck
+com.yiji.framework.watcher.dubbo.health.DubboThreadPoolStatusHealthCheck

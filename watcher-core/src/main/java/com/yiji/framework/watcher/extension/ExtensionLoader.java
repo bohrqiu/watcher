@@ -37,11 +37,11 @@ public class ExtensionLoader {
 	 * @param <T> 类型
 	 */
 	public <T> void load(ExtensionRepository<T> repository, Class<T> extensionType) {
-		loadExtensionFromPackage(repository, extensionType, getDefaultScanPackage());
-		String customScanPackage = getCustomScanPackage();
-		if (!Strings.isNullOrEmpty(customScanPackage)) {
-			loadExtensionFromPackage(repository, extensionType, customScanPackage);
-		}
+//		loadExtensionFromPackage(repository, extensionType, getDefaultScanPackage());
+//		String customScanPackage = getCustomScanPackage();
+//		if (!Strings.isNullOrEmpty(customScanPackage)) {
+//			loadExtensionFromPackage(repository, extensionType, customScanPackage);
+//		}
 		loadMetricsFromSPI(repository, extensionType);
 	}
 	
