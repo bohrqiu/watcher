@@ -10,12 +10,14 @@
  */
 package com.yiji.framework.watcher.metrics;
 
+import com.google.common.collect.Lists;
+import com.yiji.framework.watcher.metrics.base.AbstractCachedWatcherMetrics;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.management.*;
+import java.util.List;
 import java.util.Map;
-
-import com.yiji.framework.watcher.metrics.base.AbstractCachedWatcherMetrics;
 
 /**
  * @author qiubo@yiji.com
@@ -36,19 +38,21 @@ public class JstackMetrics extends AbstractCachedWatcherMetrics {
 	}
 	
 	public String dump() {
-		final ThreadInfo[] threads = getThreadInfos();
+		final List<ThreadInfoWrapper> threads = getThreadInfos();
 		StringWriter sw = new StringWriter();
 		PrintWriter writer = new PrintWriter(sw);
 		
-		for (int ti = threads.length - 1; ti >= 0; ti--) {
-			final ThreadInfo t = threads[ti];
-			writer.printf("%s id=%d state=%s", t.getThreadName(), t.getThreadId(), t.getThreadState());
+		for (ThreadInfoWrapper threadInfoWrapper : threads) {
+			final ThreadInfoWrapper t = threadInfoWrapper;
+			writer.printf("%s id=%d state=%s cpu[total=%sms,user=%sms]", t.getThreadName(), t.getThreadId(),
+				t.getThreadState(), t.getCpuTimeMillis(), t.getUserTimeMillis());
 			final LockInfo lock = t.getLockInfo();
 			if (lock != null && t.getThreadState() != Thread.State.BLOCKED) {
 				writer.printf("%n    - waiting on <0x%08x> (a %s)", lock.getIdentityHashCode(), lock.getClassName());
 				writer.printf("%n    - locked <0x%08x> (a %s)", lock.getIdentityHashCode(), lock.getClassName());
 			} else if (lock != null && t.getThreadState() == Thread.State.BLOCKED) {
-				writer.printf("%n    - waiting to lock <0x%08x> (a %s)", lock.getIdentityHashCode(), lock.getClassName());
+				writer.printf("%n    - waiting to lock <0x%08x> (a %s)", lock.getIdentityHashCode(),
+					lock.getClassName());
 			}
 			
 			if (t.isSuspended()) {
@@ -94,8 +98,109 @@ public class JstackMetrics extends AbstractCachedWatcherMetrics {
 		return sw.toString();
 	}
 	
-	private ThreadInfo[] getThreadInfos() {
-		return this.threadMXBean.dumpAllThreads(true, true);
+	private List<ThreadInfoWrapper> getThreadInfos() {
+		boolean cpuTimeEnabled = threadMXBean.isThreadCpuTimeSupported() && threadMXBean.isThreadCpuTimeEnabled();
+		
+		List<ThreadInfoWrapper> result = Lists.newArrayList();
+		final ThreadInfo[] threads = this.threadMXBean.dumpAllThreads(true, true);
+		for (int ti = threads.length - 1; ti >= 0; ti--) {
+			final ThreadInfo t = threads[ti];
+			final long cpuTimeMillis;
+			final long userTimeMillis;
+			if (cpuTimeEnabled) {
+				cpuTimeMillis = threadMXBean.getThreadCpuTime(t.getThreadId()) / 1000000;
+				userTimeMillis = threadMXBean.getThreadUserTime(t.getThreadId()) / 1000000;
+			} else {
+				cpuTimeMillis = -1;
+				userTimeMillis = -1;
+			}
+			result.add(new ThreadInfoWrapper(t, cpuTimeMillis, userTimeMillis));
+			
+		}
+		return result;
+	}
+	
+	public static class ThreadInfoWrapper {
+		
+		private ThreadInfo threadInfo;
+		private long cpuTimeMillis;
+		private long userTimeMillis;
+		
+		public ThreadInfoWrapper(ThreadInfo threadInfo, long cpuTimeMillis, long userTimeMillis) {
+			this.threadInfo = threadInfo;
+		}
+		
+		public long getBlockedCount() {
+			return threadInfo.getBlockedCount();
+		}
+		
+		public long getBlockedTime() {
+			return threadInfo.getBlockedTime();
+		}
+		
+		public MonitorInfo[] getLockedMonitors() {
+			return threadInfo.getLockedMonitors();
+		}
+		
+		public LockInfo[] getLockedSynchronizers() {
+			return threadInfo.getLockedSynchronizers();
+		}
+		
+		public LockInfo getLockInfo() {
+			return threadInfo.getLockInfo();
+		}
+		
+		public String getLockName() {
+			return threadInfo.getLockName();
+		}
+		
+		public long getLockOwnerId() {
+			return threadInfo.getLockOwnerId();
+		}
+		
+		public String getLockOwnerName() {
+			return threadInfo.getLockOwnerName();
+		}
+		
+		public StackTraceElement[] getStackTrace() {
+			return threadInfo.getStackTrace();
+		}
+		
+		public long getThreadId() {
+			return threadInfo.getThreadId();
+		}
+		
+		public String getThreadName() {
+			return threadInfo.getThreadName();
+		}
+		
+		public Thread.State getThreadState() {
+			return threadInfo.getThreadState();
+		}
+		
+		public long getWaitedCount() {
+			return threadInfo.getWaitedCount();
+		}
+		
+		public long getWaitedTime() {
+			return threadInfo.getWaitedTime();
+		}
+		
+		public boolean isInNative() {
+			return threadInfo.isInNative();
+		}
+		
+		public boolean isSuspended() {
+			return threadInfo.isSuspended();
+		}
+		
+		public long getCpuTimeMillis() {
+			return cpuTimeMillis;
+		}
+		
+		public long getUserTimeMillis() {
+			return userTimeMillis;
+		}
 	}
 	
 	public String name() {
