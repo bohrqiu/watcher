@@ -105,7 +105,8 @@ public class JstackMetrics extends AbstractCachedWatcherMetrics {
 		final Map<Thread, StackTraceElement[]> stackTraces = Thread.getAllStackTraces();
 		final List<Thread> threads = new ArrayList<Thread>(stackTraces.keySet());
 		List<ThreadInfoWrapper> result = Lists.newArrayList();
-		for (Thread thread : threads) {
+		for (Map.Entry<Thread, StackTraceElement[]> threadEntry : stackTraces.entrySet()) {
+			Thread  thread=threadEntry.getKey();
 			final ThreadInfo t = this.threadMXBean.getThreadInfo(thread.getId());
 			final long cpuTimeMillis;
 			final long userTimeMillis;
@@ -117,9 +118,8 @@ public class JstackMetrics extends AbstractCachedWatcherMetrics {
 				userTimeMillis = -1;
 			}
 			result
-				.add(new ThreadInfoWrapper(t, cpuTimeMillis, userTimeMillis, thread.isDaemon(), thread.getPriority()));
+					.add(new ThreadInfoWrapper(t, cpuTimeMillis, userTimeMillis, thread.isDaemon(), thread.getPriority(),threadEntry.getValue()));
 		}
-		
 		return result;
 	}
 	
@@ -130,14 +130,16 @@ public class JstackMetrics extends AbstractCachedWatcherMetrics {
 		private long userTimeMillis;
 		private boolean daemon;
 		private int priority;
+		private StackTraceElement[] stackTrace;
 		
 		public ThreadInfoWrapper(ThreadInfo threadInfo, long cpuTimeMillis, long userTimeMillis, boolean deamon,
-									int priority) {
+									int priority,StackTraceElement[] stackTrace) {
 			this.threadInfo = threadInfo;
 			this.daemon = deamon;
 			this.cpuTimeMillis = cpuTimeMillis;
 			this.userTimeMillis = userTimeMillis;
 			this.priority = priority;
+			this.stackTrace=stackTrace;
 		}
 		
 		public long getBlockedCount() {
@@ -173,7 +175,7 @@ public class JstackMetrics extends AbstractCachedWatcherMetrics {
 		}
 		
 		public StackTraceElement[] getStackTrace() {
-			return threadInfo.getStackTrace();
+			return stackTrace;
 		}
 		
 		public long getThreadId() {
