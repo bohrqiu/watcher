@@ -6,7 +6,7 @@
     <groupId>com.yiji.framework</groupId>
     <artifactId>watcher-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.5.5</version>
+    <version>1.5.6</version>
     <name>${project.artifactId}</name>
     <description>a way to expose monitor metrics and health check data to human or API</description>
     <url>https://github.com/cqyijifu/watcher</url>

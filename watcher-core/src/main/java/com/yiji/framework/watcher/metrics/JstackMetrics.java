@@ -16,6 +16,7 @@ import com.yiji.framework.watcher.metrics.base.AbstractCachedWatcherMetrics;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.management.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -44,8 +45,9 @@ public class JstackMetrics extends AbstractCachedWatcherMetrics {
 		
 		for (ThreadInfoWrapper threadInfoWrapper : threads) {
 			final ThreadInfoWrapper t = threadInfoWrapper;
-			writer.printf("%s id=%d state=%s cpu[total=%sms,user=%sms]", t.getThreadName(), t.getThreadId(),
-				t.getThreadState(), t.getCpuTimeMillis(), t.getUserTimeMillis());
+			writer.printf("%s id=%d state=%s deamon=%s priority=%s cpu[total=%sms,user=%sms]", t.getThreadName(),
+				t.getThreadId(), t.getThreadState(), t.isDaemon(), t.getPriority(), t.getCpuTimeMillis(),
+				t.getUserTimeMillis());
 			final LockInfo lock = t.getLockInfo();
 			if (lock != null && t.getThreadState() != Thread.State.BLOCKED) {
 				writer.printf("%n    - waiting on <0x%08x> (a %s)", lock.getIdentityHashCode(), lock.getClassName());
@@ -100,11 +102,11 @@ public class JstackMetrics extends AbstractCachedWatcherMetrics {
 	
 	private List<ThreadInfoWrapper> getThreadInfos() {
 		boolean cpuTimeEnabled = threadMXBean.isThreadCpuTimeSupported() && threadMXBean.isThreadCpuTimeEnabled();
-		
+		final Map<Thread, StackTraceElement[]> stackTraces = Thread.getAllStackTraces();
+		final List<Thread> threads = new ArrayList<Thread>(stackTraces.keySet());
 		List<ThreadInfoWrapper> result = Lists.newArrayList();
-		final ThreadInfo[] threads = this.threadMXBean.dumpAllThreads(true, true);
-		for (int ti = threads.length - 1; ti >= 0; ti--) {
-			final ThreadInfo t = threads[ti];
+		for (Thread thread : threads) {
+			final ThreadInfo t = this.threadMXBean.getThreadInfo(thread.getId());
 			final long cpuTimeMillis;
 			final long userTimeMillis;
 			if (cpuTimeEnabled) {
@@ -114,9 +116,10 @@ public class JstackMetrics extends AbstractCachedWatcherMetrics {
 				cpuTimeMillis = -1;
 				userTimeMillis = -1;
 			}
-			result.add(new ThreadInfoWrapper(t, cpuTimeMillis, userTimeMillis));
-			
+			result
+				.add(new ThreadInfoWrapper(t, cpuTimeMillis, userTimeMillis, thread.isDaemon(), thread.getPriority()));
 		}
+		
 		return result;
 	}
 	
@@ -125,9 +128,16 @@ public class JstackMetrics extends AbstractCachedWatcherMetrics {
 		private ThreadInfo threadInfo;
 		private long cpuTimeMillis;
 		private long userTimeMillis;
+		private boolean daemon;
+		private int priority;
 		
-		public ThreadInfoWrapper(ThreadInfo threadInfo, long cpuTimeMillis, long userTimeMillis) {
+		public ThreadInfoWrapper(ThreadInfo threadInfo, long cpuTimeMillis, long userTimeMillis, boolean deamon,
+									int priority) {
 			this.threadInfo = threadInfo;
+			this.daemon = deamon;
+			this.cpuTimeMillis = cpuTimeMillis;
+			this.userTimeMillis = userTimeMillis;
+			this.priority = priority;
 		}
 		
 		public long getBlockedCount() {
@@ -200,6 +210,22 @@ public class JstackMetrics extends AbstractCachedWatcherMetrics {
 		
 		public long getUserTimeMillis() {
 			return userTimeMillis;
+		}
+		
+		public boolean isDaemon() {
+			return daemon;
+		}
+		
+		public void setDaemon(boolean daemon) {
+			this.daemon = daemon;
+		}
+		
+		public int getPriority() {
+			return priority;
+		}
+		
+		public void setPriority(int priority) {
+			this.priority = priority;
 		}
 	}
 	
