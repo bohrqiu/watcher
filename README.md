@@ -38,7 +38,7 @@
 	watch thread
 
 返回：
-
+```JSON
 	{
     	"success":true,
     	"appName":"test",
@@ -51,7 +51,7 @@
     		"deadlockedThreads":[]
     	}
     }
-
+```
 
 ## 2. 如何使用
 
